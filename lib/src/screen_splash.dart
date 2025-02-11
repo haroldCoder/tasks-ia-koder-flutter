@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'home.dart';
 
@@ -25,12 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
     if (isFirstTime) {
       await prefs.setBool('isFirstTime', false);
     }
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-          builder: (context) => const MyHomePage(title: "Tasks App Koderx")),
-    );
+    if(!mounted) return;
+    context.go("/home");
   }
 
   @override

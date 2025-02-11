@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/shared/class/button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Search.dart';
@@ -13,7 +14,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  clickButtonAddTask() => print("btn click");
+  clickButtonAddTask(){
+    Future.microtask(()=>context.push("/create-tasks"));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
                 Button(
-                  click: this.clickButtonAddTask(),
+                  click: this.clickButtonAddTask,
                   style: ButtonStyle(
                       backgroundColor: WidgetStateColor.transparent),
                   contentbtn: Icon(
