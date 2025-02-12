@@ -11,7 +11,9 @@ class TextBoxs extends StatelessWidget {
       this.max_lines = 1,
       this.min_lines = 1,
       this.padding,
-      this.margin})
+      this.margin,
+      required this.onChange,
+      this.value})
       : super(key: key);
 
   final String? hintText;
@@ -23,6 +25,8 @@ class TextBoxs extends StatelessWidget {
   final int min_lines;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
+  final TextEditingController? value;
+  final ValueChanged onChange;
 
   @override
   Widget build(BuildContext context) {
@@ -32,12 +36,14 @@ class TextBoxs extends StatelessWidget {
       height: height_container,
       padding: padding,
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: Colors.transparent,
         persistentFooterAlignment: AlignmentDirectional.topStart,
         body: TextField(
+            controller: value,
             maxLines: max_lines,
             minLines: min_lines,
-            onChanged: onChanged,
+            onChanged: onChange,
             style: style,
             decoration: decoration),
       ),

@@ -1,16 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/TextBoxs/TextBoxs.dart';
 import 'package:tasks_ia_koderx/src/widgets/TextInputKoder/TextInputKoder.dart';
 
 class Createtasks extends StatelessWidget {
-  const Createtasks({super.key});
+  Createtasks({super.key});
+  CreateTasksState task = CreateTasksState();
 
   backPage(BuildContext context) {
     if (!context.mounted) return;
     Future.microtask(() => context.pop());
+  }
+
+  handleChangeTitleTask(value){
+    task.setTitle(value);
+  }
+
+  handleChangeDescriptionTask(value){
+    task.setDescription(value);
   }
 
   @override
@@ -56,8 +66,10 @@ class Createtasks extends StatelessWidget {
                     margin: EdgeInsets.symmetric(horizontal: 0, vertical: 50),
                     height: 50,
                     child: Scaffold(
+                      resizeToAvoidBottomInset: false,
                       backgroundColor: Colors.transparent,
                       body: TextInputKoder(
+                        onChange: handleChangeTitleTask,
                         style: TextStyle(
                             background: Paint()..color = Colors.black,
                             color: Colors.white),
@@ -75,6 +87,7 @@ class Createtasks extends StatelessWidget {
                     ),
                   ),
                   TextBoxs(
+                      onChange: handleChangeDescriptionTask,
                       max_lines: 10,
                       min_lines: 8,
                       height_container: 220,
