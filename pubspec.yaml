@@ -39,6 +39,8 @@ dependencies:
   go_router: ^12.1.3
   sqflite: ^2.0.0+4
   path_provider: ^2.0.11
+  flutter_svg: ^2.0.10
+  shadcn_ui: ^0.19.3
 
 dev_dependencies:
   flutter_test:
@@ -68,6 +70,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - lib/assets/lion.jpeg
+    - lib/assets/check.svg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
