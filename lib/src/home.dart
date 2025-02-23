@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Animations/Animations.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
@@ -135,6 +137,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                             title: task.title_task,
                                             description: task.description,
                                             priority: task.value_priority,
+                                            onClick: () {
+                                              showShadDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      UpdateTasks(
+                                                          complete: task.complete,
+                                                          id: task.id ?? 0,
+                                                          title:
+                                                              task.title_task,
+                                                          description:
+                                                              task.description,
+                                                          priority: task
+                                                              .value_priority));
+                                            },
                                           ))
                                       .toList(),
                                 ),

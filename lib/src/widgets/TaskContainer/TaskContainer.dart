@@ -6,11 +6,13 @@ class TaskContainer extends StatefulWidget {
       {super.key,
       this.title = "Test",
       this.description = "Test description",
-      this.priority = 1});
+      this.priority = 1,
+      this.onClick});
 
   final String title;
   final String description;
   final int priority;
+  final VoidCallback? onClick;
 
   @override
   State<StatefulWidget> createState() {
@@ -59,6 +61,7 @@ class _TaskContainerState extends State<TaskContainer> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ShadButton.outline(
+                      onPressed: widget.onClick,
                       height: 30,
                       padding:
                           EdgeInsets.symmetric(horizontal: 15, vertical: 8),

@@ -35,7 +35,8 @@ class DatabaseHelper {
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           title_task TEXT,
           description TEXT,
-          value_priority INTEGER
+          value_priority INTEGER,
+          complete INTEGER DEFAULT 0
         );
       ''');
     });
@@ -59,9 +60,12 @@ class DatabaseHelper {
 
   Future<int> update(CreateTasksState task, int id) async {
     Database db = await database;
+    Map<String, dynamic> taskMap = task.toMap();
+
+    taskMap.remove(columnId);
     return await db.update(
       table,
-      task.toMap(),
+      taskMap,
       where: '$columnId = ?',
       whereArgs: [id],
     );
