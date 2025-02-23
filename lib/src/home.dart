@@ -2,8 +2,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
@@ -29,20 +31,11 @@ class _MyHomePageState extends State<MyHomePage> {
     Future.microtask(() => context.push("/create-tasks"));
   }
 
-  TaskService _taskService = TaskService();
-  late List<CreateTasksState> tasks = [];
+  final TaskController taskController = Get.put(TaskController());
 
   @override
   void initState() {
     super.initState();
-    _initTasks();
-  }
-
-  Future<void> _initTasks() async {
-    List<CreateTasksState> fetchedTasks = await _taskService.getTasks();
-    setState(() {
-      tasks = fetchedTasks;
-    });
   }
 
   @override
@@ -88,73 +81,71 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: double.infinity,
                         padding: EdgeInsets.only(left: 15, right: 15),
                         height: 350,
-                        child: tasks.isEmpty
-                            ? Center(
+                        child: Obx(() {
+                          if (taskController.tasks.isEmpty) {
+                            return Center(
                                 child: ListView(
-                                children: [
-                                  Animations(
-                                    duration: Duration(seconds: 1),
-                                    child: SvgPicture.asset(
-                                        'lib/assets/check.svg',
-                                        width: 50,
-                                        height: 50),
-                                    transitionBuilder: (Widget? child,
-                                        AnimationController controller) {
-                                      return ScaleTransition(
-                                        scale: TweenSequence<double>([
-                                          TweenSequenceItem(
-                                              tween:
-                                                  Tween(begin: 1.0, end: 1.2),
-                                              weight: 50),
-                                          TweenSequenceItem(
-                                              tween:
-                                                  Tween(begin: 1.2, end: 1.0),
-                                              weight: 50),
-                                        ]).animate(controller),
-                                        child: Transform.rotate(
-                                          angle: controller.value * 2.0 * pi,
-                                          child: child,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(height: 30),
-                                  Text(
-                                    "No hay tareas pendientes",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white54,
-                                        decoration: TextDecoration.none,
-                                        fontSize: 25,
-                                        fontFamily: 'rubik'),
-                                  )
-                                ],
-                              ))
-                            : SingleChildScrollView(
-                                child: Column(
-                                  children: tasks
-                                      .map<Widget>((task) => TaskContainer(
-                                            title: task.title_task,
-                                            description: task.description,
-                                            priority: task.value_priority,
-                                            onClick: () {
-                                              showShadDialog(
-                                                  context: context,
-                                                  builder: (context) =>
-                                                      UpdateTasks(
-                                                          complete: task.complete,
-                                                          id: task.id ?? 0,
-                                                          title:
-                                                              task.title_task,
-                                                          description:
-                                                              task.description,
-                                                          priority: task
-                                                              .value_priority));
-                                            },
-                                          ))
-                                      .toList(),
+                              children: [
+                                Animations(
+                                  duration: Duration(seconds: 1),
+                                  child: SvgPicture.asset(
+                                      'lib/assets/check.svg',
+                                      width: 50,
+                                      height: 50),
+                                  transitionBuilder: (Widget? child,
+                                      AnimationController controller) {
+                                    return ScaleTransition(
+                                      scale: TweenSequence<double>([
+                                        TweenSequenceItem(
+                                            tween: Tween(begin: 1.0, end: 1.2),
+                                            weight: 50),
+                                        TweenSequenceItem(
+                                            tween: Tween(begin: 1.2, end: 1.0),
+                                            weight: 50),
+                                      ]).animate(controller),
+                                      child: Transform.rotate(
+                                        angle: controller.value * 2.0 * pi,
+                                        child: child,
+                                      ),
+                                    );
+                                  },
                                 ),
-                              )),
+                                SizedBox(height: 30),
+                                Text(
+                                  "No hay tareas pendientes",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: Colors.white54,
+                                      decoration: TextDecoration.none,
+                                      fontSize: 25,
+                                      fontFamily: 'rubik'),
+                                )
+                              ],
+                            ));
+                          }
+                          return SingleChildScrollView(
+                            child: Column(
+                              children: taskController.tasks
+                                  .map<Widget>((task) => TaskContainer(
+                                        title: task.title_task,
+                                        description: task.description,
+                                        priority: task.value_priority,
+                                        onClick: () {
+                                          showShadDialog(
+                                              context: context,
+                                              builder: (context) => UpdateTasks(
+                                                  complete: task.complete,
+                                                  id: task.id ?? 0,
+                                                  title: task.title_task,
+                                                  description: task.description,
+                                                  priority:
+                                                      task.value_priority));
+                                        },
+                                      ))
+                                  .toList(),
+                            ),
+                          );
+                        })),
                   ],
                 ),
                 Button(

@@ -54,7 +54,6 @@ class DatabaseHelper {
   Future<List<CreateTasksState>> getTasks() async {
     Database db = await database;
     List<Map<String, dynamic>> result = await db.query(table);
-    print(await db.query(table));
     return result.map((map) => CreateTasksState.fromMap(map)).toList();
   }
 
