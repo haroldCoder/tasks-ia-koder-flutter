@@ -10,4 +10,8 @@ class TaskService {
   Future<List<CreateTasksState>> getTasks() async {
     return await DatabaseHelper.instance.getTasks();
   }
+
+  Future<int> updateTask(CreateTasksState task, int id) async{
+    return await DatabaseHelper.instance.update(task, id);
+  }
 }

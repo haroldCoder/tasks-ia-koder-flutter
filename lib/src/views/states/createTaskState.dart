@@ -3,11 +3,13 @@ class CreateTasksState {
       {this.title_task = "",
       this.description = "",
       this.value_priority = 1,
-      this.id});
+      this.id,
+      this.complete = 0});
   final int? id;
   String title_task;
   String description;
   int value_priority;
+  int complete;
 
   Map<String, dynamic> toMap() {
     return {
@@ -15,6 +17,7 @@ class CreateTasksState {
       'title_task': title_task,
       'description': description,
       'value_priority': value_priority,
+      'complete': complete
     };
   }
 
@@ -24,12 +27,13 @@ class CreateTasksState {
       title_task: map['title_task'],
       description: map['description'],
       value_priority: map['value_priority'],
+      complete: map["complete"],
     );
   }
 
   @override
   String toString() {
-    return 'Task(id: $id, title: $title_task, description: $description, priority: $value_priority)';
+    return 'Task(id: $id, title: $title_task, description: $description, priority: $value_priority, complete: $complete';
   }
 
   void setTitle(String title) {
