@@ -30,6 +30,14 @@ class _RadiocheckState extends State<Radiocheck> {
   }
 
   @override
+  void didUpdateWidget(covariant Radiocheck oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    setState(() {
+      selectedValue = widget.value;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.black,
