@@ -125,6 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           }
                           return SingleChildScrollView(
                             child: Column(
+                              spacing: 15,
                               children: taskController.tasks
                                   .map<Widget>((task) => TaskContainer(
                                         title: task.title_task,
@@ -155,9 +156,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   contentbtn: Icon(
                     Icons.add_circle_outline,
                     color: Colors.blueAccent,
-                    size: 70,
+                    size: 60,
                   ),
-                  position: ButtonPosition(0, 250, 0, 430),
+                  position: ButtonPosition(0, 250, 0, 540),
                 )
               ],
             )));
