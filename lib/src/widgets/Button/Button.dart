@@ -28,10 +28,10 @@ class _ButtonState extends State<Button> {
     return Stack(
       children: [
         Positioned(
-            bottom: widget.position?.bottom,
-            right: widget.position?.right,
-            top: widget.position?.top,
-            left: widget.position?.left,
+            bottom: widget.position?.bottom != 0 ? widget.position?.bottom : null,
+            right: widget.position?.right != 0 ? widget.position?.right : null,
+            top: widget.position?.top != 0 ? widget.position?.top : null,
+            left: widget.position?.left != 0 ? widget.position?.left : null,
             child: Container(
               padding: widget.padding,
               width: widget.width,
