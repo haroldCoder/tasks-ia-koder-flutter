@@ -81,7 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       padding: EdgeInsets.only(left: 15, right: 15),
                       height: 350,
                       child: Obx(() {
-                        if (taskController.tasks.isEmpty) {
+                        if (taskController.tasks
+                            .where((task) => task.complete == 0)
+                            .isEmpty) {
                           return Center(
                               child: ListView(
                             children: [
@@ -124,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           child: Column(
                             spacing: 15,
                             children: taskController.tasks
+                                .where((task) => task.complete == 0)
                                 .map<Widget>((task) => TaskContainer(
                                       title: task.title_task,
                                       description: task.description,
@@ -144,40 +147,46 @@ class _MyHomePageState extends State<MyHomePage> {
                         );
                       })),
                   Expanded(
-                      child:
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          spacing: 10,
-                          children: [
-                            Button(
-                              style: ButtonStyle(
-                                shape: MaterialStatePropertyAll<OutlinedBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14))),
-                                backgroundColor:
-                                MaterialStatePropertyAll<Color>(Colors.white),
+                      child: Container(
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            spacing: 10,
+                            children: [
+                              Button(
+                                style: ButtonStyle(
+                                  shape:
+                                      MaterialStatePropertyAll<OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(14))),
+                                  backgroundColor:
+                                      MaterialStatePropertyAll<Color>(
+                                          Colors.white),
+                                ),
+                                contentbtn: Text(
+                                  "Seleccionar todo",
+                                  style: TextStyle(color: Color(0xFF4439FF)),
+                                ),
                               ),
-                              contentbtn: Text("Seleccionar todo", style: TextStyle(color: Color(
-                                  0xFF4439FF)),),
-                            ),
-                            Button(
-                              style: ButtonStyle(
-                                shape: MaterialStatePropertyAll<OutlinedBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14))),
-                                backgroundColor: MaterialStatePropertyAll<Color>(
-                                    Colors.blueAccent),
-                              ),
-                              contentbtn: Text(
-                                "Eliminar seleccionados",
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            )
-                          ],
-                        ))
-                      ),
+                              Button(
+                                style: ButtonStyle(
+                                  shape:
+                                      MaterialStatePropertyAll<OutlinedBorder>(
+                                          RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(14))),
+                                  backgroundColor:
+                                      MaterialStatePropertyAll<Color>(
+                                          Colors.blueAccent),
+                                ),
+                                contentbtn: Text(
+                                  "Eliminar seleccionados",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              )
+                            ],
+                          ))),
                   TabBarFooter(),
                 ]),
                 Button(
