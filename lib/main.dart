@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(
         redirect: (context, state) {
-         Get.find<TaskController>().clearSelectTasks();
+          Get.put(TaskController());
+          Get.find<TaskController>().clearSelectTasks();
         },
         initialLocation: '/',
         routes: [
