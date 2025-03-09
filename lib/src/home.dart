@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ));
     } else {
       List<int> task_remove =
-          taskController.tasks.map((task) => task.id!).toList();
+          taskController.tasks.where((task)=>task.complete == 0).map((task) => task.id!).toList();
       taskController.AssignTasksSelected(task_remove);
     }
   }
