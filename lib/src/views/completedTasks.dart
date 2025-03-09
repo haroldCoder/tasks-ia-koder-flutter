@@ -103,6 +103,7 @@ class Completedtasks extends StatelessWidget {
                     children: taskController.tasks
                         .where((task) => task.complete == 1)
                         .map<Widget>((task) => TaskContainer(
+                            id: task.id!,
                             completed: true,
                             title: task.title_task,
                             description: task.description,

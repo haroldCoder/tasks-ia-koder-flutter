@@ -14,4 +14,8 @@ class TaskService {
   Future<int> updateTask(CreateTasksState task, int id) async{
     return await DatabaseHelper.instance.update(task, id);
   }
+
+  Future<int> deleteTask(int id) async{
+    return await DatabaseHelper.instance.delete(id);
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 
 class TaskContainer extends StatefulWidget {
@@ -9,13 +11,15 @@ class TaskContainer extends StatefulWidget {
       this.description = "Test description",
       this.priority = 1,
       this.onClick,
-      this.completed = false});
+      this.completed = false,
+      required this.id});
 
   final String title;
   final String description;
   final int priority;
   final VoidCallback? onClick;
   final bool? completed;
+  final int id;
 
   @override
   State<StatefulWidget> createState() {
@@ -24,6 +28,42 @@ class TaskContainer extends StatefulWidget {
 }
 
 class _TaskContainerState extends State<TaskContainer> {
+  deleteTask(int id) {
+    showShadDialog(
+      context: context,
+      builder: (context) => ShadDialog.alert(
+        backgroundColor: Colors.black,
+        titleStyle: TextStyle(color: Colors.red, fontSize: 22),
+        title: Text(
+          "Advertencia",
+        ),
+        description: Padding(
+          padding: EdgeInsets.all(9),
+          child: Text("Esta seguro que quiere eliminar esta tarea?"),
+        ),
+        actions: [
+          ShadButton(
+            backgroundColor: Colors.red,
+            child: const Text('Continuar'),
+            onPressed: () {
+              TaskService().deleteTask(id);
+              ShadToaster.of(context).show(
+                const ShadToast(
+                  description: Text('Tarea eliminada exitosamente'),
+                ),
+              );
+              Navigator.of(context).pop(false);
+            },
+          ),
+          ShadButton.outline(
+            child: const Text('Cancelar', style: TextStyle(color: Colors.white54),),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ShadCard(
@@ -42,9 +82,20 @@ class _TaskContainerState extends State<TaskContainer> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(widget.title),
-            Icon(
-              Icons.close,
-              color: Color(0x9095A0FF),
+            Button(
+              style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  minimumSize: Size(0, 0),
+                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0),
+              click: () {
+                deleteTask(widget.id);
+              },
+              contentbtn: Icon(
+                Icons.close,
+                color: Color(0x9095A0FF),
+              ),
             )
           ],
         ),
@@ -63,7 +114,8 @@ class _TaskContainerState extends State<TaskContainer> {
               onPressed: widget.onClick,
               height: 30,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              backgroundColor: widget.completed! ? Colors.black : Colors.transparent,
+              backgroundColor:
+                  widget.completed! ? Colors.black : Colors.transparent,
               decoration: ShadDecoration(
                   border: ShadBorder.all(color: Color(0xFF5B36FF), width: .5)),
               child: Text(

@@ -115,6 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             children: taskController.tasks
                                 .where((task) => task.complete == 0)
                                 .map<Widget>((task) => TaskContainer(
+                                      id: task.id!,
                                       title: task.title_task,
                                       description: task.description,
                                       priority: task.value_priority,
