@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 
 class TabBarFooter extends StatelessWidget {
   TabBarFooter({super.key});
@@ -8,6 +9,22 @@ class TabBarFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String currentPath = GoRouterState.of(context).uri.path.toString();
+
+    goToHome(){
+      Future.microtask(() => context.push("/home"));
+    }
+
+    goToCompletedTasks(){
+      Future.microtask(() => context.push("/check"));
+    }
+
+    goToStatics(){
+      Future.microtask(() => context.push("/statistics"));
+    }
+
+    goToSettings(){
+      Future.microtask(() => context.push("/settings"));
+    }
 
     return Expanded(
         child: Stack(children: [
@@ -21,69 +38,113 @@ class TabBarFooter extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                    child: Column(
-                  spacing: 7,
-                  children: [
-                    Icon(
-                      Icons.home,
-                      size: 25,
-                      color: currentPath == "/home"
-                          ? Colors.blueAccent
-                          : Color(0xF0393939),
-                    ),
-                    Text("Home",
-                        style: TextStyle(
-                            fontFamily: this.font_family,
-                            fontSize: 15,
-                            decoration: TextDecoration.none,
-                            color: currentPath == "/home"
-                                ? Colors.blueAccent
-                                : Color(0xF0393939)))
-                  ],
-                )),
+                    child: Button(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0),
+                        click: () {
+                          goToHome();
+                        },
+                        contentbtn: Column(
+                          spacing: 7,
+                          children: [
+                            Icon(
+                              Icons.home,
+                              size: 25,
+                              color: currentPath == "/home"
+                                  ? Colors.blueAccent
+                                  : Color(0xF0393939),
+                            ),
+                            Text("Home",
+                                style: TextStyle(
+                                    fontFamily: this.font_family,
+                                    fontSize: 15,
+                                    decoration: TextDecoration.none,
+                                    color: currentPath == "/home"
+                                        ? Colors.blueAccent
+                                        : Color(0xF0393939)))
+                          ],
+                        ))),
                 Flexible(
                     flex: 2,
-                    child: Column(
-                      spacing: 7,
-                      children: [
-                        Icon(Icons.check_circle_outline_rounded,
-                            size: 25,
-                            color: currentPath == "/check"
-                                ? Colors.blueAccent
-                                : Color(0xF0393939)),
-                        Text("Completado",
-                            style: TextStyle(
-                                fontFamily: this.font_family,
-                                fontSize: 15,
-                                decoration: TextDecoration.none,
+                    child: Button(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0),
+                        click: () {
+                          goToCompletedTasks();
+                        },
+                        contentbtn: Column(
+                          spacing: 7,
+                          children: [
+                            Icon(Icons.check_circle_outline_rounded,
+                                size: 25,
                                 color: currentPath == "/check"
                                     ? Colors.blueAccent
-                                    : Color(0xF0393939)))
-                      ],
-                    )),
+                                    : Color(0xF0393939)),
+                            Text("Completado",
+                                style: TextStyle(
+                                    fontFamily: this.font_family,
+                                    fontSize: 15,
+                                    decoration: TextDecoration.none,
+                                    color: currentPath == "/check"
+                                        ? Colors.blueAccent
+                                        : Color(0xF0393939)))
+                          ],
+                        ))),
                 Flexible(
                     flex: 2,
-                    child: Column(
-                      spacing: 7,
-                      children: [
-                        Icon(Icons.equalizer,
-                            size: 25,
-                            color: currentPath == "/statistics"
-                                ? Colors.blueAccent
-                                : Color(0xF0393939)),
-                        Text("Estadisticas",
-                            style: TextStyle(
-                                fontFamily: this.font_family,
-                                fontSize: 15,
-                                decoration: TextDecoration.none,
+                    child: Button(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            minimumSize: Size(0, 0),
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0),
+                        click: () {
+                          goToSettings();
+                        },
+                        contentbtn: Column(
+                          spacing: 7,
+                          children: [
+                            Icon(Icons.equalizer,
+                                size: 25,
                                 color: currentPath == "/statistics"
                                     ? Colors.blueAccent
-                                    : Color(0xF0393939)))
-                      ],
-                    )),
+                                    : Color(0xF0393939)),
+                            Text("Estadisticas",
+                                style: TextStyle(
+                                    fontFamily: this.font_family,
+                                    fontSize: 15,
+                                    decoration: TextDecoration.none,
+                                    color: currentPath == "/statistics"
+                                        ? Colors.blueAccent
+                                        : Color(0xF0393939)))
+                          ],
+                        ))),
                 Flexible(
-                    flex: 2,
-                    child: Column(
+                    flex: 3,
+                    child: Button(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets
+                                .zero,
+                            minimumSize: Size(0,
+                                0),
+                            tapTargetSize: MaterialTapTargetSize
+                                .shrinkWrap,
+                            backgroundColor: Colors
+                                .transparent,
+                            elevation: 0),
+                        click: () {
+                          goToSettings();
+                        },
+                        contentbtn: Column(
                       spacing: 7,
                       children: [
                         Icon(Icons.settings,
@@ -100,7 +161,7 @@ class TabBarFooter extends StatelessWidget {
                                     ? Colors.blueAccent
                                     : Color(0xF0393939)))
                       ],
-                    ))
+                    )))
               ],
             ),
           ))
