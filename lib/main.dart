@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks.dart';
 import 'package:tasks_ia_koderx/src/views/createTasks.dart';
 import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,56 +17,67 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GoRouter router = GoRouter(initialLocation: '/', routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => SplashScreen(),
-        pageBuilder: (context, state) {
-          return NoTransitionPage(child: SplashScreen());
+    final GoRouter router = GoRouter(
+        redirect: (context, state) {
+         Get.find<TaskController>().clearSelectTasks();
         },
-      ),
-      GoRoute(
-        path: '/home',
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(position: offsetAnimation, child: child);
-              },
-              child: MyHomePage(title: "Tasks App Koderx"));
-        },
-      ),
-      GoRoute(
-        path: '/create-tasks',
-        builder: (context, state) => Createtasks(),
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(position: offsetAnimation, child: child);
-              },
-              child: Createtasks());
-        },
-      ),
-      GoRoute(
-        path: '/check',
-        builder: (context, state) => Completedtasks(),
-        pageBuilder: (context, state) {
-          return CustomTransitionPage(
-              transitionsBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                var tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
-                var offsetAnimation = animation.drive(tween);
-                return SlideTransition(position: offsetAnimation, child: child);
-              },
-              child: Completedtasks());
-        },
-      )
-    ]);
+        initialLocation: '/',
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) => SplashScreen(),
+            pageBuilder: (context, state) {
+              return NoTransitionPage(child: SplashScreen());
+            },
+          ),
+          GoRoute(
+            path: '/home',
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var tween =
+                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                  child: MyHomePage(title: "Tasks App Koderx"));
+            },
+          ),
+          GoRoute(
+            path: '/create-tasks',
+            builder: (context, state) => Createtasks(),
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var tween =
+                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                  child: Createtasks());
+            },
+          ),
+          GoRoute(
+            path: '/check',
+            builder: (context, state) => Completedtasks(),
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var tween =
+                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                  child: Completedtasks());
+            },
+          )
+        ]);
 
     return ShadApp.materialRouter(
       debugShowCheckedModeBanner: false,

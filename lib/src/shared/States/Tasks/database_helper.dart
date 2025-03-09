@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'dart:async';
@@ -77,5 +79,28 @@ class DatabaseHelper {
       where: '$columnId = ?',
       whereArgs: [id],
     );
+  }
+
+  Future<int> delete_several(List<int> ids) async{
+    Database db = await database;
+
+    try {
+      final results = await Future.wait(
+        ids.map((id) async {
+          return await db.delete(
+            table,
+            where: '$columnId = ?',
+            whereArgs: [id],
+          );
+        }),
+      );
+
+      final allSuccessful = results.every((count) => count > 0);
+
+      return allSuccessful ? 1 : 0;
+    } catch (e) {
+      print('Error al eliminar: $e');
+      return 0;
+    }
   }
 }
