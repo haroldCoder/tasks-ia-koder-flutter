@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
+import 'package:tasks_ia_koderx/src/views/completedTasks.dart';
 import 'package:tasks_ia_koderx/src/views/createTasks.dart';
 import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -26,11 +27,12 @@ class MyApp extends StatelessWidget {
         path: '/home',
         pageBuilder: (context, state) {
           return CustomTransitionPage(
-            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-              var tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
-              var offsetAnimation = animation.drive(tween);
-              return SlideTransition(position: offsetAnimation, child: child);
-            },
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                var tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                var offsetAnimation = animation.drive(tween);
+                return SlideTransition(position: offsetAnimation, child: child);
+              },
               child: MyHomePage(title: "Tasks App Koderx"));
         },
       ),
@@ -39,7 +41,8 @@ class MyApp extends StatelessWidget {
         builder: (context, state) => Createtasks(),
         pageBuilder: (context, state) {
           return CustomTransitionPage(
-              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
                 var tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                 var offsetAnimation = animation.drive(tween);
                 return SlideTransition(position: offsetAnimation, child: child);
@@ -47,6 +50,20 @@ class MyApp extends StatelessWidget {
               child: Createtasks());
         },
       ),
+      GoRoute(
+        path: '/check',
+        builder: (context, state) => Completedtasks(),
+        pageBuilder: (context, state) {
+          return CustomTransitionPage(
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                var tween = Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                var offsetAnimation = animation.drive(tween);
+                return SlideTransition(position: offsetAnimation, child: child);
+              },
+              child: Completedtasks());
+        },
+      )
     ]);
 
     return ShadApp.materialRouter(
@@ -60,7 +77,8 @@ class MyApp extends StatelessWidget {
             brightness: Brightness.dark,
           ),
           textTheme: baseTheme.textTheme.copyWith(
-            titleLarge: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            titleLarge:
+                const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(

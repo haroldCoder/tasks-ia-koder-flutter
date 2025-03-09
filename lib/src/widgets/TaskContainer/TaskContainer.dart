@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 
 class TaskContainer extends StatefulWidget {
   TaskContainer(
@@ -7,12 +8,14 @@ class TaskContainer extends StatefulWidget {
       this.title = "Test",
       this.description = "Test description",
       this.priority = 1,
-      this.onClick});
+      this.onClick,
+      this.completed = false});
 
   final String title;
   final String description;
   final int priority;
   final VoidCallback? onClick;
+  final bool? completed;
 
   @override
   State<StatefulWidget> createState() {
@@ -60,23 +63,29 @@ class _TaskContainerState extends State<TaskContainer> {
               onPressed: widget.onClick,
               height: 30,
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+              backgroundColor: widget.completed! ? Colors.black : Colors.transparent,
               decoration: ShadDecoration(
                   border: ShadBorder.all(color: Color(0xFF5B36FF), width: .5)),
               child: Text(
-                "Editar",
-                style: TextStyle(color: Color(0xFF5B36FF), fontSize: 15),
+                !widget.completed! ? "Editar" : "Devolver",
+                style: TextStyle(
+                    color:
+                        !widget.completed! ? Color(0xFF5B36FF) : Colors.white,
+                    fontSize: 15),
               ),
             ),
-            Container(
-                width: 20,
-                height: 20,
-                decoration: BoxDecoration(
-                    color: widget.priority == 1
-                        ? Colors.red
-                        : widget.priority == 2
-                            ? Colors.orange
-                            : Colors.green,
-                    borderRadius: BorderRadius.all(Radius.circular(5))))
+            !widget.completed!
+                ? Container(
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                        color: widget.priority == 1
+                            ? Colors.red
+                            : widget.priority == 2
+                                ? Colors.orange
+                                : Colors.green,
+                        borderRadius: BorderRadius.all(Radius.circular(5))))
+                : Buttonupload()
           ],
         ),
       ),

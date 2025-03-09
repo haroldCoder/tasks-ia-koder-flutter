@@ -8,6 +8,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
+import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Animations/Animations.dart';
@@ -53,22 +54,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 65,
                       padding: EdgeInsets.only(left: 10, right: 10),
                       decoration: BoxDecoration(color: Colors.blueAccent),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Tasks Koderx",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: "recursive",
-                                  fontSize: 21,
-                                  decoration: TextDecoration.none)),
-                          Icon(
-                            Icons.help,
-                            size: 30,
-                            color: Color(0xFFFFFFFF),
-                          )
-                        ],
-                      )),
+                      child: TabMain(),
+                  ),
                   Center(
                     child: Container(
                       width: 250,
