@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
+import 'package:get/get.dart';
 
 class TaskContainer extends StatefulWidget {
   TaskContainer(
@@ -28,6 +30,8 @@ class TaskContainer extends StatefulWidget {
 }
 
 class _TaskContainerState extends State<TaskContainer> {
+  TaskController taskController = Get.put(TaskController());
+
   deleteTask(int id) {
     showShadDialog(
       context: context,
@@ -56,7 +60,10 @@ class _TaskContainerState extends State<TaskContainer> {
             },
           ),
           ShadButton.outline(
-            child: const Text('Cancelar', style: TextStyle(color: Colors.white54),),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(color: Colors.white54),
+            ),
             onPressed: () => Navigator.of(context).pop(false),
           ),
         ],
@@ -67,10 +74,12 @@ class _TaskContainerState extends State<TaskContainer> {
   @override
   Widget build(BuildContext context) {
     return ShadCard(
-      backgroundColor: Colors.white,
+      backgroundColor: taskController.selectedTasks.contains(widget.id)
+          ? Colors.lightBlueAccent
+          : Colors.white70,
       shadows: [
         BoxShadow(
-          color: Colors.white70,
+          color: Colors.white,
           spreadRadius: 1,
           blurRadius: 10,
           offset: const Offset(0, 2),
@@ -94,7 +103,9 @@ class _TaskContainerState extends State<TaskContainer> {
               },
               contentbtn: Icon(
                 Icons.close,
-                color: Color(0x9095A0FF),
+                color: taskController.selectedTasks.contains(widget.id)
+                    ? Colors.white
+                    : Color(0x9095A0FF),
               ),
             )
           ],

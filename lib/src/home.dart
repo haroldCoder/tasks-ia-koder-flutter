@@ -1,3 +1,4 @@
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ import 'package:tasks_ia_koderx/src/widgets/Button/shared/class/button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Search.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
 
-class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatefulWidget{
   const MyHomePage({super.key, required this.title});
 
   final String title;
@@ -35,9 +36,53 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final TaskController taskController = Get.put(TaskController());
 
+  final TaskService taskService = TaskService();
+
   @override
   void initState() {
     super.initState();
+  }
+
+  selectAllTasks() {
+    if (taskController.tasks.where((task) => task.complete == 0).isEmpty) {
+      showShadDialog(
+          context: context,
+          builder: (context) => Container(
+                width: 200,
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: ShadDialog.alert(
+                  border: Border.all(
+                    color: Colors.red,
+                  ),
+                  radius: BorderRadius.all(new Radius.circular(20)),
+                  backgroundColor: Colors.black,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    spacing: 10,
+                    children: [
+                      Icon(
+                        Icons.error_outlined,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                      Text(
+                        'No hay tareas',
+                        style:
+                            TextStyle(color: Colors.red, fontFamily: 'roboto'),
+                      )
+                    ],
+                  ),
+                ),
+              ));
+    } else {
+      List<int> task_remove =
+          taskController.tasks.map((task) => task.id!).toList();
+      taskController.AssignTasksSelected(task_remove);
+    }
+  }
+
+  deleteAllTasks(){
+    taskService.deleteTasks(taskController.selectedTasks.toList());
   }
 
   @override
@@ -50,11 +95,11 @@ class _MyHomePageState extends State<MyHomePage> {
               children: [
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Container(
-                      width: double.infinity,
-                      height: 65,
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(color: Colors.blueAccent),
-                      child: TabMain(),
+                    width: double.infinity,
+                    height: 65,
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    decoration: BoxDecoration(color: Colors.blueAccent),
+                    child: TabMain(),
                   ),
                   Center(
                     child: Container(
@@ -142,6 +187,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             spacing: 10,
                             children: [
                               Button(
+                                click: () {
+                                  selectAllTasks();
+                                },
                                 style: ButtonStyle(
                                   shape:
                                       MaterialStatePropertyAll<OutlinedBorder>(
@@ -152,12 +200,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                       MaterialStatePropertyAll<Color>(
                                           Colors.white),
                                 ),
-                                contentbtn: Text(
-                                  "Seleccionar todo",
-                                  style: TextStyle(color: Color(0xFF4439FF)),
-                                ),
+                                contentbtn: Obx((){
+                                  print(taskController.selectedTasks.isEmpty);
+                                  return Text(
+                                    taskController.selectedTasks.length == 0
+                                        ? "Seleccionar todo"
+                                        : "Deseleccionar todo",
+                                    style: TextStyle(color: Color(0xFF4439FF)),
+                                  );
+                                }),
                               ),
                               Button(
+                                click: (){
+                                  deleteAllTasks();
+                                },
                                 style: ButtonStyle(
                                   shape:
                                       MaterialStatePropertyAll<OutlinedBorder>(
