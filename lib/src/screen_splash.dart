@@ -49,12 +49,12 @@ class _SplashScreenState extends State<SplashScreen> {
             width: 150,
           ),
           Text(
-            "Tesks Koderx IA",
+            "Tasks Koderx IA",
             style: TextStyle(
-              fontStyle: FontStyle.italic,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.bold,
               color: Colors.blue,
               fontSize: 25,
-
             ),
           )
         ]),
