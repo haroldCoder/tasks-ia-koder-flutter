@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
+import 'package:tasks_ia_koderx/src/views/Statistics/Statistics.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks.dart';
 import 'package:tasks_ia_koderx/src/views/createTasks.dart';
 import 'src/screen_splash.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final GoRouter router = GoRouter(
         redirect: (context, state) {
-         Get.find<TaskController>().clearSelectTasks();
+          Get.put(TaskController());
+          Get.find<TaskController>().clearSelectTasks();
         },
         initialLocation: '/',
         routes: [
@@ -75,6 +77,22 @@ class MyApp extends StatelessWidget {
                         position: offsetAnimation, child: child);
                   },
                   child: Completedtasks());
+            },
+          ),
+          GoRoute(
+            path: '/statistics',
+            builder: (context, state) => Statistics(),
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var tween =
+                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                  child: Statistics());
             },
           )
         ]);

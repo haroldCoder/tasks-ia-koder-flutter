@@ -108,7 +108,7 @@ class TabBarFooter extends StatelessWidget {
                             backgroundColor: Colors.transparent,
                             elevation: 0),
                         click: () {
-                          goToSettings();
+                          goToStatics();
                         },
                         contentbtn: Column(
                           spacing: 7,
