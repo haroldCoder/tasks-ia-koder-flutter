@@ -27,6 +27,7 @@ class TabBarFooter extends StatelessWidget {
     }
 
     return Expanded(
+      flex: 1,
         child: Stack(children: [
       Positioned(
           bottom: 12,

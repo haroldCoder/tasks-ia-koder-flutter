@@ -14,7 +14,6 @@ class Bargraphictasks extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(10)),
             border: Border.all(color: Colors.white38)),
-        height: 200,
         child: Column(
           children: [
             Align(

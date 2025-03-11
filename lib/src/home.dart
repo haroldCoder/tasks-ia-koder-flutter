@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,15 +7,17 @@ import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Visited_App/VisitedService.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Visited_App/interface/visited_table.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Animations/Animations.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/shared/class/button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Search.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class MyHomePage extends StatefulWidget{
   const MyHomePage({super.key, required this.title});
@@ -37,10 +38,19 @@ class _MyHomePageState extends State<MyHomePage> {
   final TaskController taskController = Get.put(TaskController());
 
   final TaskService taskService = TaskService();
+  VisitedService visitedService = VisitedService();
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
+    this._initializeData();
+  }
+
+  void _initializeData() async {
+    await initializeDateFormatting('es_ES', null);
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('EEEE, dd MMMM yyyy', 'es_ES').format(now);
+    await visitedService.saveLogged(formattedDate);
   }
 
   selectAllTasks() {

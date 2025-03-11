@@ -43,6 +43,7 @@ dependencies:
   shadcn_ui: ^0.19.3
   get: ^4.6.6
   fl_chart: ^0.70.2
+  intl: ^0.19.0
 
 dev_dependencies:
   flutter_test:
