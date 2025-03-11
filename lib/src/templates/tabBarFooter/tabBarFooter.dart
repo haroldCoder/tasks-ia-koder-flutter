@@ -27,6 +27,7 @@ class TabBarFooter extends StatelessWidget {
     }
 
     return Expanded(
+      flex: 1,
         child: Stack(children: [
       Positioned(
           bottom: 12,
@@ -108,7 +109,7 @@ class TabBarFooter extends StatelessWidget {
                             backgroundColor: Colors.transparent,
                             elevation: 0),
                         click: () {
-                          goToSettings();
+                          goToStatics();
                         },
                         contentbtn: Column(
                           spacing: 7,
