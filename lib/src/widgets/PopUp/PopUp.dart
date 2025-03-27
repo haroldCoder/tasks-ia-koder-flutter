@@ -23,6 +23,7 @@ class PopUp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShadDialog(
+        removeBorderRadiusWhenTiny: false,
         border: border,
         radius: radius,
         padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
