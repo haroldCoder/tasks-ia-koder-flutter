@@ -10,7 +10,8 @@ import 'package:tasks_ia_koderx/src/widgets/TextBoxs/TextBoxs.dart';
 import 'package:tasks_ia_koderx/src/widgets/TextInputKoder/TextInputKoder.dart';
 
 class Createtasks extends StatelessWidget {
-  Createtasks({super.key});
+  Createtasks({super.key, required this.color_app});
+  Rx<Color> color_app;
   Rx<CreateTasksState> task = CreateTasksState().obs;
 
   backPage(BuildContext context) {
@@ -59,7 +60,7 @@ class Createtasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: color_app.value,
         resizeToAvoidBottomInset: true,
         body: Obx(() {
           return Container(

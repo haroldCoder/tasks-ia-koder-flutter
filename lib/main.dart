@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tasks_ia_koderx/firebaseConfig.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
+import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/views/Settings/Settings.dart';
 import 'package:tasks_ia_koderx/src/views/Statistics/Statistics.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks.dart';
 import 'package:tasks_ia_koderx/src/views/createTasks.dart';
 import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  Get.put(ConfigAppState());
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: FirebaseConfig.apiKey,
+      appId: FirebaseConfig.appId,
+      messagingSenderId: FirebaseConfig.messagingSenderId,
+      projectId: FirebaseConfig.projectId,
+      storageBucket: FirebaseConfig.storageBucket,
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -18,6 +33,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ConfigAppState configAppState = Get.find<ConfigAppState>();
     final GoRouter router = GoRouter(
         redirect: (context, state) {
           Get.put(TaskController());
@@ -27,9 +43,14 @@ class MyApp extends StatelessWidget {
         routes: [
           GoRoute(
             path: '/',
-            builder: (context, state) => SplashScreen(),
+            builder: (context, state) => SplashScreen(
+              color_app: configAppState.color_theme,
+            ),
             pageBuilder: (context, state) {
-              return NoTransitionPage(child: SplashScreen());
+              return NoTransitionPage(
+                  child: SplashScreen(
+                color_app: configAppState.color_theme,
+              ));
             },
           ),
           GoRoute(
@@ -44,12 +65,17 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: MyHomePage(title: "Tasks App Koderx"));
+                  child: MyHomePage(
+                    title: "Tasks App Koderx",
+                    color_app: configAppState.color_theme,
+                  ));
             },
           ),
           GoRoute(
             path: '/create-tasks',
-            builder: (context, state) => Createtasks(),
+            builder: (context, state) => Createtasks(
+              color_app: configAppState.color_theme,
+            ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                   transitionsBuilder:
@@ -60,12 +86,14 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: Createtasks());
+                  child: Createtasks(color_app: configAppState.color_theme));
             },
           ),
           GoRoute(
             path: '/check',
-            builder: (context, state) => Completedtasks(),
+            builder: (context, state) => Completedtasks(
+              color_app: configAppState.color_theme,
+            ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                   transitionsBuilder:
@@ -76,23 +104,45 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: Completedtasks());
+                  child: Completedtasks(
+                    color_app: configAppState.color_theme,
+                  ));
             },
           ),
           GoRoute(
             path: '/statistics',
-            builder: (context, state) => Statistics(),
+            builder: (context, state) => Statistics(
+              color_app: configAppState.color_theme,
+            ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var tween =
-                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                     var offsetAnimation = animation.drive(tween);
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: Statistics());
+                  child: Statistics(
+                    color_app: configAppState.color_theme,
+                  ));
+            },
+          ),
+          GoRoute(
+            path: '/settings',
+            builder: (context, state) => Settings(),
+            pageBuilder: (context, state) {
+              return CustomTransitionPage(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var tween =
+                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                  child: Settings());
             },
           )
         ]);

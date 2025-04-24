@@ -20,7 +20,8 @@ import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class MyHomePage extends StatefulWidget{
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.color_app});
+  final Rx<Color> color_app;
 
   final String title;
 
@@ -100,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
         child: Container(
             height: double.infinity,
-            decoration: BoxDecoration(color: Colors.black),
+            decoration: BoxDecoration(color: widget.color_app.value),
             child: Stack(
               children: [
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

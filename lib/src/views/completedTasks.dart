@@ -16,8 +16,9 @@ import '../widgets/TaskContainer/TaskContainer.dart';
 import 'states/createTaskState.dart';
 
 class Completedtasks extends StatelessWidget {
-  Completedtasks({super.key});
+  Completedtasks({super.key, required this.color_app});
   final TaskController taskController = Get.put(TaskController());
+  Rx<Color> color_app;
 
   ChangeToPendingTask(int id, CreateTasksState task) async {
     await TaskService().updateTask(
@@ -33,7 +34,7 @@ class Completedtasks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: color_app.value,
       body: SafeArea(
           child: Column(
         children: [
