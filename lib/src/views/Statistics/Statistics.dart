@@ -9,10 +9,11 @@ import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/templates/BarGraphicTasks/BarGraphicTasks.dart';
 
 class Statistics extends StatelessWidget {
-  Statistics({super.key});
+  Statistics({super.key, required this.color_app});
   int task_pending = 0;
   int task_completed = 0;
   TaskController task_controller = Get.put(TaskController());
+  Rx<Color> color_app;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class Statistics extends StatelessWidget {
     task_pending = task_controller.tasks.where((tk) => tk.complete == 0).length;
 
     return Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: color_app.value,
         body: SafeArea(
           child: Stack(
             children: [

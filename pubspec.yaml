@@ -44,6 +44,9 @@ dependencies:
   get: ^4.6.6
   fl_chart: ^0.70.2
   intl: ^0.19.0
+  firebase_auth: ^5.5.1
+  google_sign_in: ^6.3.0
+  firebase_core: ^3.12.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +77,7 @@ flutter:
   assets:
     - lib/assets/lion.jpeg
     - lib/assets/check.svg
+    - lib/assets/googleicon.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
