@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/firebaseConfig.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
@@ -12,8 +13,10 @@ import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async{
+  await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ConfigAppState());
   await Firebase.initializeApp(
