@@ -1,7 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/loginUser.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/subscription_request.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
@@ -13,6 +16,7 @@ class Settings extends StatelessWidget {
   Settings({super.key});
   final ConfigAppState configAppState = Get.find<ConfigAppState>();
   AuthService authService = AuthService();
+  LoginUser loginUser = LoginUser();
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +215,7 @@ class Settings extends StatelessWidget {
                                 RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12))),
                           ),
-                          click: (){
+                          click: () {
                             SubscriptionRequests().createSubscription();
                           },
                         ),
@@ -219,6 +223,12 @@ class Settings extends StatelessWidget {
                             click: () async {
                               if (!authService.logged.value) {
                                 await authService.SignInWithGoogle();
+                                await loginUser.login(
+                                    authService.current_user.value?.email,
+                                    authService.current_user.value?.phoneNumber,
+                                    authService
+                                            .current_user.value?.displayName ??
+                                        "");
                               } else {
                                 await authService.logoutGoogle();
                               }
