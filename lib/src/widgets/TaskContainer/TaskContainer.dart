@@ -5,6 +5,7 @@ import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/uploadTask.dart';
 
 class TaskContainer extends StatefulWidget {
   TaskContainer(
@@ -31,6 +32,11 @@ class TaskContainer extends StatefulWidget {
 
 class _TaskContainerState extends State<TaskContainer> {
   TaskController taskController = Get.put(TaskController());
+  UploadTask uploadTask = Get.put(UploadTask());
+
+  void UploadTaskMethod(BuildContext context) {
+    uploadTask.Upload(context);
+  }
 
   deleteTask(int id) {
     showShadDialog(
@@ -148,7 +154,7 @@ class _TaskContainerState extends State<TaskContainer> {
                                 ? Colors.orange
                                 : Colors.green,
                         borderRadius: BorderRadius.all(Radius.circular(5))))
-                : Buttonupload()
+                : Buttonupload(click: (){UploadTaskMethod(context);})
           ],
         ),
       ),
