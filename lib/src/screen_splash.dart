@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
 import 'home.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -13,10 +16,28 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  PremiumUser verifyPremiumUser = Get.put(PremiumUser());
+
   @override
   void initState() {
     super.initState();
     checkFirstTime();
+    checkUserPremium();
+  }
+
+  Future<void> checkUserPremium() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final data_user = prefs.getString("data_user");
+
+    if(data_user!.isEmpty){
+      verifyPremiumUser.ResetPremiumUser();
+      return;
+    }
+
+    final Map<String, dynamic> userJson = jsonDecode(data_user!);
+
+    verifyPremiumUser.verifyUser(userJson['email'].toString());
   }
 
   Future<void> checkFirstTime() async {

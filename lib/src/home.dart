@@ -212,7 +212,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                           Colors.white),
                                 ),
                                 contentbtn: Obx((){
-                                  print(taskController.selectedTasks.isEmpty);
                                   return Text(
                                     taskController.selectedTasks.length == 0
                                         ? "Seleccionar todo"
