@@ -6,6 +6,7 @@ import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/loginUser.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/subscription_request.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
@@ -17,6 +18,7 @@ class Settings extends StatelessWidget {
   final ConfigAppState configAppState = Get.find<ConfigAppState>();
   AuthService authService = AuthService();
   LoginUser loginUser = LoginUser();
+  PremiumUser isUserPremium = Get.put(PremiumUser());
 
   @override
   Widget build(BuildContext context) {
@@ -187,38 +189,42 @@ class Settings extends StatelessWidget {
                     child: Column(
                       spacing: 5,
                       children: [
-                        Button(
-                          contentbtn: Container(
-                            height: 40,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12)),
-                                gradient: LinearGradient(
-                                  colors: [Colors.blueAccent, Colors.white12],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                )),
-                            child: Text("Cambiar a premium",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold)),
-                          ),
-                          width: MediaQuery.of(context).size.width * 0.9,
-                          style: ButtonStyle(
-                            alignment: Alignment.topLeft,
-                            padding:
-                                MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                                    EdgeInsets.all(0)),
-                            shape: MaterialStatePropertyAll<OutlinedBorder>(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12))),
-                          ),
-                          click: () {
-                            SubscriptionRequests().createSubscription();
-                          },
-                        ),
+                        Obx((){
+                          return !isUserPremium.isPremium.value ?
+                              Button(
+                                contentbtn: Container(
+                                  height: 40,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(12)),
+                                      gradient: LinearGradient(
+                                        colors: [Colors.blueAccent, Colors.white12],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      )),
+                                  child: Text("Cambiar a premium",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                style: ButtonStyle(
+                                  alignment: Alignment.topLeft,
+                                  padding:
+                                  MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                                      EdgeInsets.all(0)),
+                                  shape: MaterialStatePropertyAll<OutlinedBorder>(
+                                      RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(12))),
+                                ),
+                                click: () {
+                                  SubscriptionRequests().createSubscription();
+                                },
+                              )
+                              : SizedBox.shrink();
+                        }),
                         Button(
                             click: () async {
                               if (!authService.logged.value) {
