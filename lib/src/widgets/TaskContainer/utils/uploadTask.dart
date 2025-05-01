@@ -43,7 +43,7 @@ class UploadTask extends GetxController{
             child: ShadDialog.alert(
                 radius: BorderRadius.all(Radius.circular(10)),
                 removeBorderRadiusWhenTiny: false,
-                title: Text("Usuario no esta loggeado"),
+                title: Text("Usuario no es premium"),
                 actions: [Buttonpremium()]
             ),
           );
