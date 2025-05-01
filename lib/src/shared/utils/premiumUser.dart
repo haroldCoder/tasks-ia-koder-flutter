@@ -20,7 +20,7 @@ class PremiumUser extends GetxController {
     prefs = await SharedPreferences.getInstance();
   }
 
-  void verifyUser(String email) async {
+  Future<bool> verifyUser(String email) async {
     final response = await Requests(baseUrl: dotenv.env['API_URL'].toString())
         .request(
             method: HttpMethod.get,
@@ -28,7 +28,9 @@ class PremiumUser extends GetxController {
 
     if(response?["response"]["hasPaid"]){
       isPremium.value = true;
+      return true;
     }
+    return false;
   }
 
   void ResetPremiumUser(){

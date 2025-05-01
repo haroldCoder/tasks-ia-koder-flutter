@@ -1,23 +1,19 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/loginUser.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/subscription_request.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
-import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:get/get.dart';
 import '../../widgets/MarkDown/Markdown.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ButtonPremium.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ButtonGoogle.dart';
 
 class Settings extends StatelessWidget {
   Settings({super.key});
   final ConfigAppState configAppState = Get.find<ConfigAppState>();
   AuthService authService = AuthService();
-  LoginUser loginUser = LoginUser();
   PremiumUser isUserPremium = Get.put(PremiumUser());
 
   @override
@@ -191,75 +187,10 @@ class Settings extends StatelessWidget {
                       children: [
                         Obx((){
                           return !isUserPremium.isPremium.value ?
-                              Button(
-                                contentbtn: Container(
-                                  height: 40,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      borderRadius:
-                                      BorderRadius.all(Radius.circular(12)),
-                                      gradient: LinearGradient(
-                                        colors: [Colors.blueAccent, Colors.white12],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      )),
-                                  child: Text("Cambiar a premium",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                style: ButtonStyle(
-                                  alignment: Alignment.topLeft,
-                                  padding:
-                                  MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                                      EdgeInsets.all(0)),
-                                  shape: MaterialStatePropertyAll<OutlinedBorder>(
-                                      RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12))),
-                                ),
-                                click: () {
-                                  SubscriptionRequests().createSubscription();
-                                },
-                              )
+                              Buttonpremium()
                               : SizedBox.shrink();
                         }),
-                        Button(
-                            click: () async {
-                              if (!authService.logged.value) {
-                                await authService.SignInWithGoogle();
-                                await loginUser.login(
-                                    authService.current_user.value?.email,
-                                    authService.current_user.value?.phoneNumber,
-                                    authService
-                                            .current_user.value?.displayName ??
-                                        "");
-                              } else {
-                                await authService.logoutGoogle();
-                              }
-                            },
-                            width: MediaQuery.of(context).size.width * 0.9,
-                            style: ButtonStyle(
-                                shape: MaterialStatePropertyAll<OutlinedBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(12))),
-                                backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
-                                        Colors.white10)),
-                            contentbtn: Obx(() {
-                              return !authService.logged.value
-                                  ? Image.asset(
-                                      'lib/assets/googleicon.png',
-                                      width: 30,
-                                    )
-                                  : Text(
-                                      "Cerrar sesion",
-                                      style:
-                                          TextStyle(color: Colors.blueAccent),
-                                    );
-                            })),
+                        Buttongoogle()
                       ],
                     )),
                 Row(
