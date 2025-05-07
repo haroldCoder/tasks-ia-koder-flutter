@@ -13,7 +13,7 @@ import 'package:tasks_ia_koderx/src/shared/layouts/ButtonGoogle.dart';
 class Settings extends StatelessWidget {
   Settings({super.key});
   final ConfigAppState configAppState = Get.find<ConfigAppState>();
-  AuthService authService = AuthService();
+  AuthService authService = Get.put(AuthService());
   PremiumUser isUserPremium = Get.put(PremiumUser());
 
   @override
