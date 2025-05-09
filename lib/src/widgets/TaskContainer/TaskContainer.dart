@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 import 'package:get/get.dart';
@@ -35,7 +36,13 @@ class _TaskContainerState extends State<TaskContainer> {
   UploadTask uploadTask = Get.put(UploadTask());
 
   void UploadTaskMethod(BuildContext context) {
-    uploadTask.Upload(context);
+    uploadTask.Upload(
+        context,
+        TasksInterface(
+            title: widget.title,
+            description: widget.description,
+            priority: widget.priority,
+            completed: widget.completed! ? 1 : 0));
   }
 
   deleteTask(int id) {
@@ -154,7 +161,9 @@ class _TaskContainerState extends State<TaskContainer> {
                                 ? Colors.orange
                                 : Colors.green,
                         borderRadius: BorderRadius.all(Radius.circular(5))))
-                : Buttonupload(click: (){UploadTaskMethod(context);})
+                : Buttonupload(click: () {
+                    UploadTaskMethod(context);
+                  })
           ],
         ),
       ),
