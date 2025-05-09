@@ -2,55 +2,56 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonGoogle.dart';
 import '../../../shared/layouts/ButtonPremium.dart';
 
-class UploadTask extends GetxController{
+class UploadTask extends GetxController {
   PremiumUser premiumUser = Get.put(PremiumUser());
 
-  void Upload(BuildContext context) async{
+  void Upload(BuildContext context, TasksInterface task) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     final data_user = prefs.getString("data_user");
 
-    if(data_user == null){
-      showShadDialog(context: context, builder: (context) {
-        return
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: ShadDialog.alert(
-                radius: BorderRadius.all(Radius.circular(10)),
-                removeBorderRadiusWhenTiny: false,
-                title: Text("Usuario no esta loggeado"),
-                actions: [Buttongoogle()]
-            ),
-          );
-      });
+
+    if (data_user == null) {
+      showShadDialog(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: ShadDialog.alert(
+                  radius: BorderRadius.all(Radius.circular(10)),
+                  removeBorderRadiusWhenTiny: false,
+                  title: Text("Usuario no esta loggeado"),
+                  actions: [Buttongoogle()]),
+            );
+          });
       premiumUser.ResetPremiumUser();
       return;
     }
 
     final Map<String, dynamic> userJson = jsonDecode(data_user!);
-
-    if(!await premiumUser.verifyUser(userJson['email'].toString())){
-      showShadDialog(context: context, builder: (context) {
-        return
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: ShadDialog.alert(
-                radius: BorderRadius.all(Radius.circular(10)),
-                removeBorderRadiusWhenTiny: false,
-                title: Text("Usuario no es premium"),
-                actions: [Buttonpremium()]
-            ),
-          );
-      });
-    }
-    else{
-
+    if (!await premiumUser.verifyUser(userJson['email'].toString())) {
+      showShadDialog(
+          context: context,
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+              child: ShadDialog.alert(
+                  radius: BorderRadius.all(Radius.circular(10)),
+                  removeBorderRadiusWhenTiny: false,
+                  title: Text("Usuario no es premium"),
+                  actions: [Buttonpremium()]),
+            );
+          });
+    } else {
+      context.push("/upload-task", extra: task);
     }
   }
 }

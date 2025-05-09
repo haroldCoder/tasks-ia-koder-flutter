@@ -7,6 +7,7 @@ import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/views/Settings/Settings.dart';
 import 'package:tasks_ia_koderx/src/views/Statistics/Statistics.dart';
+import 'package:tasks_ia_koderx/src/views/UploadTask/UploadTask.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks.dart';
 import 'package:tasks_ia_koderx/src/views/createTasks.dart';
 import 'src/screen_splash.dart';
@@ -14,8 +15,9 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 
-void main() async{
+void main() async {
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ConfigAppState());
@@ -146,6 +148,29 @@ class MyApp extends StatelessWidget {
                         position: offsetAnimation, child: child);
                   },
                   child: Settings());
+            },
+          ),
+          GoRoute(
+            path: '/upload-task',
+            builder: (context, state) {
+              final data = state.extra as TasksInterface;
+              return Uploadtask(
+                  data: data);
+            },
+            pageBuilder: (context, state) {
+              final data = state.extra as TasksInterface;
+              return CustomTransitionPage(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    var tween =
+                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    var offsetAnimation = animation.drive(tween);
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                  child: Uploadtask(
+                    data: data
+                  ));
             },
           )
         ]);
