@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/NavBarPremium.dart';
@@ -55,11 +56,12 @@ class _UploadtaskState extends State<Uploadtask> {
       "description": widget.data!.description,
       "priority": widget.data!.priority,
       "completed": widget.data!.completed,
-      "userId": userId
+      "userId": userId,
+      "id_task_app": widget.data!.id
     });
 
-    if (response["httpStatus"] == 200) {
-      _streamController.add(TaskSuccess("Tarea creada con exito"));
+    if (response["httpStatus"] == 201) {
+      _streamController.add(TaskSuccess("Tarea subida con éxito"));
     } else {
       _streamController.add(TaskError("Ocurrio un error"));
     }
@@ -121,7 +123,9 @@ class _UploadtaskState extends State<Uploadtask> {
                                   context: context,
                                   builder: (builder) =>
                                       DialogUpdate(text: state.message),
-                                );
+                                ).then((_){
+                                  context.pop();
+                                });
                               });
                             } else if (state is TaskError) {
                               WidgetsBinding.instance.addPostFrameCallback((_) {
