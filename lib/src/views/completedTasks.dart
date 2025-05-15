@@ -9,7 +9,6 @@ import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import '../shared/States/Tasks/TaskController.dart';
 
 import '../shared/States/Tasks/task_service.dart';
-import '../templates/update-tasks/update-tasks.dart';
 import '../widgets/Animations/Animations.dart';
 import '../widgets/Search.dart';
 import '../widgets/TaskContainer/TaskContainer.dart';

@@ -3,6 +3,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/users/stateTaskServer.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 import 'package:get/get.dart';
@@ -32,13 +33,21 @@ class TaskContainer extends StatefulWidget {
 }
 
 class _TaskContainerState extends State<TaskContainer> {
-  TaskController taskController = Get.put(TaskController());
+  TaskController taskController = TaskController();
+  late StateTaskServer stateTaskServer;
   UploadTask uploadTask = Get.put(UploadTask());
+
+  @override
+  void initState() {
+    stateTaskServer = StateTaskServer();
+    super.initState();
+  }
 
   void UploadTaskMethod(BuildContext context) {
     uploadTask.Upload(
         context,
         TasksInterface(
+            id: widget.id,
             title: widget.title,
             description: widget.description,
             priority: widget.priority,
@@ -86,6 +95,10 @@ class _TaskContainerState extends State<TaskContainer> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.completed!) {
+      stateTaskServer.searchTask(widget.id);
+    }
+
     return ShadCard(
       backgroundColor: taskController.selectedTasks.contains(widget.id)
           ? Colors.lightBlueAccent
@@ -161,9 +174,31 @@ class _TaskContainerState extends State<TaskContainer> {
                                 ? Colors.orange
                                 : Colors.green,
                         borderRadius: BorderRadius.all(Radius.circular(5))))
-                : Buttonupload(click: () {
-                    UploadTaskMethod(context);
-                  })
+                : StreamBuilder<bool>(
+                    stream: stateTaskServer.stream,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.blueAccent,
+                          ),
+                        );
+                      } else if (snapshot.hasData) {
+                        return Container(
+                          width: 20,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        );
+                      }
+                      return Buttonupload(click: () {
+                        UploadTaskMethod(context);
+                      });
+                    })
           ],
         ),
       ),
