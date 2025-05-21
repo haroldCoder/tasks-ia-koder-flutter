@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
@@ -105,8 +106,8 @@ class Createtasks extends StatelessWidget {
                                 color: Colors.white),
                           ),
                           Container(
-                            margin: EdgeInsets.symmetric(
-                                horizontal: 0, vertical: 50),
+                            margin: EdgeInsets.only(
+                                top: 50, bottom: 20),
                             height: 50,
                             child: Scaffold(
                               resizeToAvoidBottomInset: false,
@@ -135,6 +136,10 @@ class Createtasks extends StatelessWidget {
                               ),
                             ),
                           ),
+                          Buttonai(task: task, ref: task.value.title_task),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 10),
+                          ),
                           TextBoxs(
                               value: TextEditingController(
                                   text: task.value.description)
@@ -160,8 +165,9 @@ class Createtasks extends StatelessWidget {
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 15),
                               )),
+                          Buttonai(task: task, ref: task.value.description),
                           Container(
-                            margin: EdgeInsets.only(bottom: 30),
+                            margin: EdgeInsets.only(top: 10, bottom: 20),
                             width: double.infinity,
                             height: 140,
                             child: Radiocheck(
