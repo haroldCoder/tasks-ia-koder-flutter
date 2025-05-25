@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 
 import '../../widgets/Button/Button.dart';
 import '../utils/subscription_request.dart';
@@ -11,6 +13,8 @@ class Buttonpremium extends StatefulWidget {
 }
 
 class _ButtonpremiumState extends State<Buttonpremium> {
+  AuthService authService = Get.put(AuthService());
+
   @override
   Widget build(BuildContext context) {
     return Button(
@@ -18,8 +22,7 @@ class _ButtonpremiumState extends State<Buttonpremium> {
         height: 40,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-            borderRadius:
-            BorderRadius.all(Radius.circular(12)),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
             gradient: LinearGradient(
               colors: [Colors.blueAccent, Colors.white12],
               begin: Alignment.topLeft,
@@ -35,14 +38,13 @@ class _ButtonpremiumState extends State<Buttonpremium> {
       style: ButtonStyle(
         alignment: Alignment.topLeft,
         padding:
-        MaterialStatePropertyAll<EdgeInsetsGeometry>(
-            EdgeInsets.all(0)),
+            MaterialStatePropertyAll<EdgeInsetsGeometry>(EdgeInsets.all(0)),
         shape: MaterialStatePropertyAll<OutlinedBorder>(
-            RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12))),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
       ),
       click: () {
-        SubscriptionRequests().createSubscription();
+        SubscriptionRequests()
+            .createSubscription(authService.current_user.value?.email);
       },
     );
   }
