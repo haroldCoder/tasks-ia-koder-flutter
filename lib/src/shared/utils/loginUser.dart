@@ -8,7 +8,7 @@ class LoginUser{
       .request(method: HttpMethod.post, endpoint: "users/login",
           body: {
             "email": email,
-            "cellphone": cellphone,
+            "celphone": cellphone,
             "username": username
           });
 
