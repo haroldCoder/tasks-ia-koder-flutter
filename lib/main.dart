@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/firebaseConfig.dart';
+import 'package:tasks_ia_koderx/preferencesApp.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -154,8 +156,7 @@ class MyApp extends StatelessWidget {
             path: '/upload-task',
             builder: (context, state) {
               final data = state.extra as TasksInterface;
-              return Uploadtask(
-                  data: data);
+              return Uploadtask(data: data);
             },
             pageBuilder: (context, state) {
               final data = state.extra as TasksInterface;
@@ -168,65 +169,19 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: Uploadtask(
-                    data: data
-                  ));
+                  child: Uploadtask(data: data));
             },
           )
         ]);
 
-    return ShadApp.materialRouter(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      routerConfig: router,
-      materialThemeBuilder: (context, baseTheme) {
-        return ThemeData(
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.deepPurple,
-            brightness: Brightness.dark,
-          ),
-          textTheme: baseTheme.textTheme.copyWith(
-            titleLarge:
-                const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-          ),
-          elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.deepPurple,
-              foregroundColor: Colors.white,
-            ),
-          ),
-          cardTheme: CardTheme(
-            color: Colors.grey[900],
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          inputDecorationTheme: InputDecorationTheme(
-            filled: true, // Habilita el fondo
-            fillColor: Colors.transparent, // Color de fondo
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.deepPurple, width: 2),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: Colors.grey[700]!, width: 1.5),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.deepPurple, width: 2),
-            ),
-            errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.red, width: 2),
-            ),
-            focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.redAccent, width: 2),
-            ),
-            hintStyle: TextStyle(color: Colors.grey[500]),
-            labelStyle: const TextStyle(color: Colors.white),
-          ),
+    return ShadApp.custom(
+      themeMode: ThemeMode.dark,
+      appBuilder: (BuildContext buildcontext, ThemeData data) {
+        final ThemeData theme = preferencesApp(buildcontext);
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+          theme: theme,
         );
       },
     );
