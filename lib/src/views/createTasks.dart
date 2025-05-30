@@ -130,7 +130,7 @@ class Createtasks extends StatelessWidget {
                                     labelText: "Crear tarea",
                                     border: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xBCC1CAFF), width: 2),
+                                            color: Color(0xFFFFFFFF), width: 2),
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(5)))),
                               ),
