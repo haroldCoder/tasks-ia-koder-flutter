@@ -185,7 +185,7 @@ class _TaskContainerState extends State<TaskContainer> {
                             color: Colors.blueAccent,
                           ),
                         );
-                      } else if (snapshot.hasData) {
+                      } else if (snapshot.hasData && snapshot.data == true) {
                         return Container(
                           width: 20,
                           height: 20,
