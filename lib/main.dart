@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tasks_ia_koderx/firebaseConfig.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
@@ -14,7 +13,6 @@ import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 
 void main() async {
@@ -22,12 +20,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Get.put(ConfigAppState());
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: FirebaseConfig.apiKey,
-      appId: FirebaseConfig.appId,
-      messagingSenderId: FirebaseConfig.messagingSenderId,
-      projectId: FirebaseConfig.projectId,
-      storageBucket: FirebaseConfig.storageBucket,
+    options: FirebaseOptions(
+      apiKey: dotenv.env["FIREBASE_API_KEY"].toString(),
+      appId: dotenv.env["FIREBASE_APP_ID"].toString(),
+      messagingSenderId: dotenv.env["FIREBASE_MESSAGINGSENDERING"].toString(),
+      projectId: dotenv.env["FIREBASE_PROJECT_ID"].toString(),
+      storageBucket: dotenv.env["FIREBASE_BUCKET"].toString(),
     ),
   );
   runApp(const MyApp());
