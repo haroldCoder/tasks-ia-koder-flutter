@@ -63,7 +63,7 @@ class Createtasks extends StatelessWidget {
     return Scaffold(
         backgroundColor: color_app.value,
         resizeToAvoidBottomInset: true,
-        body: Obx(() {
+        body: SafeArea(child: Obx(() {
           return Container(
             height: double.infinity,
             padding: EdgeInsets.only(left: 15, right: 15),
@@ -106,8 +106,7 @@ class Createtasks extends StatelessWidget {
                                 color: Colors.white),
                           ),
                           Container(
-                            margin: EdgeInsets.only(
-                                top: 50, bottom: 20),
+                            margin: EdgeInsets.only(top: 50, bottom: 20),
                             height: 50,
                             child: Scaffold(
                               resizeToAvoidBottomInset: false,
@@ -200,6 +199,6 @@ class Createtasks extends StatelessWidget {
               ],
             )),
           );
-        }));
+        })));
   }
 }
