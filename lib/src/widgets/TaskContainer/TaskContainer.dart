@@ -7,6 +7,7 @@ import 'package:tasks_ia_koderx/src/shared/utils/users/stateTaskServer.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/widgets/MarkDown/Markdown.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/uploadTask.dart';
 
 class TaskContainer extends StatefulWidget {
@@ -17,7 +18,8 @@ class TaskContainer extends StatefulWidget {
       this.priority = 1,
       this.onClick,
       this.completed = false,
-      required this.id});
+      required this.id,
+      this.online});
 
   final String title;
   final String description;
@@ -25,6 +27,7 @@ class TaskContainer extends StatefulWidget {
   final VoidCallback? onClick;
   final bool? completed;
   final int id;
+  final bool? online;
 
   @override
   State<StatefulWidget> createState() {
@@ -117,23 +120,25 @@ class _TaskContainerState extends State<TaskContainer> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(widget.title),
-            Button(
-              style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.zero,
-                  minimumSize: Size(0, 0),
-                  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0),
-              click: () {
-                deleteTask(widget.id);
-              },
-              contentbtn: Icon(
-                Icons.close,
-                color: taskController.selectedTasks.contains(widget.id)
-                    ? Colors.white
-                    : Color(0x9095A0FF),
-              ),
-            )
+            !widget.online!
+                ? Button(
+                    style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: Size(0, 0),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        backgroundColor: Colors.transparent,
+                        elevation: 0),
+                    click: () {
+                      deleteTask(widget.id);
+                    },
+                    contentbtn: Icon(
+                      Icons.close,
+                      color: taskController.selectedTasks.contains(widget.id)
+                          ? Colors.white
+                          : Color(0x9095A0FF),
+                    ),
+                  )
+                : SizedBox.shrink()
           ],
         ),
       ),
@@ -147,22 +152,32 @@ class _TaskContainerState extends State<TaskContainer> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ShadButton.outline(
-              onPressed: widget.onClick,
-              height: 30,
-              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              backgroundColor:
-                  widget.completed! ? Colors.black : Colors.transparent,
-              decoration: ShadDecoration(
-                  border: ShadBorder.all(color: Color(0xFF5B36FF), width: .5)),
-              child: Text(
-                !widget.completed! ? "Editar" : "Devolver",
-                style: TextStyle(
-                    color:
-                        !widget.completed! ? Color(0xFF5B36FF) : Colors.white,
-                    fontSize: 15),
-              ),
-            ),
+            !widget.online!
+                ? ShadButton.outline(
+                    onPressed: widget.onClick,
+                    height: 30,
+                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    backgroundColor:
+                        widget.completed! ? Colors.black : Colors.transparent,
+                    decoration: ShadDecoration(
+                        border: ShadBorder.all(
+                            color: Color(0xFF5B36FF), width: .5)),
+                    child: Text(
+                      !widget.completed! ? "Editar" : "Devolver",
+                      style: TextStyle(
+                          color: !widget.completed!
+                              ? Color(0xFF5B36FF)
+                              : Colors.white,
+                          fontSize: 15),
+                    ),
+                  )
+                : Text(
+                    "Online",
+                    style: TextStyle(
+                        color: Colors.lightBlueAccent,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700),
+                  ),
             !widget.completed!
                 ? Container(
                     width: 20,

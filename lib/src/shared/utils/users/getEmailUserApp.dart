@@ -7,7 +7,9 @@ Future<String> getEmailUser() async{
 
   final data_user = prefs.getString("data_user");
 
-  final Map<String, dynamic> userJson = jsonDecode(data_user!);
-
-  return userJson["email"].toString();
+  if(data_user != null){
+    final Map<String, dynamic> userJson = jsonDecode(data_user);
+    return userJson["email"].toString();
+  }
+  return "";
 }
