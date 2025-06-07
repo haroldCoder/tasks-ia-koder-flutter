@@ -47,14 +47,15 @@ class MyApp extends StatelessWidget {
         routes: [
           GoRoute(
             path: '/',
-            builder: (context, state) => SplashScreen(
-              color_app: configAppState.color_theme,
-            ),
+            builder: (context, state) =>
+                SplashScreen(
+                  color_app: configAppState.color_theme,
+                ),
             pageBuilder: (context, state) {
               return NoTransitionPage(
                   child: SplashScreen(
-                color_app: configAppState.color_theme,
-              ));
+                    color_app: configAppState.color_theme,
+                  ));
             },
           ),
           GoRoute(
@@ -64,7 +65,7 @@ class MyApp extends StatelessWidget {
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var tween =
-                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                     var offsetAnimation = animation.drive(tween);
                     return SlideTransition(
                         position: offsetAnimation, child: child);
@@ -77,15 +78,16 @@ class MyApp extends StatelessWidget {
           ),
           GoRoute(
             path: '/create-tasks',
-            builder: (context, state) => Createtasks(
-              color_app: configAppState.color_theme,
-            ),
+            builder: (context, state) =>
+                Createtasks(
+                  color_app: configAppState.color_theme,
+                ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var tween =
-                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                     var offsetAnimation = animation.drive(tween);
                     return SlideTransition(
                         position: offsetAnimation, child: child);
@@ -95,15 +97,16 @@ class MyApp extends StatelessWidget {
           ),
           GoRoute(
             path: '/check',
-            builder: (context, state) => Completedtasks(
-              color_app: configAppState.color_theme,
-            ),
+            builder: (context, state) =>
+                Completedtasks(
+                  color_app: configAppState.color_theme,
+                ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var tween =
-                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                     var offsetAnimation = animation.drive(tween);
                     return SlideTransition(
                         position: offsetAnimation, child: child);
@@ -115,15 +118,16 @@ class MyApp extends StatelessWidget {
           ),
           GoRoute(
             path: '/statistics',
-            builder: (context, state) => Statistics(
-              color_app: configAppState.color_theme,
-            ),
+            builder: (context, state) =>
+                Statistics(
+                  color_app: configAppState.color_theme,
+                ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var tween =
-                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                     var offsetAnimation = animation.drive(tween);
                     return SlideTransition(
                         position: offsetAnimation, child: child);
@@ -141,7 +145,7 @@ class MyApp extends StatelessWidget {
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var tween =
-                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                     var offsetAnimation = animation.drive(tween);
                     return SlideTransition(
                         position: offsetAnimation, child: child);
@@ -162,24 +166,25 @@ class MyApp extends StatelessWidget {
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {
                     var tween =
-                        Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
+                    Tween(begin: Offset(1.0, 0.0), end: Offset.zero);
                     var offsetAnimation = animation.drive(tween);
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
                   child: Uploadtask(
-                    data: data
+                      data: data
                   ));
             },
           )
         ]);
 
-    return ShadApp.materialRouter(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      routerConfig: router,
-      materialThemeBuilder: (context, baseTheme) {
-        return preferencesApp(context);
+    return ShadApp.custom(
+      appBuilder: (BuildContext context){
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+          theme: preferencesApp(context),
+        );
       },
     );
   }
