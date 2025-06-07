@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 preferencesApp(BuildContext context) {
-  return Theme.of(context).copyWith(
+  return ThemeData(
     textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
