@@ -19,7 +19,7 @@ class TaskContainer extends StatefulWidget {
       this.onClick,
       this.completed = false,
       required this.id,
-      this.online});
+      this.online = false});
 
   final String title;
   final String description;
