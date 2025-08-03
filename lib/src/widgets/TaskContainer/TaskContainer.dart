@@ -116,10 +116,19 @@ class _TaskContainerState extends State<TaskContainer> {
       ],
       width: double.infinity,
       title: Container(
+        margin: EdgeInsets.only(bottom: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(widget.title),
+            Flexible(
+              fit: FlexFit.loose,
+              child: Text(
+                widget.title,
+                softWrap: true,
+                overflow: TextOverflow.clip,
+                maxLines: null,
+              ),
+            ),
             !widget.online!
                 ? Button(
                     style: ElevatedButton.styleFrom(
@@ -142,7 +151,10 @@ class _TaskContainerState extends State<TaskContainer> {
           ],
         ),
       ),
-      description: Text(widget.description),
+      description: Container(
+        margin: EdgeInsets.only(top: 0),
+        child: Text(widget.description),
+      ),
       border: Border.all(width: 1, color: Colors.blueAccent),
       radius: BorderRadius.all(Radius.circular(20)),
       padding: EdgeInsets.all(10),
