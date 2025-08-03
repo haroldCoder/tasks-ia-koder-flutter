@@ -184,6 +184,9 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           routerConfig: router,
           theme: preferencesApp(context),
+          builder: (context, child) {
+            return ShadAppBuilder(child: child!);
+          }
         );
       },
     );

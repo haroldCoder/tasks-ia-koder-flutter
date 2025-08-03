@@ -40,7 +40,7 @@ dependencies:
   sqflite: ^2.0.0+4
   path_provider: ^2.0.11
   flutter_svg: ^2.0.10
-  shadcn_ui: ^0.27.1
+  shadcn_ui: ^0.28.2
   get: ^4.6.6
   fl_chart: ^0.70.2
   intl: ^0.20.2
