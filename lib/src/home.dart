@@ -19,7 +19,7 @@ import 'package:tasks_ia_koderx/src/widgets/Search.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-class MyHomePage extends StatefulWidget{
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title, required this.color_app});
   final Rx<Color> color_app;
 
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   VisitedService visitedService = VisitedService();
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
     this._initializeData();
   }
@@ -50,7 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
   void _initializeData() async {
     await initializeDateFormatting('es_ES', null);
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('EEEE, dd MMMM yyyy', 'es_ES').format(now);
+    String formattedDate =
+        DateFormat('EEEE, dd MMMM yyyy', 'es_ES').format(now);
     await visitedService.saveLogged(formattedDate);
   }
 
@@ -86,13 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ));
     } else {
-      List<int> task_remove =
-          taskController.tasks.where((task)=>task.complete == 0).map((task) => task.id!).toList();
+      List<int> task_remove = taskController.tasks
+          .where((task) => task.complete == 0)
+          .map((task) => task.id!)
+          .toList();
       taskController.AssignTasksSelected(task_remove);
     }
   }
 
-  deleteAllTasks(){
+  deleteAllTasks() {
     taskService.deleteTasks(taskController.selectedTasks.toList());
   }
 
@@ -166,6 +169,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           ));
                         }
                         return SingleChildScrollView(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
                           child: Column(
                             spacing: 15,
                             children: taskController.tasks
@@ -188,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ))
                                 .toList(),
                           ),
-                        );
+                        ));
                       })),
                   Expanded(
                       child: Container(
@@ -211,7 +216,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       MaterialStatePropertyAll<Color>(
                                           Colors.white),
                                 ),
-                                contentbtn: Obx((){
+                                contentbtn: Obx(() {
                                   return Text(
                                     taskController.selectedTasks.length == 0
                                         ? "Seleccionar todo"
@@ -221,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 }),
                               ),
                               Button(
-                                click: (){
+                                click: () {
                                   deleteAllTasks();
                                 },
                                 style: ButtonStyle(
