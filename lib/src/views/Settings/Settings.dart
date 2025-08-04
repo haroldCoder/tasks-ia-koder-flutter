@@ -20,7 +20,7 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-            backgroundColor: Colors.black54,
+            backgroundColor: const Color(0xFF000000),
             body: Stack(
               children: [
                 Column(
