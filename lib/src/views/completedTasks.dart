@@ -133,31 +133,41 @@ class Completedtasks extends StatelessWidget {
                         .where((tk) => seenIds.add(tk.id!))
                   ];
 
-                  return SingleChildScrollView(
-                    child: Column(
-                      spacing: 10,
-                      children: tasksUser
-                          .map<Widget>((task) => TaskContainer(
-                                online: task.runtimeType != CreateTasksState,
-                                id: task.runtimeType == CreateTasksState
-                                    ? task.id
-                                    : task.id_task_app,
-                                completed: task.runtimeType == CreateTasksState
-                                    ? true
-                                    : task.completed == 1,
-                                title: task.runtimeType == CreateTasksState
-                                    ? task.title_task
-                                    : task.title,
-                                description: task.description,
-                                priority: task.runtimeType == CreateTasksState
-                                    ? task.value_priority
-                                    : task.priority,
-                                onClick: () =>
-                                    ChangeToPendingTask(task.id, task),
-                              ))
-                          .toList(),
-                    ),
-                  );
+                  return Scrollbar(
+                      thumbVisibility: true,
+                      thickness: 6,
+                      radius: Radius.circular(10),
+                      trackVisibility: true,
+                      interactive: true,
+                      child: SingleChildScrollView(
+                        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                        child: Column(
+                          spacing: 10,
+                          children: tasksUser
+                              .map<Widget>((task) => TaskContainer(
+                                    online:
+                                        task.runtimeType != CreateTasksState,
+                                    id: task.runtimeType == CreateTasksState
+                                        ? task.id
+                                        : task.id_task_app,
+                                    completed:
+                                        task.runtimeType == CreateTasksState
+                                            ? true
+                                            : task.completed == 1,
+                                    title: task.runtimeType == CreateTasksState
+                                        ? task.title_task
+                                        : task.title,
+                                    description: task.description,
+                                    priority:
+                                        task.runtimeType == CreateTasksState
+                                            ? task.value_priority
+                                            : task.priority,
+                                    onClick: () =>
+                                        ChangeToPendingTask(task.id, task),
+                                  ))
+                              .toList(),
+                        ),
+                      ));
                 });
               },
             ),
