@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
@@ -195,7 +196,8 @@ class Createtasks extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ))
+                    )),
+                ButtonvoiceAi(),
               ],
             )),
           );

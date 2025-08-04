@@ -84,6 +84,7 @@ flutter:
     - lib/assets/check.svg
     - lib/assets/googleicon.png
     - lib/assets/cloud.png
+    - lib/assets/iavoice.png
     - .env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

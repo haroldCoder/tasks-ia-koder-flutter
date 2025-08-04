@@ -1,0 +1,44 @@
+import 'package:flutter/material.dart';
+import 'package:shadcn_ui/shadcn_ui.dart';
+
+class VoiceAiview extends StatelessWidget {
+  const VoiceAiview({super.key});
+
+  void pressed() {}
+
+  void msgOnTap(BuildContext context) {}
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Image(
+            image: AssetImage('lib/assets/iavoice.png'),
+            width: 100,
+            height: 100),
+        SizedBox(
+          height: 50,
+        ),
+        Column(
+          spacing: 5,
+          children: [
+            Material(
+              child: InkWell(
+                child: Container(
+                    color: Colors.black,
+                    child: Icon(
+                      Icons.mic,
+                      color: Color(0xFF00F74A),
+                      size: 35,
+                    )),
+                onLongPress: () => pressed(),
+                onTap: () => msgOnTap(context),
+              ),
+            ),
+            Text("Manten presionado", style: TextStyle(color: const Color(0xFF494949)),)
+          ],
+        )
+      ],
+    );
+  }
+}

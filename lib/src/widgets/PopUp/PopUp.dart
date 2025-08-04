@@ -11,7 +11,8 @@ class PopUp extends StatelessWidget {
       this.child,
       this.bg,
       this.border,
-      this.radius});
+      this.radius,
+      this.padding});
   final Widget? title;
   final Widget? description;
   final List<Widget> actions;
@@ -19,6 +20,7 @@ class PopUp extends StatelessWidget {
   final Color? bg;
   final Border? border;
   final BorderRadius? radius;
+  final EdgeInsets? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +28,7 @@ class PopUp extends StatelessWidget {
         removeBorderRadiusWhenTiny: false,
         border: border,
         radius: radius,
-        padding: EdgeInsets.symmetric(vertical: 40, horizontal: 10),
+        padding: padding ?? EdgeInsets.symmetric(vertical: 40, horizontal: 10),
         closeIcon: GestureDetector(
           onTap: () {
             GoRouter.of(context).pop();
