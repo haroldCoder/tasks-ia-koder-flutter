@@ -36,7 +36,7 @@ class TaskContainer extends StatefulWidget {
 }
 
 class _TaskContainerState extends State<TaskContainer> {
-  TaskController taskController = TaskController();
+  TaskController taskController = Get.put(TaskController());
   late StateTaskServer stateTaskServer;
   UploadTask uploadTask = Get.put(UploadTask());
 
