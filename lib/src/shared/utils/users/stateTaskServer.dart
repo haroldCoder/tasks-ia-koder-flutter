@@ -12,16 +12,19 @@ class StateTaskServer {
   Stream<bool> get stream => _stateTaskController.stream;
 
   searchTask(int idtaks) async {
-    var response = await Requests(baseUrl: dotenv.env["API_URL"].toString())
-        .request(
-            method: HttpMethod.get, endpoint: "v1/tasks/task/search/${idtaks}");
+    try {
+      var response = await Requests(baseUrl: dotenv.env["API_URL"].toString())
+          .request(
+              method: HttpMethod.get,
+              endpoint: "v1/tasks/task/search/${idtaks}");
 
-
-    if (response["httpStatus"] == 200) {
-      _stateTaskController.add(true);
-    }
-    else{
-      _stateTaskController.add(false);
+      if (response["httpStatus"] == 200) {
+        _stateTaskController.add(true);
+      } else {
+        _stateTaskController.add(false);
+      }
+    } catch (err) {
+      _stateTaskController.addError(err);
     }
   }
 

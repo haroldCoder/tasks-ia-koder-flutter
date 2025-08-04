@@ -222,6 +222,12 @@ class _TaskContainerState extends State<TaskContainer> {
                           ),
                         );
                       }
+                      else if(snapshot.hasError){
+                        return Icon(
+                          Icons.wifi_off,
+                          color: Colors.red,
+                        );
+                      }
                       return Buttonupload(click: () {
                         UploadTaskMethod(context);
                       });
