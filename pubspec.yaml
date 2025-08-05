@@ -52,6 +52,8 @@ dependencies:
   flutter_dotenv: ^5.2.1
   google_generative_ai: ^0.4.7
   google_fonts: ^6.2.1
+  permission_handler: ^11.3.0
+  speech_to_text: ^7.2.0
 
 dev_dependencies:
   flutter_test:

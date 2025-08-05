@@ -10,11 +10,13 @@ import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
 import 'package:tasks_ia_koderx/src/widgets/TextBoxs/TextBoxs.dart';
 import 'package:tasks_ia_koderx/src/widgets/TextInputKoder/TextInputKoder.dart';
+import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/utils/convertBrainToTask.dart';
 
 class Createtasks extends StatelessWidget {
   Createtasks({super.key, required this.color_app});
   Rx<Color> color_app;
   Rx<CreateTasksState> task = CreateTasksState().obs;
+  final convertBrainToTask = Get.put(ConvertBrainToTask());
 
   backPage(BuildContext context) {
     if (!context.mounted) return;
@@ -61,6 +63,14 @@ class Createtasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ever(convertBrainToTask.title, (String tt){
+      handleChangeTitleTask(tt);
+    });
+
+    ever(convertBrainToTask.description, (String dp){
+      handleChangeDescriptionTask(dp);
+    });
+
     return Scaffold(
         backgroundColor: color_app.value,
         resizeToAvoidBottomInset: true,

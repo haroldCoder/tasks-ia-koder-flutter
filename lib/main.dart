@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
           Get.put(TaskController());
           Get.find<TaskController>().clearSelectTasks();
         },
-        initialLocation: '/create-tasks',
+        initialLocation: '/',
         routes: [
           GoRoute(
             path: '/',

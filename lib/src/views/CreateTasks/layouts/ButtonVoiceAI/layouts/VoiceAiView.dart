@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/VoiceRecorder.dart';
 
 class VoiceAiview extends StatelessWidget {
   const VoiceAiview({super.key});
@@ -22,20 +23,22 @@ class VoiceAiview extends StatelessWidget {
         Column(
           spacing: 5,
           children: [
-            Material(
-              child: InkWell(
-                child: Container(
-                    color: Colors.black,
-                    child: Icon(
-                      Icons.mic,
-                      color: Color(0xFF00F74A),
-                      size: 35,
-                    )),
-                onLongPress: () => pressed(),
-                onTap: () => msgOnTap(context),
-              ),
+            Voicerecorder(
+              widget: Container(
+                  color: Colors.black,
+                  child: Icon(
+                    Icons.mic,
+                    color: Color(0xFF00F74A),
+                    size: 35,
+                  )),
+              onPressed: (Function fn){
+                fn();
+              },
             ),
-            Text("Manten presionado", style: TextStyle(color: const Color(0xFF494949)),)
+            Text(
+              "Manten presionado",
+              style: TextStyle(color: const Color(0xFF494949)),
+            )
           ],
         )
       ],
