@@ -63,11 +63,11 @@ class Createtasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ever(convertBrainToTask.title, (String tt){
+    ever(convertBrainToTask.title, (String tt) {
       handleChangeTitleTask(tt);
     });
 
-    ever(convertBrainToTask.description, (String dp){
+    ever(convertBrainToTask.description, (String dp) {
       handleChangeDescriptionTask(dp);
     });
 
@@ -175,6 +175,7 @@ class Createtasks extends StatelessWidget {
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 15),
                               )),
+                          SizedBox(height: 4),
                           Buttonai(task: task, ref: task.value.description),
                           Container(
                             margin: EdgeInsets.only(top: 10, bottom: 20),

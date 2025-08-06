@@ -17,7 +17,7 @@ class ConvertBrainToTask extends GetxController {
       final responseDescription = await configureAI.model
           .startChat()
           .sendMessage(Content.text(
-              'Genera una descripcion breve y descriptiva basado en una idea de tarea proporcionada: $val.'));
+              'Genera una descripcion breve de lo que podria llevar esta tarea: $val. no me des introduccion'));
               
       final responseTitle = await configureAI.model.startChat().sendMessage(
           Content.text(
