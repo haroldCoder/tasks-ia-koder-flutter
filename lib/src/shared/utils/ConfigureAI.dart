@@ -6,7 +6,7 @@ class ConfigureAI{
 
   ConfigureAI(){
     model = GenerativeModel(
-      model: 'gemini-1.5-flash',
+      model: 'gemma-3n-e4b-it',
       apiKey: dotenv.env["GEMINI_KEY"].toString()
     );
   }
