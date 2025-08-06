@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/ConfigureAI.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAI.dart';
 
 class ConvertBrainToTask extends GetxController {
   Rx<String> brain = new Rx<String>("");

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 
-import '../../../../shared/utils/ConfigureAI.dart';
+import '../../../../shared/utils/AI/ConfigureAI.dart';
 import '../../../../widgets/Button/Button.dart';
 import '../../utils/generateBrain.dart';
 
