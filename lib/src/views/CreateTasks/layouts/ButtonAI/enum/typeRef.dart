@@ -1,0 +1,4 @@
+enum Typeref {
+  title,
+  descripcion
+}

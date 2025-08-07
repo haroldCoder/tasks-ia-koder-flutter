@@ -8,16 +8,11 @@ import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart'
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
 
 class ConfigureAgentsIa {
-  StreamController<Response> _streamController = StreamController<Response>();
-
-  final ModelIA model;
-  final List<MessagesIAInterface> messages;
-
-  ConfigureAgentsIa({required this.model, required this.messages});
+  StreamController<Response> _streamController = StreamController<Response>.broadcast();
 
   Stream<Response> get stream => _streamController.stream;
 
-  makeBrain() async {
+  makeBrain(ModelIA model, List<MessagesIAInterface> messages) async {
     try {
       Response response = await Requests(baseUrl: 'https://openrouter.ai/')
           .makeRequest(
@@ -28,13 +23,14 @@ class ConfigureAgentsIa {
             'Content-Type': 'application/json'
           },
               body: {
-            'model': this.model.path,
-            'messages': this.messages.map((m) => m.toJson()).toList(),
+            'model': model.path,
+            'messages': messages.map((m) => m.toJson()).toList(),
           });
 
       print(response.statusCode);
       _streamController.add(response);
     } catch (err) {
+      print(err);
       _streamController.addError('Err: $err');
     }
   }

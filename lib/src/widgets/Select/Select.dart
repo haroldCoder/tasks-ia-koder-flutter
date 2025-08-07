@@ -5,13 +5,19 @@ class Select extends StatelessWidget {
   const Select(
       {super.key,
       required this.options,
-      required this.placeholder,
+      this.placeholder,
       this.decoration,
-      required this.onchange});
+      required this.onchange,
+      this.initialValue,
+      this.colorletter,
+      this.trailing});
   final Map options;
-  final Widget placeholder;
+  final Widget? placeholder;
   final ShadDecoration? decoration;
-  final ValueChanged<String?>? onchange;
+  final Function(String value) onchange;
+  final String? initialValue;
+  final Color? colorletter;
+  final Widget? trailing;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +25,20 @@ class Select extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minWidth: 180),
       child: ShadSelect<String>(
+        trailing: trailing,
+        initialValue: initialValue,
         placeholder: this.placeholder,
         decoration: decoration,
         options: [
           ...this.options.entries.map<Widget>(
               (e) => ShadOption(value: e.key, child: Text(e.value))),
         ],
-        selectedOptionBuilder: (context, value) => Text(this.options[value]!),
-        onChanged: onchange,
+        selectedOptionBuilder: (context, value) => Text(value, style: TextStyle(color: this.colorletter),),
+        onChanged: (String? value) {
+          if (value != null) {
+            onchange(value);
+          }
+        },
       ),
     );
   }

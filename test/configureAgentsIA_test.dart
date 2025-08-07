@@ -27,17 +27,13 @@ void main() {
 
     await dotenv.load();
 
-    configureAgentsIa = ConfigureAgentsIa(
-      model: model,
-      messages: messages,
-    );
+    configureAgentsIa = ConfigureAgentsIa();
   });
 
   group('ConfigureAgentsIa Tests without Mock', () {
     test('makeBrain emits response body on successful request', () async {
       Future<Response> futureData = configureAgentsIa.stream.first as Future<Response>;
-
-      await configureAgentsIa.makeBrain();
+      await configureAgentsIa.makeBrain(model, messages);
 
       Response data = await futureData;
 

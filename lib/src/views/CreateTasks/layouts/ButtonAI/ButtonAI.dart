@@ -1,6 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/createTask/es/createTaskIa.es.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnMessageIA.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 
 import '../../../../shared/utils/AI/ConfigureAI.dart';
@@ -11,24 +17,48 @@ class Buttonai extends StatelessWidget {
   ConfigureAI configureAI = ConfigureAI();
   Rx<CreateTasksState> task;
   String ref;
+  ConfigureAgentsIa? configureAgentsIa;
+  final configApp = Get.put(ConfigAppState());
+  final Typeref? typeref;
 
   Buttonai(
-      {super.key, required this.task, required this.ref});
+      {super.key,
+      required this.task,
+      required this.ref,
+      this.configureAgentsIa,
+      this.typeref});
+
+  void useIAModelToBrain() async {
+    switch (configApp.model_ai.value) {
+      case ModelIA.gemma3nE4Bit:
+        generateBrain(configureAI.model, ref, (value) {
+          task.update((tk) {
+            if (tk != null) {
+              if (ref == task.value.title_task) {
+                tk.title_task = value;
+              } else if (ref == task.value.description) {
+                tk.description = value;
+              }
+            }
+          });
+        });
+        break;
+      default:
+        await configureAgentsIa?.makeBrain(configApp.model_ai.value, returnMessageIA(this.typeref!));
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return
-      Button(
-        disable: ref == "",
+    return Button(
+      disable: ref == "",
       style: ButtonStyle(
-        side: MaterialStatePropertyAll<BorderSide>(BorderSide(
-          color: Colors.blueAccent
-        )),
-        shape: MaterialStatePropertyAll<RoundedRectangleBorder>(RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10)
-        )),
-        backgroundColor: MaterialStatePropertyAll<Color>(Colors.black)
-      ),
+          side: MaterialStatePropertyAll<BorderSide>(
+              BorderSide(color: Colors.blueAccent)),
+          shape: MaterialStatePropertyAll<RoundedRectangleBorder>(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+          backgroundColor: MaterialStatePropertyAll<Color>(Colors.black)),
       contentbtn: Wrap(
         children: [
           Text(
@@ -36,22 +66,15 @@ class Buttonai extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 12),
           ),
           SizedBox(width: 8.0),
-          Icon(Icons.auto_awesome, color: Colors.blueAccent, size: 15,)
+          Icon(
+            Icons.auto_awesome,
+            color: Colors.blueAccent,
+            size: 15,
+          )
         ],
       ),
       click: () {
-        generateBrain(configureAI.model, ref, (value) {
-          task.update((tk) {
-            if (tk != null){
-              if(ref == task.value.title_task){
-                tk.title_task = value;
-              }
-              else if(ref == task.value.description){
-                tk.description = value;
-              }
-            }
-          });
-        });
+        useIAModelToBrain();
       },
     );
   }
