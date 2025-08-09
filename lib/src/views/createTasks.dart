@@ -11,6 +11,7 @@ import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/type
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnamentStreams.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnamentStream.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
@@ -21,7 +22,6 @@ class Createtasks extends StatelessWidget {
   Rx<Color> color_app;
   Rx<CreateTasksState> task = CreateTasksState().obs;
   final convertBrainToTask = Get.put(ConvertBrainToTask());
-  ConfigureAgentsIa? configureAgentsIa;
   final configApp = Get.put(ConfigAppState());
 
   backPage(BuildContext context) {
@@ -69,6 +69,9 @@ class Createtasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ConfigureAgentsIa(ListenAgentsIAChanges()));
+    Get.put(ControllerStreamBrain());
+
     ever(convertBrainToTask.title, (String tt) {
       handleChangeTitleTask(tt);
     });
@@ -137,14 +140,12 @@ class Createtasks extends StatelessWidget {
                                 handleChangeTitleTask: (dynamic value) =>
                                     handleChangeTitleTask(value),
                                 value: task.value.title_task,
-                                configureAgentsIa: configureAgentsIa,
                               ),
                             ),
                           ),
                           Buttonai(
                             task: task,
                             ref: task.value.title_task,
-                            configureAgentsIa: configureAgentsIa ?? null,
                             typeref: Typeref.title,
                           ),
                           Container(
@@ -156,10 +157,9 @@ class Createtasks extends StatelessWidget {
                                   handleChangeDescriptionTask(value)),
                           SizedBox(height: 4),
                           Buttonai(
-                              task: task,
-                              ref: task.value.description,
-                              configureAgentsIa: configureAgentsIa,
-                              typeref: Typeref.descripcion,
+                            task: task,
+                            ref: task.value.description,
+                            typeref: Typeref.descripcion,
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 10, bottom: 20),

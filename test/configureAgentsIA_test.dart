@@ -13,7 +13,7 @@ void main() {
   late List<MessagesIAInterface> messages;
 
   setUp(() async {
-    model = ModelIA.horizonBeta;
+    model = ModelIA.gemmaFree;
     messages = [
       MessagesIAInterface(
           role: "system",

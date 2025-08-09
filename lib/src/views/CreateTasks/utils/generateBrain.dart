@@ -1,13 +1,25 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 
 class ControllerStreamBrain extends GetxController{
   StreamController<bool> _streamControllerbrain = StreamController<bool>.broadcast();
+  StreamController<ElementId> _elementController = StreamController<ElementId>.broadcast();
+  Rx<ElementId> elementId = ElementId.worthless.obs;
+  Rx<bool> loading = false.obs;
+
+  StreamController<ElementId> get streamElement => _elementController;
+
+  void SelectElement(ElementId element){
+    this.elementId = element.obs;
+    _elementController.add(element);
+  }
 
   StreamController<bool>  get stream => _streamControllerbrain;
 
   void setLoading(bool value) {
+    loading.value = value;
     _streamControllerbrain.add(value);
   }
 

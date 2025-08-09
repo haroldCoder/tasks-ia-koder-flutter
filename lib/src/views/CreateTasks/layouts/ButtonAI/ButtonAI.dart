@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/lang/createTask/es/createTaskIa.es.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnMessageIA.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
@@ -17,20 +16,21 @@ class Buttonai extends StatelessWidget {
   ConfigureAI configureAI = ConfigureAI();
   Rx<CreateTasksState> task;
   String ref;
-  ConfigureAgentsIa? configureAgentsIa;
+  final configureAgentsIa = Get.find<ConfigureAgentsIa>();
   final configApp = Get.put(ConfigAppState());
+  final controllerStreamBrain = Get.find<ControllerStreamBrain>();
   final Typeref? typeref;
+  ElementId? elementId = ElementId.worthless;
 
-  Buttonai(
-      {super.key,
-      required this.task,
-      required this.ref,
-      this.configureAgentsIa,
-      this.typeref});
+  Buttonai({super.key, required this.task, required this.ref, this.typeref});
 
-  void useIAModelToBrain() async {
+  void useIAModelToBrain() {
+    elementId = typeref == Typeref.title
+            ? ElementId.title_input
+            : ElementId.desc_textBox;
     switch (configApp.model_ai.value) {
       case ModelIA.gemma3nE4Bit:
+        controllerStreamBrain.SelectElement(elementId!);
         generateBrain(configureAI.model, ref, (value) {
           task.update((tk) {
             if (tk != null) {
@@ -44,7 +44,8 @@ class Buttonai extends StatelessWidget {
         });
         break;
       default:
-        await configureAgentsIa?.makeBrain(configApp.model_ai.value, returnMessageIA(this.typeref!));
+        configureAgentsIa.makeBrain(configApp.model_ai.value,
+            returnMessageIA(this.typeref!, ref), elementId);
         break;
     }
   }
