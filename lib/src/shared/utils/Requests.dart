@@ -8,13 +8,12 @@ class Requests {
 
   Requests({required this.baseUrl});
 
-  Future<dynamic> request({
-    required HttpMethod method,
-    required String endpoint,
-    Map<String, String>? headers,
-    dynamic body,
-    Map<String, String>? queryParameters,
-  }) async {
+  Future<http.Response> makeRequest(
+      {required HttpMethod method,
+      required String endpoint,
+      Map<String, String>? headers,
+      dynamic body,
+      Map<String, String>? queryParameters}) async {
     try {
       final uri = Uri.parse('$baseUrl$endpoint')
           .replace(queryParameters: queryParameters);
@@ -50,10 +49,26 @@ class Requests {
           break;
       }
 
-      return json.decode(response.body);
+      return response;
     } catch (e) {
       throw HttpServiceException('Request failed: $e');
     }
+  }
+
+  Future<dynamic> request({
+    required HttpMethod method,
+    required String endpoint,
+    Map<String, String>? headers,
+    dynamic body,
+    Map<String, String>? queryParameters,
+  }) async {
+    http.Response response = await makeRequest(
+        method: method,
+        endpoint: endpoint,
+        headers: headers,
+        body: body,
+        queryParameters: queryParameters);
+    return json.decode(response.body);
   }
 }
 

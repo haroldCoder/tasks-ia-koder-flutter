@@ -21,8 +21,9 @@ class _VoicerecorderState extends State<Voicerecorder> {
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = '';
-  final convertBrainToTask = Get.put(ConvertBrainToTask());
+  final convertBrainToTask = Get.find<ConvertBrainToTask>();
   Timer? _closeTimer;
+  double _scale = 1;
 
   @override
   void initState() {
@@ -52,29 +53,51 @@ class _VoicerecorderState extends State<Voicerecorder> {
     if (!_isListening) {
       bool available = await _speech.initialize();
       if (available) {
-        setState(() => _isListening = true);
-        _speech.listen(
-            onResult: (val) => setState(() {
-                  setState(() => _text = val.recognizedWords);
-                }));
+        setState(() {
+          _isListening = true;
+          _scale = 2;
+        });
+        _speech.listen(onResult: (val) {
+          setState(() {
+            _text = val.recognizedWords;
+          });
+        });
       }
     }
+  }
+
+  void pressedEnd() {
+    _closeTimer = Timer(Duration(seconds: 2), () {
+      setState(() {
+        _scale = 1;
+        _isListening = false;
+      });
+      _speech.stop();
+      GoRouter.of(context).pop();
+      print(_text);
+      convertBrainToTask.brain.value = _text;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
+      color: Colors.transparent,
         child: GestureDetector(
-      child: widget.widget,
+      child: AnimatedScale(
+          scale: _scale,
+          duration: Duration(milliseconds: 200),
+          child: Container(
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: _isListening ? Color(0x420043D4) : Colors.transparent),
+            child: widget.widget,
+          )),
       onLongPressStart:
           widget.onPressed != null ? (_) => widget.onPressed!(_listen) : null,
       onLongPressEnd: (_) {
-        _closeTimer = Timer(Duration(seconds: 2), () {
-          setState(() => _isListening = false);
-          _speech.stop();
-          GoRouter.of(context).pop();
-          convertBrainToTask.brain.value = _text;
-        });
+        pressedEnd();
       },
     ));
   }

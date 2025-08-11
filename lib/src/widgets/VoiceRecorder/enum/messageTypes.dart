@@ -1,0 +1,4 @@
+enum MessageTypes {
+  title,
+  descripcion
+}

@@ -3,13 +3,18 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnamentStreams.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnamentStream.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
-import 'package:tasks_ia_koderx/src/widgets/TextBoxs/TextBoxs.dart';
-import 'package:tasks_ia_koderx/src/widgets/TextInputKoder/TextInputKoder.dart';
 import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/utils/convertBrainToTask.dart';
 
 class Createtasks extends StatelessWidget {
@@ -17,6 +22,7 @@ class Createtasks extends StatelessWidget {
   Rx<Color> color_app;
   Rx<CreateTasksState> task = CreateTasksState().obs;
   final convertBrainToTask = Get.put(ConvertBrainToTask());
+  final configApp = Get.put(ConfigAppState());
 
   backPage(BuildContext context) {
     if (!context.mounted) return;
@@ -116,67 +122,42 @@ class Createtasks extends StatelessWidget {
                                 decoration: TextDecoration.none,
                                 color: Colors.white),
                           ),
+                          SizedBox(height: 40),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: SelectModelAI(),
+                          ),
                           Container(
-                            margin: EdgeInsets.only(top: 50, bottom: 20),
+                            margin: EdgeInsets.only(top: 30, bottom: 20),
                             height: 50,
                             child: Scaffold(
                               resizeToAvoidBottomInset: false,
                               backgroundColor: Colors.transparent,
-                              body: TextInputKoder(
-                                value: TextEditingController(
-                                    text: task.value.title_task)
-                                  ..selection = TextSelection.fromPosition(
-                                    TextPosition(
-                                        offset: task.value.title_task.length),
-                                  ),
-                                onChange: handleChangeTitleTask,
-                                style: TextStyle(
-                                    background: Paint()..color = Colors.black,
-                                    color: Colors.white),
-                                decoration: InputDecoration(
-                                    labelStyle: TextStyle(color: Colors.white),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        horizontal: 12, vertical: 6),
-                                    labelText: "Crear tarea",
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide(
-                                            color: Color(0xFFFFFFFF), width: 2),
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)))),
+                              body: InputMagnamentStreams(
+                                handleChangeTitleTask: (dynamic value) =>
+                                    handleChangeTitleTask(value),
+                                value: task.value.title_task,
                               ),
                             ),
                           ),
-                          Buttonai(task: task, ref: task.value.title_task),
+                          Buttonai(
+                            task: task,
+                            ref: task.value.title_task,
+                            typeref: Typeref.title,
+                          ),
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 10),
                           ),
-                          TextBoxs(
-                              value: TextEditingController(
-                                  text: task.value.description)
-                                ..selection = TextSelection.fromPosition(
-                                    TextPosition(
-                                        offset: task.value.description.length)),
-                              onChange: handleChangeDescriptionTask,
-                              max_lines: 10,
-                              min_lines: 8,
-                              height_container: 220,
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              decoration: InputDecoration(
-                                hintText: "Descripción de la tarea",
-                                hintStyle: TextStyle(
-                                  color: Colors.grey[400],
-                                ),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    borderSide: BorderSide(
-                                        color: Color(0xBCC1CAFF), width: 2)),
-                                contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
-                              )),
+                          Textboxmagnamentstream(
+                              value: task.value.description,
+                              handleChangeDescriptionTask: (dynamic value) =>
+                                  handleChangeDescriptionTask(value)),
                           SizedBox(height: 4),
-                          Buttonai(task: task, ref: task.value.description),
+                          Buttonai(
+                            task: task,
+                            ref: task.value.description,
+                            typeref: Typeref.descripcion,
+                          ),
                           Container(
                             margin: EdgeInsets.only(top: 10, bottom: 20),
                             width: double.infinity,
