@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/VoiceRecorder.dart';
 
 class VoiceAiview extends StatelessWidget {
@@ -20,18 +20,20 @@ class VoiceAiview extends StatelessWidget {
         SizedBox(
           height: 50,
         ),
+        SelectModelAI(),
+        SizedBox(
+          height: 50,
+        ),
         Column(
           spacing: 5,
           children: [
             Voicerecorder(
-              widget: Container(
-                  color: Colors.black,
-                  child: Icon(
-                    Icons.mic,
-                    color: Color(0xFF00F74A),
-                    size: 35,
-                  )),
-              onPressed: (Function fn){
+              widget: Icon(
+                Icons.mic,
+                color: Color(0xFF00F74A),
+                size: 35,
+              ),
+              onPressed: (Function fn) {
                 fn();
               },
             ),

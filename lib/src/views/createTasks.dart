@@ -69,9 +69,6 @@ class Createtasks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ConfigureAgentsIa(ListenAgentsIAChanges()));
-    Get.put(ControllerStreamBrain());
-
     ever(convertBrainToTask.title, (String tt) {
       handleChangeTitleTask(tt);
     });

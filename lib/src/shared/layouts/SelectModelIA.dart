@@ -8,7 +8,7 @@ import 'package:tasks_ia_koderx/src/widgets/Select/Select.dart';
 
 class SelectModelAI extends StatelessWidget {
   SelectModelAI({super.key});
-  final configApp = Get.put(ConfigAppState());
+  final configApp = Get.find<ConfigAppState>();
 
   void onChangeModelIA(String value) {
     configApp
@@ -23,7 +23,8 @@ class SelectModelAI extends StatelessWidget {
           spacing: 10,
       children: [
         Text("Modelo de IA: ", style: TextStyle(color: const Color(0xFF666666), fontSize: 15)),
-        Select(
+        Obx((){
+          return Select(
             trailing: Icon(Icons.keyboard_arrow_down, color: Colors.blue),
             colorletter: Colors.white,
             decoration: ShadDecoration(
@@ -37,7 +38,8 @@ class SelectModelAI extends StatelessWidget {
             options: modelsAIOptions
                 .map((k, v) => MapEntry(k.path.toString(), v.path.toString())),
             onchange: (String value) => onChangeModelIA(value),
-            initialValue: configApp.model_ai.value.toString())
+            initialValue: configApp.model_ai.value.toString());
+        })
       ],
     ));
   }

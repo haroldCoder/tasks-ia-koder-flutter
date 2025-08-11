@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
@@ -28,24 +26,18 @@ class ListenAgentsIAChanges extends GetxController{
 
 class ConfigureAgentsIa extends GetxController{
   final StreamController<http.Response> _streamController = StreamController<http.Response>.broadcast();
-  ListenAgentsIAChanges? _listenAgentsIAChanges;
+  final _listenAgentsIAChanges = Get.put(ListenAgentsIAChanges());
   
 
   Stream<http.Response> get stream => _streamController.stream;
 
-  ConfigureAgentsIa([ListenAgentsIAChanges? listenAgentsIAChanges]){
-    if(listenAgentsIAChanges != null){
-      _listenAgentsIAChanges = Get.put(listenAgentsIAChanges);
-    }
-  }
-
   Future<void> makeBrain(ModelIA model, List<MessagesIAInterface> messages, [ElementId? element]) async {
     try {
       if(element != null){
-        _listenAgentsIAChanges?.assignElementSelect(element);
+        _listenAgentsIAChanges.assignElementSelect(element);
       }
 
-      _listenAgentsIAChanges?.changeLoading(true);
+      _listenAgentsIAChanges.changeLoading(true);
       http.Response response = await Requests(baseUrl: 'https://openrouter.ai/')
           .makeRequest(
               method: HttpMethod.post,
@@ -60,7 +52,7 @@ class ConfigureAgentsIa extends GetxController{
           });
           
       _streamController.add(response);
-      _listenAgentsIAChanges?.changeLoading(false);
+      _listenAgentsIAChanges.changeLoading(false);
       if(kDebugMode){
         print(response.body);
       }
