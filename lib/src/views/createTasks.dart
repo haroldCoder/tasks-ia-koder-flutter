@@ -5,13 +5,11 @@ import 'package:tasks_ia_koderx/src/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnamentStreams.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnamentStream.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
@@ -137,6 +135,7 @@ class Createtasks extends StatelessWidget {
                                 handleChangeTitleTask: (dynamic value) =>
                                     handleChangeTitleTask(value),
                                 value: task.value.title_task,
+                                task: task,
                               ),
                             ),
                           ),
@@ -151,7 +150,8 @@ class Createtasks extends StatelessWidget {
                           Textboxmagnamentstream(
                               value: task.value.description,
                               handleChangeDescriptionTask: (dynamic value) =>
-                                  handleChangeDescriptionTask(value)),
+                                  handleChangeDescriptionTask(value),
+                              task: task,),
                           SizedBox(height: 4),
                           Buttonai(
                             task: task,
