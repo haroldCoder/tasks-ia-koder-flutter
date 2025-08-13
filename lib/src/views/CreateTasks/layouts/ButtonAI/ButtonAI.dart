@@ -21,8 +21,9 @@ class Buttonai extends StatelessWidget {
   final controllerStreamBrain = Get.find<ControllerStreamBrain>();
   final Typeref? typeref;
   ElementId? elementId = ElementId.worthless;
+  bool disabled;
 
-  Buttonai({super.key, required this.task, required this.ref, this.typeref});
+  Buttonai({super.key, required this.task, required this.ref, this.typeref, this.disabled = false});
 
   void useIAModelToBrain() {
     elementId = typeref == Typeref.title
@@ -53,7 +54,7 @@ class Buttonai extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Button(
-      disable: ref == "",
+      disable: ref == "" || disabled ?? true,
       style: ButtonStyle(
           side: MaterialStatePropertyAll<BorderSide>(
               BorderSide(color: Colors.blueAccent)),

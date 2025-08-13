@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
+import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
@@ -21,6 +23,7 @@ class Createtasks extends StatelessWidget {
   Rx<CreateTasksState> task = CreateTasksState().obs;
   final convertBrainToTask = Get.put(ConvertBrainToTask());
   final configApp = Get.put(ConfigAppState());
+  final connectionGlobal = Get.put(ConnectionGlobal());
 
   backPage(BuildContext context) {
     if (!context.mounted) return;
@@ -120,10 +123,15 @@ class Createtasks extends StatelessWidget {
                                 decoration: TextDecoration.none,
                                 color: Colors.white),
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(height: 30),
                           Align(
                             alignment: Alignment.topRight,
-                            child: SelectModelAI(),
+                            child: ConnectionInternet(),
+                          ),
+                          SizedBox(height: 25),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: SelectModelAI(enabled: connectionGlobal.connection.value),
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 30, bottom: 20),
@@ -143,6 +151,7 @@ class Createtasks extends StatelessWidget {
                             task: task,
                             ref: task.value.title_task,
                             typeref: Typeref.title,
+                            disabled: !connectionGlobal.connection.value,
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 10),
@@ -157,6 +166,7 @@ class Createtasks extends StatelessWidget {
                             task: task,
                             ref: task.value.description,
                             typeref: Typeref.descripcion,
+                            disabled: !connectionGlobal.connection.value,
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 10, bottom: 20),
@@ -189,7 +199,7 @@ class Createtasks extends StatelessWidget {
                         ],
                       ),
                     )),
-                ButtonvoiceAi(),
+                ButtonvoiceAi(enabled: connectionGlobal.connection),
               ],
             )),
           );

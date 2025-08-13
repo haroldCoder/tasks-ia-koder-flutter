@@ -10,7 +10,8 @@ class Select extends StatelessWidget {
       required this.onchange,
       this.initialValue,
       this.colorletter,
-      this.trailing});
+      this.trailing,
+      this.enabled = true});
   final Map options;
   final Widget? placeholder;
   final ShadDecoration? decoration;
@@ -18,6 +19,7 @@ class Select extends StatelessWidget {
   final String? initialValue;
   final Color? colorletter;
   final Widget? trailing;
+  final bool enabled;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class Select extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minWidth: 180),
       child: ShadSelect<String>(
+        enabled: enabled && true,
         trailing: trailing,
         initialValue: initialValue,
         placeholder: this.placeholder,

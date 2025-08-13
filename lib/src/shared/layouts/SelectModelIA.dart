@@ -7,8 +7,9 @@ import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/widgets/Select/Select.dart';
 
 class SelectModelAI extends StatelessWidget {
-  SelectModelAI({super.key});
+  SelectModelAI({super.key, this.enabled = true});
   final configApp = Get.find<ConfigAppState>();
+  final bool enabled;
 
   void onChangeModelIA(String value) {
     configApp
@@ -25,6 +26,7 @@ class SelectModelAI extends StatelessWidget {
         Text("Modelo de IA: ", style: TextStyle(color: const Color(0xFF666666), fontSize: 15)),
         Obx((){
           return Select(
+            enabled: enabled,
             trailing: Icon(Icons.keyboard_arrow_down, color: Colors.blue),
             colorletter: Colors.white,
             decoration: ShadDecoration(

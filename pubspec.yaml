@@ -58,6 +58,7 @@ dependencies:
   mockito: ^5.5.0
   build_runner: ^2.6.0
   build_runner_core: ^9.2.0
+  connectivity_plus: ^6.1.5
 
 dev_dependencies:
   flutter_test:
