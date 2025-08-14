@@ -1,0 +1,28 @@
+{
+    "agentIA": {
+        "title": "Oops...",
+        "error": "An error occurred, please contact support",
+        "titlePromp": "Improve the style and clarity of the following title, returning only the improved text without explanations: ",
+        "descriptionPromp": "Improve the style and clarity of the following description, returning only the improved text without explanations: ",
+        "systemPromp": "You are an assistant that improves texts, returning only the improved and more structured text."
+    },
+    "connection": {
+        "wifi": "Wi-Fi connected",
+        "mobile": "Mobile data",
+        "empty": "No network"
+    },
+    "create_task": {
+        "create": "Create Tasks",
+        "title": "Create task",
+        "descripcion": "Task description",
+        "btn_generate": "Generate",
+        "btn_create": "Create Task",
+        "model_text": "AI Model:",
+        "low_priority": "Low",
+        "medium_priority": "Medium",
+        "hight_priority": "High"
+    },
+    "voice_ai": {
+        "pressed": "Hold down"
+    }
+}

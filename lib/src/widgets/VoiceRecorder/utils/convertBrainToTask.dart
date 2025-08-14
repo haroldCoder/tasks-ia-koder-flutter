@@ -3,7 +3,7 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/lang/createTask/es/createTaskIa.es.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAI.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
@@ -65,7 +65,7 @@ class ConvertBrainToTask extends GetxController {
         await configureAgenIa.makeBrain(
             configApp.model_ai.value, messagesTitle, ElementId.title_input);
 
-        await Future.delayed(Duration(seconds: 8));
+        await Future.delayed(Duration(seconds: 2));
 
         await configureAgenIa.makeBrain(
             configApp.model_ai.value, messagesDescription, ElementId.desc_textBox);

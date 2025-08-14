@@ -1,0 +1,28 @@
+{
+    "agentIA": {
+        "title": "Ups...",
+        "error": "Ocurrio un error, comunicate con soporte",
+        "titlePromp": "Mejora el estilo y la claridad del siguiente titulo, devolviendo solo el texto mejorado sin explicaciones: ",
+        "descriptionPromp": "Mejora el estilo y la claridad de la siguiente descripcion, devolviendo solo el texto mejorado sin explicaciones: ",
+        "systemPromp": "Eres un asistente que mejora textos, devolviendo solo el texto mejorado y mas estructurado."
+    },
+    "connection": {
+        "wifi": "Wifi conectado",
+        "mobile": "Datos mobiles",
+        "empty": "No hay red"
+    },
+    "create_task": {
+        "create": "Crear Tareas",
+        "title": "Crear tarea",
+        "descripcion": "Descripción de la tarea",
+        "btn_generate": "Generar",
+        "btn_create": "Crear Tarea",
+        "model_text": "Modelo de IA:",
+        "low_priority": "Baja",
+        "medium_priority": "Media",
+        "hight_priority": "Alta"
+    },
+    "voice_ai": {
+        "pressed": "Manten presionado"
+    }
+}

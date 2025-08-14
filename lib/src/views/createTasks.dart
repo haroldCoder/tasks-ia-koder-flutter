@@ -1,17 +1,19 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
+import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnamentStreams.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnamentStream.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
@@ -23,6 +25,7 @@ class Createtasks extends StatelessWidget {
   Rx<CreateTasksState> task = CreateTasksState().obs;
   final convertBrainToTask = Get.put(ConvertBrainToTask());
   final configApp = Get.put(ConfigAppState());
+  final connectionGlobal = Get.put(ConnectionGlobal());
 
   backPage(BuildContext context) {
     if (!context.mounted) return;
@@ -115,17 +118,22 @@ class Createtasks extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Crear Tareas",
+                            tr('create_task.create'),
                             style: TextStyle(
                                 fontFamily: "normal",
                                 fontSize: 30,
                                 decoration: TextDecoration.none,
                                 color: Colors.white),
                           ),
-                          SizedBox(height: 40),
+                          SizedBox(height: 30),
                           Align(
                             alignment: Alignment.topRight,
-                            child: SelectModelAI(),
+                            child: ConnectionInternet(),
+                          ),
+                          SizedBox(height: 25),
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: SelectModelAI(enabled: connectionGlobal.connection.value),
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 30, bottom: 20),
@@ -137,6 +145,8 @@ class Createtasks extends StatelessWidget {
                                 handleChangeTitleTask: (dynamic value) =>
                                     handleChangeTitleTask(value),
                                 value: task.value.title_task,
+                                task: task,
+                                contextmain: context,
                               ),
                             ),
                           ),
@@ -144,6 +154,7 @@ class Createtasks extends StatelessWidget {
                             task: task,
                             ref: task.value.title_task,
                             typeref: Typeref.title,
+                            disabled: !connectionGlobal.connection.value,
                           ),
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 10),
@@ -151,12 +162,15 @@ class Createtasks extends StatelessWidget {
                           Textboxmagnamentstream(
                               value: task.value.description,
                               handleChangeDescriptionTask: (dynamic value) =>
-                                  handleChangeDescriptionTask(value)),
+                                  handleChangeDescriptionTask(value),
+                              task: task,
+                              contextmain: context,),
                           SizedBox(height: 4),
                           Buttonai(
                             task: task,
                             ref: task.value.description,
                             typeref: Typeref.descripcion,
+                            disabled: !connectionGlobal.connection.value,
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 10, bottom: 20),
@@ -172,7 +186,7 @@ class Createtasks extends StatelessWidget {
                             width: double.infinity,
                             padding: EdgeInsets.symmetric(horizontal: 8),
                             click: () => createTask(context),
-                            contentbtn: Text("Crear Tarea",
+                            contentbtn: Text(btnCreate,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,
@@ -189,7 +203,7 @@ class Createtasks extends StatelessWidget {
                         ],
                       ),
                     )),
-                ButtonvoiceAi(),
+                ButtonvoiceAi(enabled: connectionGlobal.connection),
               ],
             )),
           );
