@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -5,6 +6,7 @@ import 'package:tasks_ia_koderx/src/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
@@ -116,7 +118,7 @@ class Createtasks extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Crear Tareas",
+                            tr('create_task.create'),
                             style: TextStyle(
                                 fontFamily: "normal",
                                 fontSize: 30,
@@ -144,6 +146,7 @@ class Createtasks extends StatelessWidget {
                                     handleChangeTitleTask(value),
                                 value: task.value.title_task,
                                 task: task,
+                                contextmain: context,
                               ),
                             ),
                           ),
@@ -160,7 +163,8 @@ class Createtasks extends StatelessWidget {
                               value: task.value.description,
                               handleChangeDescriptionTask: (dynamic value) =>
                                   handleChangeDescriptionTask(value),
-                              task: task,),
+                              task: task,
+                              contextmain: context,),
                           SizedBox(height: 4),
                           Buttonai(
                             task: task,
@@ -182,7 +186,7 @@ class Createtasks extends StatelessWidget {
                             width: double.infinity,
                             padding: EdgeInsets.symmetric(horizontal: 8),
                             click: () => createTask(context),
-                            contentbtn: Text("Crear Tarea",
+                            contentbtn: Text(btnCreate,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 17,

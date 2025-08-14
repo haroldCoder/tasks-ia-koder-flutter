@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/TextBoxs/TextBoxs.dart';
 
 class TextboxsDescription extends StatefulWidget {
@@ -34,7 +35,7 @@ class _TextboxsDescriptionState extends State<TextboxsDescription> {
       height_container: 220,
       style: const TextStyle(color: Colors.white),
       decoration: InputDecoration(
-        hintText: "Descripción de la tarea",
+        hintText: descriptionLabel,
         hintStyle: TextStyle(color: Colors.grey[400]),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),

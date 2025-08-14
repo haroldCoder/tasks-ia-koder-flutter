@@ -4,7 +4,7 @@ import 'package:get/utils.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionWifi.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/enums/connectionType.dart';
-import 'package:tasks_ia_koderx/src/shared/lang/connectionInternet/es/connectionInternet.es.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/connectionInternet/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionStream.dart';
 
 class ConnectionInternet extends StatefulWidget {

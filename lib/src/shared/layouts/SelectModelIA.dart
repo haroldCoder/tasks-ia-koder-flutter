@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/constants/modelsIASelect.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/Select/Select.dart';
 
 class SelectModelAI extends StatelessWidget {
@@ -23,7 +25,7 @@ class SelectModelAI extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           spacing: 10,
       children: [
-        Text("Modelo de IA: ", style: TextStyle(color: const Color(0xFF666666), fontSize: 15)),
+        Text(tr(modelText), style: TextStyle(color: const Color(0xFF666666), fontSize: 15)),
         Obx((){
           return Select(
             enabled: enabled,

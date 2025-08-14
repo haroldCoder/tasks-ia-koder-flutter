@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/voiceAI/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/VoiceRecorder.dart';
 
@@ -38,7 +39,7 @@ class VoiceAiview extends StatelessWidget {
               },
             ),
             Text(
-              "Manten presionado",
+              pressedOn,
               style: TextStyle(color: const Color(0xFF494949)),
             )
           ],

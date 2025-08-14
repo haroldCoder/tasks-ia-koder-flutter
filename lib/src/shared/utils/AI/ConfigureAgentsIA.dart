@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/agentIA/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 
@@ -50,8 +51,14 @@ class ConfigureAgentsIa extends GetxController{
             'model': model.path,
             'messages': messages.map((m) => m.toJson()).toList(),
           });
-          
-      _streamController.add(response);
+
+      if(response.statusCode == 200){
+        _streamController.add(response);
+      }
+      else{
+        _streamController.addError(error);
+      }
+      
       _listenAgentsIAChanges.changeLoading(false);
       if(kDebugMode){
         print(response.body);

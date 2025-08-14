@@ -59,6 +59,7 @@ dependencies:
   build_runner: ^2.6.0
   build_runner_core: ^9.2.0
   connectivity_plus: ^6.1.5
+  easy_localization: ^3.0.8
 
 dev_dependencies:
   flutter_test:
@@ -93,6 +94,7 @@ flutter:
     - lib/assets/cloud.png
     - lib/assets/iavoice.png
     - .env
+    - lib/src/shared/lang/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

@@ -1,11 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ErrorAgent/showErrorAgentIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/TextBoxsDescription/TextBoxsDescription.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/modifyState/updateDataTask.dart';
@@ -17,11 +16,13 @@ class Textboxmagnamentstream extends StatelessWidget {
       {super.key,
       required this.value,
       required this.handleChangeDescriptionTask,
-      this.task});
+      this.task,
+      required this.contextmain});
 
   final Function(dynamic value) handleChangeDescriptionTask;
   final String value;
   final Rx<CreateTasksState>? task;
+  final BuildContext contextmain;
 
   ConfigureAgentsIa configureAgentsIa = Get.find<ConfigureAgentsIa>();
   final configApp = Get.put(ConfigAppState());
@@ -34,7 +35,7 @@ class Textboxmagnamentstream extends StatelessWidget {
       if (listenAgentsIAChanges.select.value == ElementId.desc_textBox) {
         String content = returnContentAgentIA(snapshot);
 
-        if(task != null){
+        if (task != null) {
           updateDataTask(task!, content, ElementId.desc_textBox);
         }
       }
@@ -52,6 +53,9 @@ class Textboxmagnamentstream extends StatelessWidget {
                   return CircularProgressIndicator(
                     color: Colors.blueAccent,
                   );
+                } else if (snapshot.hasError && select) {
+                  showErrorAgentIA(
+                      context: context, description: snapshot.error.toString());
                 }
                 return TextboxsDescription(
                     value: value, onChange: handleChangeDescriptionTask);
@@ -65,11 +69,15 @@ class Textboxmagnamentstream extends StatelessWidget {
             final isLoading = snapshot.data ?? false;
 
             return Obx(() {
-              if (controllerStreamBrain.elementId.value ==
-                      ElementId.desc_textBox &&
-                  isLoading) {
+              bool select = controllerStreamBrain.elementId.value ==
+                  ElementId.desc_textBox;
+              if (select && isLoading) {
                 return const CircularProgressIndicator(
                     color: Colors.blueAccent);
+              }
+              if (select && snapshot.hasError) {
+                showErrorAgentIA(
+                    context: context, description: snapshot.error.toString());
               }
 
               return TextboxsDescription(
