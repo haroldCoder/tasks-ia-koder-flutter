@@ -23,7 +23,11 @@
         "hight_priority": "High"
     },
     "voice_ai": {
-        "pressed": "Hold down"
+        "pressed": "Hold down",
+        "generate_title": "Generate a short and descriptive title based on a provided task idea: ",
+        "title_obs": ". Return it without explanations, only the title.",
+        "generate_description": "Generate a short description of what this task might include: ",
+        "description_obs": ". Do not give me an introduction."
     },
     "home": {
         "search": "Search tasks...",
@@ -79,5 +83,8 @@
         "mode": "Mode: ",
         "change_premium": "Change to premium",
         "log_out": "Log out"
+    },
+    "generate_brain": {
+        "generate_text": "Write and improve the text for this task. Return only the final text with proper punctuation, without explanations or justification: "
     }
 }
