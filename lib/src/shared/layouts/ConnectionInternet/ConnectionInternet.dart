@@ -15,7 +15,6 @@ class ConnectionInternet extends StatefulWidget {
 }
 
 class _ConnectionInternetState extends State<ConnectionInternet> {
-  ConnectionType _type = ConnectionType.empty;
   ConnectionWifi connectionWifi = ConnectionWifi();
   final connectionGlobal = Get.find<ConnectionGlobal>();
 
@@ -24,9 +23,7 @@ class _ConnectionInternetState extends State<ConnectionInternet> {
     // TODO: implement initState
     super.initState();
     connectionWifi.stream.listen((type) {
-      setState(() {
-        _type = type;
-      });
+      connectionGlobal.saveTypeConnection(type);
       connectionGlobal.refreshStatus(type == ConnectionType.wifi
           ? true
           : type == ConnectionType.mobile
@@ -42,7 +39,8 @@ class _ConnectionInternetState extends State<ConnectionInternet> {
       spacing: 6,
       children: [
         ConnectionStream(),
-        Text(status[_type].toString(), style: TextStyle(color: Colors.grey))
+        Obx(() => Text(status[connectionGlobal.typeConection.value].toString(),
+            style: TextStyle(color: Colors.grey)))
       ],
     );
   }
