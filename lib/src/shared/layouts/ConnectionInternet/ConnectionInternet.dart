@@ -8,7 +8,9 @@ import 'package:tasks_ia_koderx/src/shared/lang/connectionInternet/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionStream.dart';
 
 class ConnectionInternet extends StatefulWidget {
-  const ConnectionInternet({super.key});
+  const ConnectionInternet({super.key, this.decoration, this.font});
+  final TextDecoration? decoration;
+  final String? font;
 
   @override
   State<ConnectionInternet> createState() => _ConnectionInternetState();
@@ -40,7 +42,8 @@ class _ConnectionInternetState extends State<ConnectionInternet> {
       children: [
         ConnectionStream(),
         Obx(() => Text(status[connectionGlobal.typeConection.value].toString(),
-            style: TextStyle(color: Colors.grey)))
+            style: 
+                TextStyle(color: Colors.grey, fontSize: 16, decoration: widget.decoration, fontFamily: widget.font)))
       ],
     );
   }

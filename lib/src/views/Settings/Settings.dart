@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
@@ -41,6 +42,16 @@ class Settings extends StatelessWidget {
                       ]),
                       child: TabMain(),
                     ),
+                    SizedBox(height: 20),
+                    Container(
+                      height: 20,
+                      padding: EdgeInsets.only(right: 8),
+                      child: ConnectionInternet(
+                        decoration: TextDecoration.none,
+                        font: 'rubik',
+                      ),
+                    ),
+                    SizedBox(height: 20),
                     Container(
                       alignment: Alignment.topLeft,
                       padding:
@@ -186,9 +197,9 @@ class Settings extends StatelessWidget {
                     child: Column(
                       spacing: 5,
                       children: [
-                        Obx((){
-                          return !isUserPremium.isPremium.value ?
-                              Buttonpremium()
+                        Obx(() {
+                          return !isUserPremium.isPremium.value
+                              ? Buttonpremium()
                               : SizedBox.shrink();
                         }),
                         Buttongoogle()
