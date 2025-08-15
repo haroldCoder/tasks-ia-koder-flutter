@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/loginUser.dart';
 
@@ -49,7 +50,7 @@ class _ButtongoogleState extends State<Buttongoogle> {
                   width: 30,
                 )
               : Text(
-                  "Cerrar sesion",
+                  logOut,
                   style: TextStyle(color: Colors.blueAccent),
                 );
         }));

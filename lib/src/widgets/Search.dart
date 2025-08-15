@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 
 class SearchWidget extends StatefulWidget {
   const SearchWidget({super.key, this.margin = 0});
@@ -32,7 +33,7 @@ class _SearchState extends State<SearchWidget> {
                 )
               ), child: SearchBar(
                 textInputAction: TextInputAction.done,
-                hintText: "Buscar tareas...",
+                hintText: search,
                 backgroundColor: MaterialStateProperty.all(Colors.transparent),
                 hintStyle: MaterialStateProperty.all(TextStyle(
                     color: Colors.white54,

@@ -23,6 +23,68 @@
         "hight_priority": "Alta"
     },
     "voice_ai": {
-        "pressed": "Manten presionado"
+        "pressed": "Manten presionado",
+        "generate_title": "Generate a short and descriptive title based on a provided task idea: ",
+        "title_obs": ". Return it without explanations, only the title.",
+        "generate_description": "Generate a short description of what this task might include: ",
+        "description_obs": ". Do not give me an introduction."
+    },
+    "home": {
+        "search": "Buscar tareas...",
+        "btn_complete": "Completar",
+        "btn_completed": "Completada",
+        "btn_update": "Actualizar",
+        "select_all": "Seleccionar todo",
+        "deselect_all": "Deseleccionar todo",
+        "remove_all": "Eliminar seleccionados",
+        "no_task": "No hay tareas pendientes",
+        "low_priority": "Baja",
+        "medium_priority": "Media",
+        "hight_priority": "Alta",
+        "task_update_successfully": "Tarea actualizada exitosamente",
+        "error_ocurred": "Ocurrio un error",
+        "task_container": {
+            "warning": "Advertencia",
+            "question": "Esta seguro que quiere eliminar esta tarea?",
+            "continue": "Continuar",
+            "task_remove": "Tarea eliminada exitosamente",
+            "cancel": "Cancelar",
+            "btn_edit": "Editar",
+            "btn_return": "Devolver",
+            "status": "online"
+        }
+    },
+    "completed_tasks": {
+        "tasks_completeds": "tareas completadas"
+    },
+    "graphs": {
+        "state_tasks": "Estado de tareas",
+        "completeds": "Completadas",
+        "pendigns": "Pendientes",
+        "interactions_day": "Interacciones por dia",
+        "monday": "Lunes",
+        "tuesday": "Martes",
+        "wednesday": "Miércoles",
+        "thursday": "Jueves",
+        "friday": "Viernes",
+        "saturday": "Sábado",
+        "sunday": "Domingo"
+    },
+    "upload_task": {
+        "btn_upload_view": "Subir a la cloud",
+        "upload_succesfully": "Tarea subida con éxito",
+        "upload_error": "Ocurrio un error",
+        "back": "Volver"
+    },
+    "settings": {
+        "title": "Configuraciones",
+        "username": "Usuario",
+        "email": "Correo electronico",
+        "mode": "Modo: ",
+        "change_premium": "Cambiar a premium",
+        "log_out": "Cerrra sesión"
+    },
+    "generate_brain": {
+        "generate_text": "Redacta y mejora el texto para esta tarea, solo dame el resultado, para ponerlo en un input. solo el texto con signos de puntuacio, etc: "
     }
 }

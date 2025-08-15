@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 
 import '../../widgets/Button/Button.dart';
@@ -28,7 +29,7 @@ class _ButtonpremiumState extends State<Buttonpremium> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             )),
-        child: Text("Cambiar a premium",
+        child: Text(changePremium,
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/graphs/lang.dart';
 
 class Bargraphictasks extends StatelessWidget {
   const Bargraphictasks(
@@ -18,7 +19,7 @@ class Bargraphictasks extends StatelessWidget {
           children: [
             Align(
               child: Text(
-                "Estado de tareas",
+                stateTaskGraph,
                 style: TextStyle(color: Colors.white38),
               ),
               alignment: Alignment.topLeft,
@@ -61,11 +62,11 @@ class Bargraphictasks extends StatelessWidget {
                     getTitlesWidget: (double value, TitleMeta meta) {
                       switch (value.toInt()) {
                         case 0:
-                          return Text("Completadas",
+                          return Text(completedsGraph,
                               style:
                                   TextStyle(fontSize: 12, color: Colors.white));
                         case 1:
-                          return Text("Pendientes",
+                          return Text(pendingsGraph,
                               style:
                                   TextStyle(fontSize: 12, color: Colors.white));
                         default:

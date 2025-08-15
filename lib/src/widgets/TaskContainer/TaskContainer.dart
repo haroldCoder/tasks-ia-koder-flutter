@@ -3,6 +3,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/taskContainer/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/users/stateTaskServer.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
@@ -64,29 +65,29 @@ class _TaskContainerState extends State<TaskContainer> {
         backgroundColor: Colors.black,
         titleStyle: TextStyle(color: Colors.red, fontSize: 22),
         title: Text(
-          "Advertencia",
+          warningTaskContainer,
         ),
         description: Padding(
           padding: EdgeInsets.all(9),
-          child: Text("Esta seguro que quiere eliminar esta tarea?"),
+          child: Text(questionTaskContainer),
         ),
         actions: [
           ShadButton(
             backgroundColor: Colors.red,
-            child: const Text('Continuar'),
+            child: Text(continueTaskContainer),
             onPressed: () {
               TaskService().deleteTask(id);
               ShadToaster.of(context).show(
-                const ShadToast(
-                  description: Text('Tarea eliminada exitosamente'),
+                ShadToast(
+                  description: Text(taskRemoveTaskContainer),
                 ),
               );
               Navigator.of(context).pop(false);
             },
           ),
           ShadButton.outline(
-            child: const Text(
-              'Cancelar',
+            child: Text(
+              cancelTaskContainer,
               style: TextStyle(color: Colors.white54),
             ),
             onPressed: () => Navigator.of(context).pop(false),
@@ -175,7 +176,9 @@ class _TaskContainerState extends State<TaskContainer> {
                         border: ShadBorder.all(
                             color: Color(0xFF5B36FF), width: .5)),
                     child: Text(
-                      !widget.completed! ? "Editar" : "Devolver",
+                      !widget.completed!
+                          ? btnEditTaskContainer
+                          : btnReturnTaskContainer,
                       style: TextStyle(
                           color: !widget.completed!
                               ? Color(0xFF5B36FF)
@@ -184,7 +187,7 @@ class _TaskContainerState extends State<TaskContainer> {
                     ),
                   )
                 : Text(
-                    "Online",
+                    statusTaskContainer,
                     style: TextStyle(
                         color: Colors.lightBlueAccent,
                         fontSize: 20,
@@ -221,8 +224,7 @@ class _TaskContainerState extends State<TaskContainer> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         );
-                      }
-                      else if(snapshot.hasError){
+                      } else if (snapshot.hasError) {
                         return Icon(
                           Icons.wifi_off,
                           color: Colors.red,

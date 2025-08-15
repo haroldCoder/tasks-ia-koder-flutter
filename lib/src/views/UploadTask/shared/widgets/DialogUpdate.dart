@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/uploadTask/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 
 class DialogUpdate extends StatelessWidget {
@@ -16,7 +17,7 @@ class DialogUpdate extends StatelessWidget {
       ),
       actions: [
         Button(
-            contentbtn: Text("volver"),
+            contentbtn: Text(backUpdate),
             style: ButtonStyle(
                 backgroundColor: WidgetStatePropertyAll(Colors.blueAccent),
                 shape: WidgetStatePropertyAll(RoundedRectangleBorder(

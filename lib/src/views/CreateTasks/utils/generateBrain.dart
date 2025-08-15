@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:get/get.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/AI/lang.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 
 class ControllerStreamBrain extends GetxController{
@@ -38,7 +39,7 @@ Future<void> generateBrain(
     controllerStremBrain.setLoading(true);
 
     final response = await model.startChat().sendMessage(Content.text(
-        'Redacta y mejora el texto para esta tarea, solo dame el resultado, para ponerlo en un input. solo el texto con signos de puntuacio, etc: ${value}'));
+        '${generateText} ${value}'));
     function(response.text.toString());
   } catch (err) {
     print(err);

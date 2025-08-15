@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
@@ -64,7 +65,7 @@ class Settings extends StatelessWidget {
                                         bottom: BorderSide(
                                             width: 1, color: Colors.white54))),
                                 child: Text(
-                                  "Settings",
+                                  titleSettings,
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -98,7 +99,7 @@ class Settings extends StatelessWidget {
                                                   width: 1,
                                                   color: Colors.white60))),
                                       child: Text(
-                                        "Username",
+                                        username,
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 18),
                                       ),
@@ -134,7 +135,7 @@ class Settings extends StatelessWidget {
                                                     width: 1,
                                                     color: Colors.white60))),
                                         child: Text(
-                                          "Email",
+                                          email,
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 18),
@@ -157,7 +158,7 @@ class Settings extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                "Modo: ",
+                                mode,
                                 style: TextStyle(color: Colors.white30),
                               ),
                               Obx(() => ShadSwitch(

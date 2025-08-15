@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/uploadTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/NavBarPremium.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
@@ -61,9 +62,9 @@ class _UploadtaskState extends State<Uploadtask> {
     });
 
     if (response["httpStatus"] == 201) {
-      _streamController.add(TaskSuccess("Tarea subida con éxito"));
+      _streamController.add(TaskSuccess(updateSuccesfully));
     } else {
-      _streamController.add(TaskError("Ocurrio un error"));
+      _streamController.add(TaskError(updateError));
     }
   }
 
@@ -160,7 +161,7 @@ class _UploadtaskState extends State<Uploadtask> {
                                       borderRadius: BorderRadius.circular(100),
                                     ))),
                                 contentbtn: Text(
-                                  "Subir a la cloud",
+                                  btnUploadView,
                                   style: TextStyle(color: Colors.white),
                                 ),
                               )

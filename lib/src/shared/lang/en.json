@@ -23,6 +23,68 @@
         "hight_priority": "High"
     },
     "voice_ai": {
-        "pressed": "Hold down"
+        "pressed": "Hold down",
+        "generate_title": "Generate a short and descriptive title based on a provided task idea: ",
+        "title_obs": ". Return it without explanations, only the title.",
+        "generate_description": "Generate a short description of what this task might include: ",
+        "description_obs": ". Do not give me an introduction."
+    },
+    "home": {
+        "search": "Search tasks...",
+        "btn_complete": "Complete",
+        "btn_completed": "Completed",
+        "btn_update": "Update",
+        "select_all": "Select all",
+        "deselect_all": "Deselect all",
+        "remove_all": "Remove selected",
+        "no_task": "No pending tasks",
+        "low_priority": "Low",
+        "medium_priority": "Medium",
+        "hight_priority": "High",
+        "task_update_successfully": "Task updated successfully",
+        "error_ocurred": "An error occurred",
+        "task_container": {
+            "warning": "Warning",
+            "question": "Are you sure you want to delete this task?",
+            "continue": "Continue",
+            "task_remove": "Task successfully deleted",
+            "cancel": "Cancel",
+            "btn_edit": "Edit",
+            "btn_return": "Return",
+            "status": "online"
+        }
+    },
+    "completed_tasks": {
+        "tasks_completeds": "completed tasks"
+    },
+    "graphs": {
+        "state_tasks": "Task Status",
+        "completeds": "Completed",
+        "pendigns": "Pending",
+        "interactions_day": "Interactions per Day",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "upload_task": {
+            "btn_upload_view": "Upload to the cloud",
+            "upload_succesfully": "Task uploaded successfully",
+            "upload_error": "An error occurred",
+            "back": "Back"
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "username": "Username",
+        "email": "Email",
+        "mode": "Mode: ",
+        "change_premium": "Change to premium",
+        "log_out": "Log out"
+    },
+    "generate_brain": {
+        "generate_text": "Write and improve the text for this task. Return only the final text with proper punctuation, without explanations or justification: "
     }
 }
