@@ -52,5 +52,18 @@
     },
     "completed_tasks": {
         "tasks_completeds": "tareas completadas"
+    },
+    "graphs": {
+        "state_tasks": "Estado de tareas",
+        "completeds": "Completadas",
+        "pendigns": "Pendientes",
+        "interactions_day": "Interacciones por dia",
+        "monday": "Lunes",
+        "tuesday": "Martes",
+        "wednesday": "Miércoles",
+        "thursday": "Jueves",
+        "friday": "Viernes",
+        "saturday": "Sábado",
+        "sunday": "Domingo"
     }
 }

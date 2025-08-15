@@ -53,5 +53,18 @@
     },
     "completed_tasks": {
         "tasks_completeds": "completed tasks"
-    }
+    },
+    "graphs": {
+    "state_tasks": "Task Status",
+    "completeds": "Completed",
+    "pendigns": "Pending",
+    "interactions_day": "Interactions per Day",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+}
 }

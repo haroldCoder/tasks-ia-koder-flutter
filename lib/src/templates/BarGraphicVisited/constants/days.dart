@@ -1,9 +1,11 @@
-Map<String, int> visited_balance_days = {
-  "lunes": 0,
-  "martes": 0,
-  "miércoles": 0,
-  "jueves": 0,
-  "viernes": 0,
-  "sábado": 0,
-  "domingo": 0,
+import 'package:tasks_ia_koderx/src/shared/lang/graphs/lang.dart';
+
+Map<String, int> get visitedBalanceDays => {
+  "${monday}": 0,
+  "${tuesday}": 0,
+  "${wednesday}": 0,
+  "${thursday}": 0,
+  "${friday}": 0,
+  "${saturday}": 0,
+  "${sunday}": 0,
 };

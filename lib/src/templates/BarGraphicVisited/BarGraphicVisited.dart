@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/graphs/lang.dart';
+import 'package:tasks_ia_koderx/src/templates/BarGraphicVisited/constants/days.dart';
 
 import '../../shared/States/Visited_App/VisitedService.dart';
 
@@ -10,15 +12,6 @@ class Bargraphicvisited extends StatefulWidget {
 
 class _BargraphicvisitedState extends State<Bargraphicvisited> {
   VisitedService visitedService = VisitedService();
-  Map<String, int> visited_balance_days = {
-    "lunes": 0,
-    "martes": 0,
-    "miercoles": 0,
-    "jueves": 0,
-    "viernes": 0,
-    "sabado": 0,
-    "domingo": 0,
-  };
 
   @override
   void initState() {
@@ -35,9 +28,9 @@ class _BargraphicvisitedState extends State<Bargraphicvisited> {
 
         if (parts.isNotEmpty) {
           String dayFound = parts[0];
-          if (visited_balance_days.containsKey(dayFound)) {
-            visited_balance_days[dayFound] =
-                visited_balance_days[dayFound]! + 1;
+          if (visitedBalanceDays.containsKey(dayFound)) {
+            visitedBalanceDays[dayFound] =
+                visitedBalanceDays[dayFound]! + 1;
           }
         }
       }
@@ -46,8 +39,8 @@ class _BargraphicvisitedState extends State<Bargraphicvisited> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> days = visited_balance_days.keys.toList();
-    List<int> values = visited_balance_days.values.toList();
+    List<String> days = visitedBalanceDays.keys.toList();
+    List<int> values = visitedBalanceDays.values.toList();
 
     return  Container(
         padding: EdgeInsets.only(top: 10, bottom: 10, left: 10),
@@ -60,7 +53,7 @@ class _BargraphicvisitedState extends State<Bargraphicvisited> {
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                "Interacciones por día",
+                interactionsDay,
                 style: TextStyle(color: Colors.white38),
               ),
             ),
