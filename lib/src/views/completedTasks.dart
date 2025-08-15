@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/completedTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
@@ -51,6 +52,15 @@ class Completedtasks extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.blueAccent),
             child: TabMain(),
           ),
+          SizedBox(height: 20),
+          Container(
+            height: 20,
+            padding: EdgeInsets.only(right: 8),
+            child: ConnectionInternet(
+              decoration: TextDecoration.none,
+              font: 'rubik',
+            ),
+          ),
           Center(
             child: Container(
               width: 250,
@@ -78,52 +88,51 @@ class Completedtasks extends StatelessWidget {
                     }
                   }
 
-                    final tasks = snapshot.data;
-                    final seenIds = <int>{};
-                    tasksUser = [
-                      ...tasks.where((tk) => seenIds.add(tk.id_task_app)),
-                      ...taskController.tasks
-                          .where((task) => task.complete == 1)
-                          .where((tk) => seenIds.add(tk.id!))
-                    ];
+                  final tasks = snapshot.data;
+                  final seenIds = <int>{};
+                  tasksUser = [
+                    ...tasks.where((tk) => seenIds.add(tk.id_task_app)),
+                    ...taskController.tasks
+                        .where((task) => task.complete == 1)
+                        .where((tk) => seenIds.add(tk.id!))
+                  ];
 
-                    return Scrollbar(
-                        thumbVisibility: true,
-                        thickness: 6,
-                        radius: Radius.circular(10),
-                        trackVisibility: true,
-                        interactive: true,
-                        child: SingleChildScrollView(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          child: Column(
-                            spacing: 10,
-                            children: tasksUser
-                                .map<Widget>((task) => TaskContainer(
-                                      online:
-                                          task.runtimeType != CreateTasksState,
-                                      id: task.runtimeType == CreateTasksState
-                                          ? task.id
-                                          : task.id_task_app,
-                                      completed:
-                                          task.runtimeType == CreateTasksState
-                                              ? true
-                                              : task.completed == 1,
-                                      title:
-                                          task.runtimeType == CreateTasksState
-                                              ? task.title_task
-                                              : task.title,
-                                      description: task.description,
-                                      priority:
-                                          task.runtimeType == CreateTasksState
-                                              ? task.value_priority
-                                              : task.priority,
-                                      onClick: () =>
-                                          ChangeToPendingTask(task.id, task),
-                                    ))
-                                .toList(),
-                          ),
-                        ));
+                  return Scrollbar(
+                      thumbVisibility: true,
+                      thickness: 6,
+                      radius: Radius.circular(10),
+                      trackVisibility: true,
+                      interactive: true,
+                      child: SingleChildScrollView(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                        child: Column(
+                          spacing: 10,
+                          children: tasksUser
+                              .map<Widget>((task) => TaskContainer(
+                                    online:
+                                        task.runtimeType != CreateTasksState,
+                                    id: task.runtimeType == CreateTasksState
+                                        ? task.id
+                                        : task.id_task_app,
+                                    completed:
+                                        task.runtimeType == CreateTasksState
+                                            ? true
+                                            : task.completed == 1,
+                                    title: task.runtimeType == CreateTasksState
+                                        ? task.title_task
+                                        : task.title,
+                                    description: task.description,
+                                    priority:
+                                        task.runtimeType == CreateTasksState
+                                            ? task.value_priority
+                                            : task.priority,
+                                    onClick: () =>
+                                        ChangeToPendingTask(task.id, task),
+                                  ))
+                              .toList(),
+                        ),
+                      ));
                 });
               },
             ),

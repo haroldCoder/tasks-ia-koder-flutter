@@ -7,6 +7,7 @@ import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Visited_App/VisitedService.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
@@ -104,111 +105,134 @@ class _MyHomePageState extends State<MyHomePage> {
             decoration: BoxDecoration(color: widget.color_app.value),
             child: Stack(
               children: [
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Container(
-                    width: double.infinity,
-                    height: 65,
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    decoration: BoxDecoration(color: Colors.blueAccent),
-                    child: TabMain(),
-                  ),
-                  Center(
-                    child: Container(
-                      width: 250,
-                      child: const SearchWidget(margin: 20),
-                    ),
-                  ),
-                  Container(
-                      margin: EdgeInsets.only(top: 30),
-                      width: double.infinity,
-                      padding: EdgeInsets.only(left: 15, right: 15),
-                      height: 350,
-                      child: Obx(() {
-                        if (taskController.tasks
-                            .where((task) => task.complete == 0)
-                            .isEmpty) {
-                          return AreNoTasks();
-                        }
-                        return SingleChildScrollView(
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                          child: Column(
-                            spacing: 15,
-                            children: taskController.tasks
-                                .where((task) => task.complete == 0)
-                                .map<Widget>((task) => TaskContainer(
-                                      id: task.id!,
-                                      title: task.title_task,
-                                      description: task.description,
-                                      priority: task.value_priority,
-                                      onClick: () {
-                                        showShadDialog(
-                                            context: context,
-                                            builder: (context) => UpdateTasks(
-                                                complete: task.complete,
-                                                id: task.id ?? 0,
-                                                title: task.title_task,
-                                                description: task.description,
-                                                priority: task.value_priority));
-                                      },
-                                    ))
-                                .toList(),
-                          ),
-                        ));
-                      })),
-                  Expanded(
-                      child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            spacing: 10,
-                            children: [
-                              Button(
-                                click: () {
-                                  selectAllTasks();
-                                },
-                                style: ButtonStyle(
-                                  shape:
-                                      MaterialStatePropertyAll<OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(14))),
-                                  backgroundColor:
-                                      MaterialStatePropertyAll<Color>(
-                                          Colors.white),
+                Container(
+                  height: double.infinity,
+                  decoration: BoxDecoration(color: widget.color_app.value),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        height: 65,
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(color: Colors.blueAccent),
+                        child: TabMain(),
+                      ),
+
+                      SizedBox(height: 20),
+
+                      Container(
+                        height: 20,
+                        padding: EdgeInsets.only(right: 8),
+                        child: ConnectionInternet(
+                          decoration: TextDecoration.none,
+                          font: 'rubik',
+                        ),
+                      ),
+
+                      Center(
+                        child: Container(
+                          width: 250,
+                          child: const SearchWidget(margin: 20),
+                        ),
+                      ),
+
+                      SizedBox(height: 30),
+
+                      Container(
+                        height: 300,
+                        child: Obx(() {
+                          final tareasPendientes = taskController.tasks
+                              .where((task) => task.complete == 0)
+                              .toList();
+
+                          if (tareasPendientes.isEmpty) {
+                            return AreNoTasks();
+                          }
+
+                          return SingleChildScrollView(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Column(
+                              spacing: 15,
+                              children: tareasPendientes.map((task) {
+                                return TaskContainer(
+                                  id: task.id!,
+                                  title: task.title_task,
+                                  description: task.description,
+                                  priority: task.value_priority,
+                                  onClick: () {
+                                    showShadDialog(
+                                      context: context,
+                                      builder: (context) => UpdateTasks(
+                                        complete: task.complete,
+                                        id: task.id ?? 0,
+                                        title: task.title_task,
+                                        description: task.description,
+                                        priority: task.value_priority,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }).toList(),
+                            ),
+                          );
+                        }),
+                      ),
+
+                      Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          spacing: 10,
+                          children: [
+                            Button(
+                              click: selectAllTasks,
+                              style: ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
                                 ),
-                                contentbtn: Obx(() {
-                                  return Text(
-                                    taskController.selectedTasks.length == 0
-                                        ? selectAll
-                                        : deselectAll,
-                                    style: TextStyle(color: Color(0xFF4439FF)),
-                                  );
-                                }),
+                                backgroundColor:
+                                    MaterialStatePropertyAll<Color>(
+                                        Colors.white),
                               ),
-                              Button(
-                                click: () {
-                                  deleteAllTasks();
-                                },
-                                style: ButtonStyle(
-                                  shape:
-                                      MaterialStatePropertyAll<OutlinedBorder>(
-                                          RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(14))),
-                                  backgroundColor:
-                                      MaterialStatePropertyAll<Color>(
-                                          Colors.blueAccent),
+                              contentbtn: Obx(() {
+                                return Text(
+                                  taskController.selectedTasks.isEmpty
+                                      ? selectAll
+                                      : deselectAll,
+                                  style: TextStyle(color: Color(0xFF4439FF)),
+                                );
+                              }),
+                            ),
+                            Button(
+                              click: deleteAllTasks,
+                              style: ButtonStyle(
+                                shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
                                 ),
-                                contentbtn: Text(
-                                  removeAll,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )
-                            ],
-                          ))),
-                  TabBarFooter(),
-                ]),
+                                backgroundColor:
+                                    MaterialStatePropertyAll<Color>(
+                                        Colors.blueAccent),
+                              ),
+                              contentbtn: Text(
+                                removeAll,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      TabBarFooter(),
+                    ],
+                  ),
+                ),
                 Button(
                   click: this.clickButtonAddTask,
                   style: ButtonStyle(
