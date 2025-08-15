@@ -14,7 +14,7 @@
     "create_task": {
         "create": "Crear Tareas",
         "title": "Crear tarea",
-        "descripcion": "Descripción de la tarea",
+        "description": "Descripción de la tarea",
         "btn_generate": "Generar",
         "btn_create": "Crear Tarea",
         "model_text": "Modelo de IA:",
