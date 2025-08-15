@@ -49,5 +49,8 @@
             "btn_return": "Devolver",
             "status": "online"
         }
+    },
+    "completed_tasks": {
+        "tasks_completeds": "tareas completadas"
     }
 }

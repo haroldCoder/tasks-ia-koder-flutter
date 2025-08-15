@@ -1,19 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Visited_App/VisitedService.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Visited_App/interface/visited_table.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
-import 'package:tasks_ia_koderx/src/widgets/Animations/Animations.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/shared/class/button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Search.dart';
@@ -131,43 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         if (taskController.tasks
                             .where((task) => task.complete == 0)
                             .isEmpty) {
-                          return Center(
-                              child: ListView(
-                            children: [
-                              Animations(
-                                duration: Duration(seconds: 1),
-                                child: SvgPicture.asset('lib/assets/check.svg',
-                                    width: 50, height: 50),
-                                transitionBuilder: (Widget? child,
-                                    AnimationController controller) {
-                                  return ScaleTransition(
-                                    scale: TweenSequence<double>([
-                                      TweenSequenceItem(
-                                          tween: Tween(begin: 1.0, end: 1.2),
-                                          weight: 50),
-                                      TweenSequenceItem(
-                                          tween: Tween(begin: 1.2, end: 1.0),
-                                          weight: 50),
-                                    ]).animate(controller),
-                                    child: Transform.rotate(
-                                      angle: controller.value * 2.0 * pi,
-                                      child: child,
-                                    ),
-                                  );
-                                },
-                              ),
-                              SizedBox(height: 30),
-                              Text(
-                                noTasks,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white54,
-                                    decoration: TextDecoration.none,
-                                    fontSize: 25,
-                                    fontFamily: 'rubik'),
-                              )
-                            ],
-                          ));
+                          return AreNoTasks();
                         }
                         return SingleChildScrollView(
                             child: Container(

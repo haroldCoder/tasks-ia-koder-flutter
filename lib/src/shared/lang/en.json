@@ -50,5 +50,8 @@
             "btn_return": "Return",
             "status": "online"
         }
+    },
+    "completed_tasks": {
+        "tasks_completeds": "completed tasks"
     }
 }
