@@ -71,5 +71,13 @@
         "upload_succesfully": "Tarea subida con éxito",
         "upload_error": "Ocurrio un error",
         "back": "Volver"
+    },
+    "settings": {
+        "title": "Configuraciones",
+        "username": "Usuario",
+        "email": "Correo electronico",
+        "mode": "Modo: ",
+        "change_premium": "Cambiar a premium",
+        "log_out": "Cerrra sesión"
     }
 }
