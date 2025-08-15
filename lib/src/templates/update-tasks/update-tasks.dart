@@ -3,7 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/constants/updateTaskOptions.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/PopUp/PopUp.dart';
@@ -55,7 +57,7 @@ class UpdateTasks extends StatefulWidget {
             left: BorderSide(color: Colors.green, width: 2),
             right: BorderSide(color: Colors.green, width: 2)),
         title: Text(
-          "Tarea actualizada exitosamente",
+          taskUpdateSuccesfully,
           style: TextStyle(color: Colors.green),
         ),
       ));
@@ -70,7 +72,7 @@ class UpdateTasks extends StatefulWidget {
             left: BorderSide(color: Colors.red, width: 2),
             right: BorderSide(color: Colors.red, width: 2)),
         title: Text(
-          "Ocurrio un error",
+          ocurredError,
           style: TextStyle(color: Colors.red),
         ),
       ));
@@ -111,7 +113,7 @@ class _UpdateTasksState extends State<UpdateTasks> {
                     click: () {
                       widget.updateDate(context);
                     },
-                    contentbtn: Text("Actualizar",
+                    contentbtn: Text(btnUpdate,
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 17,
@@ -210,16 +212,12 @@ class _UpdateTasksState extends State<UpdateTasks> {
                                             bottom: ShadBorderSide(
                                                 color: Colors.blueAccent,
                                                 width: 2))),
-                                    options: {
-                                      "1": 'Alta',
-                                      "2": 'Media',
-                                      "3": 'Baja'
-                                    },
+                                    options: updateTaskOptions,
                                     placeholder: widget.priority == 1
-                                        ? Text("Alta")
+                                        ? Text(hightPriorityHome)
                                         : widget.priority == 2
-                                            ? Text("Media")
-                                            : Text("Baja")),
+                                            ? Text(mediumPriorityHome)
+                                            : Text(lowPriorityHome)),
                               ),
                               Button(
                                 click: () {
@@ -244,8 +242,8 @@ class _UpdateTasksState extends State<UpdateTasks> {
                                 ),
                                 contentbtn: Text(
                                   widget.complete == 1
-                                      ? "Completada"
-                                      : "Completadar",
+                                      ? btnComplete
+                                      : btnCompleted,
                                   style: TextStyle(color: widget.complete == 1
                                       ? Colors.white
                                       : Colors.blueAccent),

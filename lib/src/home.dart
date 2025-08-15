@@ -9,6 +9,7 @@ import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Visited_App/VisitedService.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Visited_App/interface/visited_table.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
@@ -157,7 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               ),
                               SizedBox(height: 30),
                               Text(
-                                "No hay tareas pendientes",
+                                noTasks,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: Colors.white54,
@@ -219,8 +220,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 contentbtn: Obx(() {
                                   return Text(
                                     taskController.selectedTasks.length == 0
-                                        ? "Seleccionar todo"
-                                        : "Deseleccionar todo",
+                                        ? selectAll
+                                        : deselectAll,
                                     style: TextStyle(color: Color(0xFF4439FF)),
                                   );
                                 }),
@@ -240,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                           Colors.blueAccent),
                                 ),
                                 contentbtn: Text(
-                                  "Eliminar seleccionados",
+                                  removeAll,
                                   style: TextStyle(color: Colors.white),
                                 ),
                               )

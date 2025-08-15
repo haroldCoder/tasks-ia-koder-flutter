@@ -24,5 +24,30 @@
     },
     "voice_ai": {
         "pressed": "Manten presionado"
+    },
+    "home": {
+        "search": "Buscar tareas...",
+        "btn_complete": "Completar",
+        "btn_completed": "Completada",
+        "btn_update": "Actualizar",
+        "select_all": "Seleccionar todo",
+        "deselect_all": "Deseleccionar todo",
+        "remove_all": "Eliminar seleccionados",
+        "no_task": "No hay tareas pendientes",
+        "low_priority": "Baja",
+        "medium_priority": "Media",
+        "hight_priority": "Alta",
+        "task_update_successfully": "Tarea actualizada exitosamente",
+        "error_ocurred": "Ocurrio un error",
+        "task_container": {
+            "warning": "Advertencia",
+            "question": "Esta seguro que quiere eliminar esta tarea?",
+            "continue": "Continuar",
+            "task_remove": "Tarea eliminada exitosamente",
+            "cancel": "Cancelar",
+            "btn_edit": "Editar",
+            "btn_return": "Devolver",
+            "status": "online"
+        }
     }
 }
