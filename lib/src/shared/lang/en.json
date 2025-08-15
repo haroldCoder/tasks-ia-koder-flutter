@@ -14,7 +14,7 @@
     "create_task": {
         "create": "Create Tasks",
         "title": "Create task",
-        "descripcion": "Task description",
+        "description": "Task description",
         "btn_generate": "Generate",
         "btn_create": "Create Task",
         "model_text": "AI Model:",

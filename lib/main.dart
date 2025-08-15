@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasks_ia_koderx/preferencesApp.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
@@ -39,10 +40,18 @@ void main() async {
       storageBucket: dotenv.env["FIREBASE_BUCKET"].toString(),
     ),
   );
-  runApp(EasyLocalization(
-      child: const MyApp(),
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove('locale');
+
+  runApp(
+    EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('es')],
-      path: 'lib/src/shared/lang'));
+      path: 'lib/src/shared/lang',
+      startLocale: const Locale('en'),
+      saveLocale: false,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -183,8 +192,6 @@ class MyApp extends StatelessWidget {
             },
           )
         ]);
-
-        context.setLocale(Locale('es'));
 
     return ShadApp.custom(
       appBuilder: (BuildContext context) {

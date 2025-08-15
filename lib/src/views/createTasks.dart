@@ -8,6 +8,7 @@ import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/LanguagueChange.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
@@ -95,22 +96,28 @@ class Createtasks extends StatelessWidget {
                 Container(
                     height: 50,
                     width: double.infinity,
-                    child: Stack(children: [
-                      Button(
-                        style: ButtonStyle(
-                            alignment: Alignment.centerLeft,
-                            padding: MaterialStatePropertyAll<EdgeInsets>(
-                                EdgeInsets.all(0)),
-                            backgroundColor: MaterialStatePropertyAll<Color>(
-                                Colors.transparent)),
-                        click: () => backPage(context),
-                        contentbtn: Icon(
-                          Icons.arrow_back,
-                          size: 25,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ])),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Button(
+                            style: ButtonStyle(
+                                alignment: Alignment.centerLeft,
+                                padding: MaterialStatePropertyAll<EdgeInsets>(
+                                    EdgeInsets.all(0)),
+                                backgroundColor:
+                                    MaterialStatePropertyAll<Color>(
+                                        Colors.transparent)),
+                            click: () => backPage(context),
+                            contentbtn: Icon(
+                              Icons.arrow_back,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                          ),
+                          LanguagueChange(
+                              background: Color(0xFF202020),
+                              selectedBackground: Colors.blueAccent)
+                        ])),
                 Container(
                     margin: EdgeInsets.only(top: 30),
                     child: SingleChildScrollView(
@@ -133,7 +140,8 @@ class Createtasks extends StatelessWidget {
                           SizedBox(height: 25),
                           Align(
                             alignment: Alignment.topRight,
-                            child: SelectModelAI(enabled: connectionGlobal.connection.value),
+                            child: SelectModelAI(
+                                enabled: connectionGlobal.connection.value),
                           ),
                           Container(
                             margin: EdgeInsets.only(top: 30, bottom: 20),
@@ -160,11 +168,12 @@ class Createtasks extends StatelessWidget {
                             margin: EdgeInsets.symmetric(vertical: 10),
                           ),
                           Textboxmagnamentstream(
-                              value: task.value.description,
-                              handleChangeDescriptionTask: (dynamic value) =>
-                                  handleChangeDescriptionTask(value),
-                              task: task,
-                              contextmain: context,),
+                            value: task.value.description,
+                            handleChangeDescriptionTask: (dynamic value) =>
+                                handleChangeDescriptionTask(value),
+                            task: task,
+                            contextmain: context,
+                          ),
                           SizedBox(height: 4),
                           Buttonai(
                             task: task,
