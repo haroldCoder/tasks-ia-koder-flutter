@@ -65,5 +65,11 @@
         "friday": "Viernes",
         "saturday": "Sábado",
         "sunday": "Domingo"
+    },
+    "upload_task": {
+        "btn_upload_view": "Subir a la cloud",
+        "upload_succesfully": "Tarea subida con éxito",
+        "upload_error": "Ocurrio un error",
+        "back": "Volver"
     }
 }

@@ -27,7 +27,6 @@
     },
     "home": {
         "search": "Search tasks...",
-        
         "btn_complete": "Complete",
         "btn_completed": "Completed",
         "btn_update": "Update",
@@ -55,16 +54,22 @@
         "tasks_completeds": "completed tasks"
     },
     "graphs": {
-    "state_tasks": "Task Status",
-    "completeds": "Completed",
-    "pendigns": "Pending",
-    "interactions_day": "Interactions per Day",
-    "monday": "Monday",
-    "tuesday": "Tuesday",
-    "wednesday": "Wednesday",
-    "thursday": "Thursday",
-    "friday": "Friday",
-    "saturday": "Saturday",
-    "sunday": "Sunday"
-}
+        "state_tasks": "Task Status",
+        "completeds": "Completed",
+        "pendigns": "Pending",
+        "interactions_day": "Interactions per Day",
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday",
+        "upload_task": {
+            "btn_upload_view": "Upload to the cloud",
+            "upload_succesfully": "Task uploaded successfully",
+            "upload_error": "An error occurred",
+            "back": "Back"
+        }
+    }
 }

@@ -68,13 +68,15 @@ class Completedtasks extends StatelessWidget {
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return Obx(() {
+                }
+                return Obx(() {
+                  if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     if (taskController.tasks
                         .where((task) => task.complete == 1)
                         .isEmpty) {
                       return AreNoTasks();
                     }
+                  }
 
                     final tasks = snapshot.data;
                     final seenIds = <int>{};
@@ -122,9 +124,7 @@ class Completedtasks extends StatelessWidget {
                                 .toList(),
                           ),
                         ));
-                  });
-                }
-                return SizedBox();
+                });
               },
             ),
           ),
