@@ -37,9 +37,9 @@ class Buttonai extends StatelessWidget {
           task.update((tk) {
             if (tk != null) {
               if (ref == task.value.title_task) {
-                tk.title_task = value;
+                tk.title_task = value.trim();
               } else if (ref == task.value.description) {
-                tk.description = value;
+                tk.description = value.trim();
               }
             }
           });

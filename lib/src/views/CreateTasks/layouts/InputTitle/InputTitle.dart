@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/TextInputKoder/TextInputKoder.dart';
@@ -20,6 +22,21 @@ class _InputTitle extends State<InputTitle> {
     // TODO: implement initState
     super.initState();
     _controller = TextEditingController(text: widget.value);
+  }
+
+  @override
+  void didUpdateWidget(covariant InputTitle oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.value != oldWidget.value) {
+      final previousSelection = _controller.selection;
+      _controller.value = TextEditingValue(
+        text: widget.value,
+        selection: previousSelection.copyWith(
+          baseOffset: min(previousSelection.start, widget.value.length),
+          extentOffset: min(previousSelection.end, widget.value.length),
+        ),
+      );
+    }
   }
 
   @override

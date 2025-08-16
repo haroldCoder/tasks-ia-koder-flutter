@@ -1,13 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ErrorAgent/ErrorAgentIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ErrorAgent/showErrorAgentIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/InputTitle/InputTitle.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
@@ -59,12 +55,6 @@ class InputMagnamentStreams extends StatelessWidget {
               }
 
               if (snapshot.hasData && select) {
-                final data = jsonDecode(snapshot.data!.body);
-                dynamic content =
-                    jsonEncode(data["choices"][0]["message"]["content"]);
-                content =
-                    utf8.decode(latin1.encode(content), allowMalformed: true);
-
                 return InputTitle(
                     value: value, onChange: handleChangeTitleTask);
               } else if (snapshot.hasError && select) {
