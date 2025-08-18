@@ -57,7 +57,8 @@ class InputMagnamentStreams extends StatelessWidget {
               if (snapshot.hasData && select) {
                 return InputTitle(
                     value: value, onChange: handleChangeTitleTask);
-              } else if (snapshot.hasError && select) {
+              } else if (snapshot.hasError && select && !configureAgentsIa.errorShown) {
+                configureAgentsIa.errorShown = true;
                 showErrorAgentIA(
                     context: contextmain,
                     description: snapshot.error.toString());

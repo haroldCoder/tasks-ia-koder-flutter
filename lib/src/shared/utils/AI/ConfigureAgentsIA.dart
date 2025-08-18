@@ -28,11 +28,14 @@ class ListenAgentsIAChanges extends GetxController{
 class ConfigureAgentsIa extends GetxController{
   final StreamController<http.Response> _streamController = StreamController<http.Response>.broadcast();
   final _listenAgentsIAChanges = Get.put(ListenAgentsIAChanges());
-  
+  bool _errorShown = false;
 
   Stream<http.Response> get stream => _streamController.stream;
+  bool get errorShown => _errorShown;
+  set errorShown(bool value) => _errorShown = value;
 
   Future<void> makeBrain(ModelIA model, List<MessagesIAInterface> messages, [ElementId? element]) async {
+    _errorShown = false;
     try {
       if(element != null){
         _listenAgentsIAChanges.assignElementSelect(element);
