@@ -53,7 +53,8 @@ class Textboxmagnamentstream extends StatelessWidget {
                   return CircularProgressIndicator(
                     color: Colors.blueAccent,
                   );
-                } else if (snapshot.hasError && select) {
+                } else if (snapshot.hasError && select && !configureAgentsIa.errorShown) {
+                  configureAgentsIa.errorShown = true;
                   showErrorAgentIA(
                       context: context, description: snapshot.error.toString());
                 }
