@@ -4,6 +4,7 @@ import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/taskContainer/lang.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/users/stateTaskServer.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
@@ -40,6 +41,7 @@ class _TaskContainerState extends State<TaskContainer> {
   TaskController taskController = Get.put(TaskController());
   late StateTaskServer stateTaskServer;
   UploadTask uploadTask = Get.put(UploadTask());
+  AuthService authService = Get.put(AuthService());
 
   @override
   void initState() {
@@ -215,7 +217,7 @@ class _TaskContainerState extends State<TaskContainer> {
                             color: Colors.blueAccent,
                           ),
                         );
-                      } else if (snapshot.hasData && snapshot.data == true) {
+                      } else if (snapshot.hasData && snapshot.data == true && authService.logged.value) {
                         return Container(
                           width: 20,
                           height: 20,
@@ -226,7 +228,7 @@ class _TaskContainerState extends State<TaskContainer> {
                         );
                       } else if (snapshot.hasError) {
                         return Icon(
-                          Icons.wifi_off,
+                          Icons.cloud_off,
                           color: Colors.red,
                         );
                       }
