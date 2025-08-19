@@ -24,10 +24,10 @@
     },
     "voice_ai": {
         "pressed": "Manten presionado",
-        "generate_title": "Generate a short and descriptive title based on a provided task idea: ",
-        "title_obs": ". Return it without explanations, only the title.",
-        "generate_description": "Generate a short description of what this task might include: ",
-        "description_obs": ". Do not give me an introduction."
+        "generate_title": "Genera un título corto y descriptivo basado en una idea de tarea proporcionada: ",
+        "title_obs": ". Devuélvelo sin explicaciones, solo el título.",
+        "generate_description": "Genera una breve descripción de lo que esta tarea podría incluir: ",
+        "description_obs": ". No me des una introducción."
     },
     "home": {
         "search": "Buscar tareas...",
