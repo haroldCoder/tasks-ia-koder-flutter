@@ -5,13 +5,15 @@ import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
 class GetIdUser {
   late int Iduser;
 
-  Future<int> buildRequest(user) async {
+  Future<int> buildRequest(String user) async {
+    if(user == ""){
+      return 0;
+    }
+
     var response = await Requests(baseUrl: dotenv.env["API_URL"].toString())
-        .request(method: HttpMethod.get, endpoint: "users/user/${user}");
+        .request(method: HttpMethod.get, endpoint: "v1/users/users/$user");
 
     Iduser = response["response"]["id"];
-
-    print(response);
 
     return Iduser;
   }

@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'dart:async';
 import 'package:tasks_ia_koderx/src/shared/States/storage/storageManage.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 
@@ -47,14 +48,12 @@ class DatabaseTasksHelper {
     return result.map((map) => CreateTasksState.fromMap(map)).toList();
   }
 
-  Future<int> update(CreateTasksState task, int id) async {
+  Future<int> update(UpdateTasksInterface task, int id) async {
     Database db = await this.storageManage.database;
-    Map<String, dynamic> taskMap = task.toMap();
 
-    taskMap.remove(columnId);
     return await db.update(
       table,
-      taskMap,
+      task.toMap(),
       where: '$columnId = ?',
       whereArgs: [id],
     );

@@ -5,7 +5,7 @@ class CreateTasksState {
       this.value_priority = 1,
       this.id,
       this.complete = 0});
-  final int? id;
+  int? id;
   String title_task;
   String description;
   int value_priority;
@@ -34,6 +34,10 @@ class CreateTasksState {
   @override
   String toString() {
     return 'Task(id: $id, title: $title_task, description: $description, priority: $value_priority, complete: $complete';
+  }
+
+  void setId(int id) {
+    this.id = id;
   }
 
   void setTitle(String title) {

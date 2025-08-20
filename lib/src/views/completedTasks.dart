@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/completedTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
+import 'package:tasks_ia_koderx/src/views/completedTasks/layouts/TasksDisplay/TaskDisplay.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks/utils/uploadedTasks.dart';
 import '../shared/States/Tasks/TaskController.dart';
 import '../shared/States/Tasks/task_service.dart';
 import '../widgets/Search.dart';
-import '../widgets/TaskContainer/TaskContainer.dart';
 import 'states/createTaskState.dart';
 
 class Completedtasks extends StatelessWidget {
@@ -21,7 +22,6 @@ class Completedtasks extends StatelessWidget {
   final TaskController taskController = Get.put(TaskController());
   final UploadedTasks uploadedTasks = UploadedTasks();
   Rx<Color> color_app;
-  late var tasksUser = [];
 
   getUploadedTasksUser() async {
     uploadedTasks.getUploadedTasks(await getEmailUser());
@@ -29,12 +29,9 @@ class Completedtasks extends StatelessWidget {
 
   ChangeToPendingTask(int id, CreateTasksState task) async {
     await TaskService().updateTask(
-        CreateTasksState(
-            id: task.id ?? 0,
-            title_task: task.title_task,
-            description: task.description,
-            value_priority: task.value_priority,
-            complete: 0),
+        UpdateTasksInterface(
+          completed: 0
+        ),
         id);
   }
 
@@ -89,50 +86,12 @@ class Completedtasks extends StatelessWidget {
                   }
 
                   final tasks = snapshot.data;
-                  final seenIds = <int>{};
-                  tasksUser = [
-                    ...tasks.where((tk) => seenIds.add(tk.id_task_app)),
-                    ...taskController.tasks
-                        .where((task) => task.complete == 1)
-                        .where((tk) => seenIds.add(tk.id!))
-                  ];
 
-                  return Scrollbar(
-                      thumbVisibility: true,
-                      thickness: 6,
-                      radius: Radius.circular(10),
-                      trackVisibility: true,
-                      interactive: true,
-                      child: SingleChildScrollView(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                        child: Column(
-                          spacing: 10,
-                          children: tasksUser
-                              .map<Widget>((task) => TaskContainer(
-                                    online:
-                                        task.runtimeType != CreateTasksState,
-                                    id: task.runtimeType == CreateTasksState
-                                        ? task.id
-                                        : task.id_task_app,
-                                    completed:
-                                        task.runtimeType == CreateTasksState
-                                            ? true
-                                            : task.completed == 1,
-                                    title: task.runtimeType == CreateTasksState
-                                        ? task.title_task
-                                        : task.title,
-                                    description: task.description,
-                                    priority:
-                                        task.runtimeType == CreateTasksState
-                                            ? task.value_priority
-                                            : task.priority,
-                                    onClick: () =>
-                                        ChangeToPendingTask(task.id, task),
-                                  ))
-                              .toList(),
-                        ),
-                      ));
+                  return TaskDisplay(
+                    localTasks: taskController.tasks.where((task) => task.complete == 1).toList(),
+                    onlineTasks: tasks,
+                    changeToPendingTask: ChangeToPendingTask,
+                  );
                 });
               },
             ),
