@@ -9,7 +9,7 @@ import 'package:tasks_ia_koderx/src/shared/utils/users/stateTaskServer.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 import 'package:get/get.dart';
-import 'package:tasks_ia_koderx/src/widgets/MarkDown/Markdown.dart';
+import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/showUserNotLogged.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/uploadTask.dart';
 
 class TaskContainer extends StatefulWidget {
@@ -50,6 +50,10 @@ class _TaskContainerState extends State<TaskContainer> {
   }
 
   void UploadTaskMethod(BuildContext context) {
+    if (!authService.logged.value) {
+      showUserNotLogged(context, authService);
+      return;
+    }
     uploadTask.Upload(
         context,
         TasksInterface(
@@ -217,7 +221,9 @@ class _TaskContainerState extends State<TaskContainer> {
                             color: Colors.blueAccent,
                           ),
                         );
-                      } else if (snapshot.hasData && snapshot.data == true && authService.logged.value) {
+                      } else if (snapshot.hasData &&
+                          snapshot.data == true &&
+                          authService.logged.value) {
                         return Container(
                           width: 20,
                           height: 20,
