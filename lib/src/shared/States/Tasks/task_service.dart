@@ -1,4 +1,5 @@
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/database_helper.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 
 class TaskService {
@@ -10,7 +11,7 @@ class TaskService {
     return await DatabaseTasksHelper.instance.getTasks();
   }
 
-  Future<int> updateTask(CreateTasksState task, int id) async{
+  Future<int> updateTask(UpdateTasksInterface task, int id) async{
     return await DatabaseTasksHelper.instance.update(task, id);
   }
 
