@@ -22,37 +22,39 @@ class _ButtongoogleState extends State<Buttongoogle> {
 
   @override
   Widget build(BuildContext context) {
-    return Button(
-        click: () async {
-          if (!authService.logged.value) {
-            await authService.SignInWithGoogle();
-            await loginUser.login(
-                authService.current_user.value?.email,
-                authService.current_user.value?.phoneNumber,
-                authService.current_user.value?.displayName ?? "");
-            isUserPremium
-                .verifyUser(authService.current_user.value!.email.toString());
-          } else {
-            await authService.logoutGoogle();
-            isUserPremium.ResetPremiumUser();
-          }
-        },
-        width: MediaQuery.of(context).size.width * 0.9,
-        style: ButtonStyle(
-            shape: MaterialStatePropertyAll<OutlinedBorder>(
-                RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12))),
-            backgroundColor: MaterialStatePropertyAll<Color>(Colors.white10)),
-        contentbtn: Obx(() {
-          return !authService.logged.value
-              ? Image.asset(
-                  'lib/assets/googleicon.png',
-                  width: 30,
-                )
-              : Text(
-                  logOut,
-                  style: TextStyle(color: Colors.blueAccent),
-                );
-        }));
+    return Obx(() {
+      final user = authService.current_user.value;
+      return Button(
+          click: () async {
+            if (!authService.logged.value) {
+              await authService.SignInWithGoogle();
+              await loginUser.login(
+                  user?.email, user?.phoneNumber, user?.displayName ?? "");
+              if (user != null) {
+                isUserPremium.verifyUser(user.email.toString());
+              }
+            } else {
+              await authService.logoutGoogle();
+              isUserPremium.ResetPremiumUser();
+            }
+          },
+          width: MediaQuery.of(context).size.width * 0.9,
+          style: ButtonStyle(
+              shape: MaterialStatePropertyAll<OutlinedBorder>(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12))),
+              backgroundColor: MaterialStatePropertyAll<Color>(Colors.white10)),
+          contentbtn: Obx(() {
+            return !authService.logged.value
+                ? Image.asset(
+                    'lib/assets/googleicon.png',
+                    width: 30,
+                  )
+                : Text(
+                    logOut,
+                    style: TextStyle(color: Colors.blueAccent),
+                  );
+          }));
+    });
   }
 }

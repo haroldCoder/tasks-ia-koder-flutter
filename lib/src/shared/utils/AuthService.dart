@@ -50,7 +50,6 @@ class AuthService extends GetxController {
           await FirebaseAuth.instance.signInWithCredential(credential);
       logged.value = true;
       current_user.value = userCredential.user;
-      await prefs.setBool('logged', logged.value);
       if (current_user.value != null) {
         final userMap = {
           'uid': current_user.value!.uid,
@@ -61,6 +60,7 @@ class AuthService extends GetxController {
         final userJson = jsonEncode(userMap);
         await prefs.setString('data_user', userJson);
       }
+      await prefs.setBool('logged', logged.value);
     } catch (e) {
       print("Error al iniciar sesión: $e");
     }
