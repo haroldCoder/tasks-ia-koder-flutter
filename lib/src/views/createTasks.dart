@@ -4,8 +4,9 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/LanguagueChange.dart';
@@ -15,7 +16,6 @@ import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/type
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnamentStreams.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnamentStream.dart';
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
 import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/utils/convertBrainToTask.dart';
@@ -23,7 +23,7 @@ import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/utils/convertBrainToTa
 class Createtasks extends StatelessWidget {
   Createtasks({super.key, required this.color_app});
   Rx<Color> color_app;
-  Rx<CreateTasksState> task = CreateTasksState().obs;
+  Rx<TaskDataManage> task = TaskDataManage().obs;
   final convertBrainToTask = Get.put(ConvertBrainToTask());
   final configApp = Get.put(ConfigAppState());
   final connectionGlobal = Get.put(ConnectionGlobal());
@@ -49,14 +49,14 @@ class Createtasks extends StatelessWidget {
 
   handeChangePriority(value) {
     task.update((t) {
-      if (t != null) t.setPriorityValue(value);
+      if (t != null) t.setPriority(value);
     });
     task.refresh();
   }
 
   createTask(BuildContext context) async {
-    TaskService().saveTasks(task.value.title_task, task.value.description,
-        task.value.value_priority);
+    TaskController().createTask(task.value.title, task.value.description,
+        task.value.priority);
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text("Tarea creada con éxito"),
@@ -152,7 +152,7 @@ class Createtasks extends StatelessWidget {
                               body: InputMagnamentStreams(
                                 handleChangeTitleTask: (dynamic value) =>
                                     handleChangeTitleTask(value),
-                                value: task.value.title_task,
+                                value: task.value.title,
                                 task: task,
                                 contextmain: context,
                               ),
@@ -160,7 +160,7 @@ class Createtasks extends StatelessWidget {
                           ),
                           Buttonai(
                             task: task,
-                            ref: task.value.title_task,
+                            ref: task.value.title,
                             typeref: Typeref.title,
                             disabled: !connectionGlobal.connection.value,
                           ),
@@ -186,7 +186,7 @@ class Createtasks extends StatelessWidget {
                             width: double.infinity,
                             height: 140,
                             child: Radiocheck(
-                              value: task.value.value_priority,
+                              value: task.value.priority,
                               onChange: handeChangePriority,
                               list: priorityOptions,
                             ),

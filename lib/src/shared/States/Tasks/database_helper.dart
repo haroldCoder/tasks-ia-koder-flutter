@@ -1,11 +1,11 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:tasks_ia_koderx/src/shared/States/repository/storageRepository.dart';
 import 'dart:async';
 import 'package:tasks_ia_koderx/src/shared/States/storage/storageManage.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
-
-class DatabaseTasksHelper {
+class DatabaseTasksHelper implements StorageRepository {
   static String table = 'tasks';
   static const columnId = 'id';
   static const columnTaskName = 'taskName';
@@ -33,6 +33,7 @@ class DatabaseTasksHelper {
       ''');
   }
 
+  @override
   Future<int> insert(String title, String description, int priority) async {
     Database db = await this.storageManage.database;
     return await db.insert(table, {
@@ -42,12 +43,14 @@ class DatabaseTasksHelper {
     });
   }
 
-  Future<List<CreateTasksState>> getTasks() async {
+  @override
+  Future<List<TasksInterface>> getTasks() async {
     Database db = await this.storageManage.database;
     List<Map<String, dynamic>> result = await db.query(table);
-    return result.map((map) => CreateTasksState.fromMap(map)).toList();
+    return result.map((map) => TasksInterface.fromMap(map)).toList();
   }
 
+  @override
   Future<int> update(UpdateTasksInterface task, int id) async {
     Database db = await this.storageManage.database;
 
@@ -59,6 +62,7 @@ class DatabaseTasksHelper {
     );
   }
 
+  @override
   Future<int> delete(int id) async {
     Database db = await this.storageManage.database;
     return await db.delete(
@@ -68,7 +72,7 @@ class DatabaseTasksHelper {
     );
   }
 
-  Future<int> delete_several(List<int> ids) async{
+  Future<int> deleteSeveral(List<int> ids) async{
     Database db = await this.storageManage.database;
 
     try {

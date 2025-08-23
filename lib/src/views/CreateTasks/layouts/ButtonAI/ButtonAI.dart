@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnMessageIA.dart';
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
-
 import '../../../../shared/utils/AI/ConfigureAI.dart';
 import '../../../../widgets/Button/Button.dart';
 import '../../utils/generateBrain.dart';
 
 class Buttonai extends StatelessWidget {
   ConfigureAI configureAI = ConfigureAI();
-  Rx<CreateTasksState> task;
+  Rx<TasksInterface> task;
   String ref;
   final configureAgentsIa = Get.find<ConfigureAgentsIa>();
   final configApp = Get.put(ConfigAppState());
@@ -36,8 +35,8 @@ class Buttonai extends StatelessWidget {
         generateBrain(configureAI.model, ref, (value) {
           task.update((tk) {
             if (tk != null) {
-              if (ref == task.value.title_task) {
-                tk.title_task = value.trim();
+              if (ref == task.value.title) {
+                tk.title = value.trim();
               } else if (ref == task.value.description) {
                 tk.description = value.trim();
               }

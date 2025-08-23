@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 
 void updateDataTask(
-    Rx<CreateTasksState> task, String value, ElementId element) {
+    Rx<TaskDataManage> task, String value, ElementId element) {
   switch (element) {
     case ElementId.title_input:
       task.update((t) {

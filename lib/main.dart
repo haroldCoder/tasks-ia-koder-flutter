@@ -93,7 +93,7 @@ class MyApp extends StatelessWidget {
                   },
                   child: MyHomePage(
                     title: "Tasks App Koderx",
-                    color_app: configAppState.color_theme,
+                    colorApp: configAppState.color_theme,
                   ));
             },
           ),
@@ -118,7 +118,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: '/check',
             builder: (context, state) => Completedtasks(
-              color_app: configAppState.color_theme,
+              colorApp: configAppState.color_theme,
             ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
@@ -131,7 +131,7 @@ class MyApp extends StatelessWidget {
                         position: offsetAnimation, child: child);
                   },
                   child: Completedtasks(
-                    color_app: configAppState.color_theme,
+                    colorApp: configAppState.color_theme,
                   ));
             },
           ),

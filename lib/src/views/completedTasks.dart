@@ -7,38 +7,32 @@ import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/Connection
 import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
-import 'package:tasks_ia_koderx/src/views/completedTasks/layouts/TasksDisplay/TaskDisplay.dart';
+import 'package:tasks_ia_koderx/src/views/completedTasks/layouts/TasksDisplay/TasksDisplay.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks/utils/uploadedTasks.dart';
 import '../shared/States/Tasks/TaskController.dart';
-import '../shared/States/Tasks/task_service.dart';
 import '../widgets/Search.dart';
-import 'states/createTaskState.dart';
 
 class Completedtasks extends StatelessWidget {
-  Completedtasks({super.key, required this.color_app}) {
+  Completedtasks({super.key, required this.colorApp}) {
     getUploadedTasksUser();
   }
 
   final TaskController taskController = Get.put(TaskController());
   final UploadedTasks uploadedTasks = UploadedTasks();
-  Rx<Color> color_app;
+  Rx<Color> colorApp;
 
   getUploadedTasksUser() async {
     uploadedTasks.getUploadedTasks(await getEmailUser());
   }
 
-  ChangeToPendingTask(int id, CreateTasksState task) async {
-    await TaskService().updateTask(
-        UpdateTasksInterface(
-          completed: 0
-        ),
-        id);
+  changeToPendingTask(int id) async {
+    await taskController.updateTask(UpdateTasksInterface(completed: 0), id);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: color_app.value,
+      backgroundColor: colorApp.value,
       body: SafeArea(
           child: Column(
         children: [
@@ -79,18 +73,27 @@ class Completedtasks extends StatelessWidget {
                 return Obx(() {
                   if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     if (taskController.tasks
-                        .where((task) => task.complete == 1)
+                        .where((task) => task.completed == 1)
                         .isEmpty) {
                       return AreNoTasks();
                     }
+                    return TaskDisplay(
+                      localTasks: taskController.tasks
+                          .where((task) => task.completed == 1)
+                          .toList(),
+                      onlineTasks: [],
+                      changeToPendingTask: changeToPendingTask,
+                    );
                   }
 
                   final tasks = snapshot.data;
 
                   return TaskDisplay(
-                    localTasks: taskController.tasks.where((task) => task.complete == 1).toList(),
+                    localTasks: taskController.tasks
+                        .where((task) => task.completed == 1)
+                        .toList(),
                     onlineTasks: tasks,
-                    changeToPendingTask: ChangeToPendingTask,
+                    changeToPendingTask: changeToPendingTask,
                   );
                 });
               },
@@ -104,7 +107,7 @@ class Completedtasks extends StatelessWidget {
                   right: 110,
                   child: Text(
                       style: TextStyle(color: Colors.white30, fontSize: 17),
-                      '${taskController.tasks.where((tasks) => tasks.complete == 1).length} ${tasksCompleted}'))
+                      '${taskController.tasks.where((tasks) => tasks.completed == 1).length} ${tasksCompleted}'))
             ],
           )),
           TabBarFooter()

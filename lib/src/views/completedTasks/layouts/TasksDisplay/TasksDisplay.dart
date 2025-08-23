@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/route_manager.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
+import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasksServer.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
 
 class TaskDisplay extends StatefulWidget {
@@ -14,9 +11,9 @@ class TaskDisplay extends StatefulWidget {
       required this.localTasks,
       required this.onlineTasks,
       required this.changeToPendingTask});
-  final List<CreateTasksState> localTasks;
+  final List<TasksInterface> localTasks;
   final List<TasksServer> onlineTasks;
-  final void Function(int id, CreateTasksState task) changeToPendingTask;
+  final void Function(int id) changeToPendingTask;
 
   @override
   State<TaskDisplay> createState() => _TaskDisplayState();
@@ -24,27 +21,32 @@ class TaskDisplay extends StatefulWidget {
 
 class _TaskDisplayState extends State<TaskDisplay> {
   List<dynamic> tasksUser = [];
-  TaskService taskService = TaskService();
+  TaskController taskController = TaskController();
 
   @override
   void initState() {
     super.initState();
-    int lastIdOnline = widget.onlineTasks[widget.onlineTasks.length - 1].id_task_app;
-    final localMap = {for (var tk in widget.localTasks) tk.id: tk};
 
-    for (var tkOnline in widget.onlineTasks) {
-      final tkLocal = localMap[tkOnline.id_task_app];
-      if (tkLocal != null) {
-        taskService.updateTask(
-          UpdateTasksInterface(id: lastIdOnline + 1),
-          tkLocal.id!,
-        );
+    if (widget.onlineTasks.isNotEmpty) {
+      int lastIdOnline =
+          widget.onlineTasks[widget.onlineTasks.length - 1].id_task_app;
+      final localMap = {for (var tk in widget.localTasks) tk.id: tk};
+
+      for (var tkOnline in widget.onlineTasks) {
+        final tkLocal = localMap[tkOnline.id_task_app];
+        if (tkLocal != null) {
+          taskController.updateTask(
+            UpdateTasksInterface(id: lastIdOnline + 1),
+            tkLocal.id,
+          );
+        }
       }
+
+      tasksUser = [...widget.localTasks, ...widget.onlineTasks];
     }
-
-    print(widget.localTasks[0].id);
-
-    tasksUser = [...widget.localTasks, ...widget.onlineTasks];
+    else{
+      tasksUser = widget.localTasks;
+    }
   }
 
   @override
@@ -61,22 +63,21 @@ class _TaskDisplayState extends State<TaskDisplay> {
             spacing: 10,
             children: tasksUser
                 .map<Widget>((task) => TaskContainer(
-                      online: task.runtimeType != CreateTasksState,
-                      id: task.runtimeType == CreateTasksState
+                      online: task.runtimeType != TasksInterface,
+                      id: task.runtimeType == TasksInterface
                           ? task.id
                           : task.id_task_app,
-                      completed: task.runtimeType == CreateTasksState
+                      completed: task.runtimeType == TasksInterface
                           ? true
                           : task.completed == 1,
-                      title: task.runtimeType == CreateTasksState
-                          ? task.title_task
+                      title: task.runtimeType == TasksInterface
+                          ? task.title
                           : task.title,
                       description: task.description,
-                      priority: task.runtimeType == CreateTasksState
-                          ? task.value_priority
+                      priority: task.runtimeType == TasksInterface
+                          ? task.priority
                           : task.priority,
-                      onClick: () =>
-                          widget.changeToPendingTask(task.id ?? 0, task),
+                      onClick: () => widget.changeToPendingTask(task.id ?? 0),
                     ))
                 .toList(),
           ),

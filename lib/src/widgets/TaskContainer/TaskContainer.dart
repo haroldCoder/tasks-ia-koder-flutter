@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/taskContainer/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
@@ -82,7 +81,7 @@ class _TaskContainerState extends State<TaskContainer> {
             backgroundColor: Colors.red,
             child: Text(continueTaskContainer),
             onPressed: () {
-              TaskService().deleteTask(id);
+              TaskController().deleteTask(id);
               ShadToaster.of(context).show(
                 ShadToast(
                   description: Text(taskRemoveTaskContainer),

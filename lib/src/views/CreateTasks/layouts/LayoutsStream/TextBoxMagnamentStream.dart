@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
@@ -9,7 +10,6 @@ import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/TextBoxsDescriptio
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/modifyState/updateDataTask.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnContentAgentIA.dart';
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 
 class Textboxmagnamentstream extends StatelessWidget {
   Textboxmagnamentstream(
@@ -21,7 +21,7 @@ class Textboxmagnamentstream extends StatelessWidget {
 
   final Function(dynamic value) handleChangeDescriptionTask;
   final String value;
-  final Rx<CreateTasksState>? task;
+  final Rx<TaskDataManage>? task;
   final BuildContext contextmain;
 
   ConfigureAgentsIa configureAgentsIa = Get.find<ConfigureAgentsIa>();
