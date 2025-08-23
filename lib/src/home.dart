@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/task_service.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Visited_App/VisitedService.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
@@ -18,8 +17,8 @@ import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title, required this.color_app});
-  final Rx<Color> color_app;
+  const MyHomePage({super.key, required this.title, required this.colorApp});
+  final Rx<Color> colorApp;
 
   final String title;
 
@@ -28,15 +27,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late AnimationController _controller;
+  late AnimationController controller;
 
   clickButtonAddTask() {
     Future.microtask(() => context.push("/create-tasks"));
   }
 
   final TaskController taskController = Get.put(TaskController());
-
-  final TaskService taskService = TaskService();
   VisitedService visitedService = VisitedService();
 
   @override
@@ -54,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   selectAllTasks() {
-    if (taskController.tasks.where((task) => task.complete == 0).isEmpty) {
+    if (taskController.tasks.where((task) => task.completed == 0).isEmpty) {
       showShadDialog(
           context: context,
           builder: (context) => Container(
@@ -86,15 +83,15 @@ class _MyHomePageState extends State<MyHomePage> {
               ));
     } else {
       List<int> task_remove = taskController.tasks
-          .where((task) => task.complete == 0)
-          .map((task) => task.id!)
+          .where((task) => task.completed == 0)
+          .map((task) => task.id)
           .toList();
       taskController.AssignTasksSelected(task_remove);
     }
   }
 
   deleteAllTasks() {
-    taskService.deleteTasks(taskController.selectedTasks.toList());
+    taskController.deleteSeveralTasks(taskController.selectedTasks);
   }
 
   @override
@@ -102,12 +99,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return SafeArea(
         child: Container(
             height: double.infinity,
-            decoration: BoxDecoration(color: widget.color_app.value),
+            decoration: BoxDecoration(color: widget.colorApp.value),
             child: Stack(
               children: [
                 Container(
                   height: double.infinity,
-                  decoration: BoxDecoration(color: widget.color_app.value),
+                  decoration: BoxDecoration(color: widget.colorApp.value),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -118,9 +115,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         decoration: BoxDecoration(color: Colors.blueAccent),
                         child: TabMain(),
                       ),
-
                       SizedBox(height: 20),
-
                       Container(
                         height: 20,
                         padding: EdgeInsets.only(right: 8),
@@ -129,24 +124,21 @@ class _MyHomePageState extends State<MyHomePage> {
                           font: 'rubik',
                         ),
                       ),
-
                       Center(
                         child: Container(
                           width: 250,
                           child: const SearchWidget(margin: 20),
                         ),
                       ),
-
                       SizedBox(height: 30),
-
                       Container(
                         height: 300,
                         child: Obx(() {
-                          final tareasPendientes = taskController.tasks
-                              .where((task) => task.complete == 0)
+                          final taskPending = taskController.tasks
+                              .where((task) => task.completed == 0)
                               .toList();
 
-                          if (tareasPendientes.isEmpty) {
+                          if (taskPending.isEmpty) {
                             return AreNoTasks();
                           }
 
@@ -155,21 +147,21 @@ class _MyHomePageState extends State<MyHomePage> {
                                 horizontal: 15, vertical: 10),
                             child: Column(
                               spacing: 15,
-                              children: tareasPendientes.map((task) {
+                              children: taskPending.map((task) {
                                 return TaskContainer(
-                                  id: task.id!,
-                                  title: task.title_task,
+                                  id: task.id,
+                                  title: task.title,
                                   description: task.description,
-                                  priority: task.value_priority,
+                                  priority: task.priority,
                                   onClick: () {
                                     showShadDialog(
                                       context: context,
                                       builder: (context) => UpdateTasks(
-                                        complete: task.complete,
-                                        id: task.id ?? 0,
-                                        title: task.title_task,
+                                        complete: task.completed,
+                                        id: task.id,
+                                        title: task.title,
                                         description: task.description,
-                                        priority: task.value_priority,
+                                        priority: task.priority,
                                       ),
                                     );
                                   },
@@ -179,7 +171,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           );
                         }),
                       ),
-
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -228,7 +219,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-
                       TabBarFooter(),
                     ],
                   ),

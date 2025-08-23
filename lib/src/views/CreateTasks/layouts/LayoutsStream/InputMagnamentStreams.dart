@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
@@ -9,7 +10,6 @@ import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/InputTitle/InputTi
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/modifyState/updateDataTask.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnContentAgentIA.dart';
-import 'package:tasks_ia_koderx/src/views/states/createTaskState.dart';
 
 class InputMagnamentStreams extends StatelessWidget {
   InputMagnamentStreams(
@@ -21,7 +21,7 @@ class InputMagnamentStreams extends StatelessWidget {
 
   final Function(dynamic value) handleChangeTitleTask;
   final String value;
-  final Rx<CreateTasksState>? task;
+  final Rx<TaskDataManage>? task;
   final BuildContext contextmain;
 
   final configureAgentsIa = Get.find<ConfigureAgentsIa>();
@@ -70,7 +70,7 @@ class InputMagnamentStreams extends StatelessWidget {
         );
       }
       return StreamBuilder<bool>(
-        key: ValueKey(configApp.model_ai.value), // fuerza recreación
+        key: ValueKey(configApp.model_ai.value),
         stream: controllerStreamBrain.stream.stream,
         builder: (context, snapshot) {
           final isLoading = snapshot.data ?? false;

@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
@@ -19,8 +18,8 @@ class Statistics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     task_completed =
-        task_controller.tasks.where((tk) => tk.complete == 1).length;
-    task_pending = task_controller.tasks.where((tk) => tk.complete == 0).length;
+        task_controller.tasks.where((tk) => tk.completed == 1).length;
+    task_pending = task_controller.tasks.where((tk) => tk.completed == 0).length;
 
     return Scaffold(
         backgroundColor: color_app.value,
