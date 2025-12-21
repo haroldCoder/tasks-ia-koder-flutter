@@ -30,12 +30,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final data_user = prefs.getString("data_user");
 
-    if(data_user!.isEmpty){
+    if(data_user == null){
       verifyPremiumUser.ResetPremiumUser();
       return;
     }
 
-    final Map<String, dynamic> userJson = jsonDecode(data_user!);
+    final Map<String, dynamic> userJson = jsonDecode(data_user);
 
     verifyPremiumUser.verifyUser(userJson['email'].toString());
   }

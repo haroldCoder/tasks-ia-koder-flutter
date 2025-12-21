@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasks_ia_koderx/preferencesApp.dart';
@@ -32,13 +33,13 @@ void main() async {
   Get.put(ConvertBrainToTask(), permanent: true);
   Get.put(ConnectionGlobal(), permanent: true);
   await Firebase.initializeApp(
-    options: FirebaseOptions(
+    /*options: FirebaseOptions(
       apiKey: dotenv.env["FIREBASE_API_KEY"].toString(),
       appId: dotenv.env["FIREBASE_APP_ID"].toString(),
       messagingSenderId: dotenv.env["FIREBASE_MESSAGINGSENDERING"].toString(),
       projectId: dotenv.env["FIREBASE_PROJECT_ID"].toString(),
       storageBucket: dotenv.env["FIREBASE_BUCKET"].toString(),
-    ),
+    ),*/
   );
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('locale');
@@ -91,9 +92,9 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: MyHomePage(
+                  child: HomePage(
                     title: "Tasks App Koderx",
-                    colorApp: configAppState.color_theme,
+                    colorApp: configAppState.color_theme.value,
                   ));
             },
           ),
@@ -138,7 +139,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: '/statistics',
             builder: (context, state) => Statistics(
-              color_app: configAppState.color_theme,
+              color_app: configAppState.color_theme.value,
             ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
@@ -151,7 +152,7 @@ class MyApp extends StatelessWidget {
                         position: offsetAnimation, child: child);
                   },
                   child: Statistics(
-                    color_app: configAppState.color_theme,
+                    color_app: configAppState.color_theme.value,
                   ));
             },
           ),
@@ -203,7 +204,7 @@ class MyApp extends StatelessWidget {
             routerConfig: router,
             theme: preferencesApp(context),
             builder: (context, child) {
-              return ShadAppBuilder(child: child!);
+              return ProviderScope(child: ShadAppBuilder(child: child!)) ;
             });
       },
     );
