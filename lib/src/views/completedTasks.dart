@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/uploaded_providers.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasksServer.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/completedTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
@@ -13,8 +11,6 @@ import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
 import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks/layouts/TasksDisplay/TasksDisplay.dart';
-import 'package:tasks_ia_koderx/src/views/completedTasks/utils/uploadedTasks.dart';
-import '../shared/States/Tasks/TaskController.dart';
 import '../widgets/Search.dart';
 
 class Completedtasks extends ConsumerStatefulWidget {
@@ -39,14 +35,14 @@ class _CompletedtasksState extends ConsumerState<Completedtasks> {
   }
 
   changeToPendingTask(int id) async {
-    final taskController = ref.read(taskProvider.notifier);
+    final taskController = ref.read(taskUseCasesProvider.notifier);
     await taskController.updateTask(UpdateTasksInterface(completed: 0), id);
   }
 
   @override
   Widget build(BuildContext context) {
     final taskUploadedState = ref.watch(uploadedTasksProvider);
-    final taskLocalState = ref.watch(taskProvider);
+    final taskLocalState = ref.watch(taskUseCasesProvider);
     final completedLocalTasks = taskLocalState.tasks
         .where((task) => task.completed == 1)
         .toList();
@@ -84,6 +80,9 @@ class _CompletedtasksState extends ConsumerState<Completedtasks> {
               padding: EdgeInsets.only(left: 15, right: 15),
               height: 400,
               child: taskUploadedState.when(data: (value) {
+                if(completedLocalTasks.isEmpty && value.isEmpty){
+                  return AreNoTasks();
+                }
                 return TaskDisplay(
                     localTasks: completedLocalTasks,
                     onlineTasks: value,

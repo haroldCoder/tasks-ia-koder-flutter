@@ -11,17 +11,15 @@ import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/modifyState/updateDataTask.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnContentAgentIA.dart';
 
-class Textboxmagnamentstream extends StatelessWidget {
-  Textboxmagnamentstream(
+class Textboxmagnament extends StatelessWidget {
+  Textboxmagnament(
       {super.key,
       required this.value,
       required this.handleChangeDescriptionTask,
-      this.task,
       required this.contextmain});
 
   final Function(dynamic value) handleChangeDescriptionTask;
   final String value;
-  final Rx<TaskDataManage>? task;
   final BuildContext contextmain;
 
   ConfigureAgentsIa configureAgentsIa = Get.find<ConfigureAgentsIa>();
@@ -35,9 +33,7 @@ class Textboxmagnamentstream extends StatelessWidget {
       if (listenAgentsIAChanges.select.value == ElementId.desc_textBox) {
         String content = returnContentAgentIA(snapshot);
 
-        if (task != null) {
-          updateDataTask(task!, content, ElementId.desc_textBox);
-        }
+        handleChangeDescriptionTask(content);
       }
     });
 

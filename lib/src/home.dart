@@ -49,8 +49,8 @@ class _MyHomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final taskState = ref.watch(taskProvider);
-    final taskController = ref.read(taskProvider.notifier);
+    final taskState = ref.watch(taskUseCasesProvider);
+    final taskController = ref.read(taskUseCasesProvider.notifier);
 
     selectAllTasks() {
       if (taskState.tasks.where((task) => task.completed == 0).isEmpty) {

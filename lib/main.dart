@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasks_ia_koderx/preferencesApp.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
-import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
@@ -31,15 +30,14 @@ void main() async {
   Get.put(ConfigureAgentsIa(), permanent: true);
   Get.put(ControllerStreamBrain(), permanent: true);
   Get.put(ConvertBrainToTask(), permanent: true);
-  Get.put(ConnectionGlobal(), permanent: true);
   await Firebase.initializeApp(
-    /*options: FirebaseOptions(
+    options: FirebaseOptions(
       apiKey: dotenv.env["FIREBASE_API_KEY"].toString(),
       appId: dotenv.env["FIREBASE_APP_ID"].toString(),
       messagingSenderId: dotenv.env["FIREBASE_MESSAGINGSENDERING"].toString(),
       projectId: dotenv.env["FIREBASE_PROJECT_ID"].toString(),
       storageBucket: dotenv.env["FIREBASE_BUCKET"].toString(),
-    ),*/
+    ),
   );
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('locale');

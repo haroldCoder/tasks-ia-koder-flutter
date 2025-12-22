@@ -1,19 +1,17 @@
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Import Riverpod
 import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 
 void updateDataTask(
-    Rx<TaskDataManage> task, String value, ElementId element) {
+    WidgetRef ref, String value, ElementId element) {
+  final taskNotifier = ref.read(taskDataManageProvider.notifier);
+
   switch (element) {
     case ElementId.title_input:
-      task.update((t) {
-        if (t != null) t.setTitle(value);
-      });
+      taskNotifier.setTitle(value);
       break;
     case ElementId.desc_textBox:
-      task.update((t) {
-        if (t != null) t.setDescription(value);
-      });
+      taskNotifier.setDescription(value);
       break;
     default:
       break;

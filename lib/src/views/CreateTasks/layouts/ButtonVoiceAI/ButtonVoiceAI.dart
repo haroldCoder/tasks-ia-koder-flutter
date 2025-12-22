@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
+import 'package:tasks_ia_koderx/src/providers/connection_providers.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/layouts/VoiceAiView.dart';
 import 'package:tasks_ia_koderx/src/widgets/Overlay/OverlayFixed.dart';
 import 'package:tasks_ia_koderx/src/widgets/PopUp/PopUp.dart';
 
-class ButtonvoiceAi extends StatelessWidget {
+class ButtonvoiceAi extends ConsumerWidget {
   ButtonvoiceAi({super.key, this.enabled});
-  final Rx<bool>? enabled;
+  final bool? enabled;
 
   void openDialogVoice(BuildContext context) {
     showShadDialog(
@@ -30,16 +30,19 @@ class ButtonvoiceAi extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Overlayfixed(
         bottom: 40,
         right: 25,
-        widget: Obx(() {
+        widget: Consumer(builder: (contex, ref, _) {
+          final isConnected = ref.watch(connectionGlobalProvider);
+          bool isEnabled = (enabled == true) || isConnected;
+
           return Container(
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: enabled?.value == true
+                    color: (isConnected)
                         ? Color(0xFF01FF6B).withOpacity(0.6)
                         : Colors.grey,
                     blurRadius: 16,
@@ -50,12 +53,11 @@ class ButtonvoiceAi extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: IconButton(
-                onPressed: enabled?.value == true ? () => openDialogVoice(context) : null,
+                onPressed:
+                    (isConnected) ? () => openDialogVoice(context) : null,
                 icon: Icon(
                   Icons.mic,
-                  color: enabled?.value == true
-                      ? Color(0xFF00F7A5)
-                      : Colors.grey,
+                  color: isEnabled ? Color(0xFF00F7A5) : Colors.grey,
                   size: 35,
                 ),
                 style: ButtonStyle(
@@ -66,4 +68,3 @@ class ButtonvoiceAi extends StatelessWidget {
         }));
   }
 }
-

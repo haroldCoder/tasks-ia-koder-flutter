@@ -1,8 +1,7 @@
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:tasks_ia_koderx/src/application/use_cases/task_use_cases.dart';
 import 'package:tasks_ia_koderx/src/providers/task_state.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
 
-final taskProvider = StateNotifierProvider<TaskController, TasksState>((ref) {
-  return TaskController();
+final taskUseCasesProvider = StateNotifierProvider<TaskUseCases, TasksState>((ref) {
+  return TaskUseCases();
 });
-

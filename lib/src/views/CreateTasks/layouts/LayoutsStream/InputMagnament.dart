@@ -1,27 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
-import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ErrorAgent/showErrorAgentIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/InputTitle/InputTitle.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/modifyState/updateDataTask.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnContentAgentIA.dart';
 
-class InputMagnamentStreams extends StatelessWidget {
-  InputMagnamentStreams(
+class InputMagnament extends StatelessWidget {
+  InputMagnament(
       {super.key,
       required this.handleChangeTitleTask,
       required this.value,
-      this.task,
       required this.contextmain});
 
   final Function(dynamic value) handleChangeTitleTask;
   final String value;
-  final Rx<TaskDataManage>? task;
   final BuildContext contextmain;
 
   final configureAgentsIa = Get.find<ConfigureAgentsIa>();
@@ -34,10 +30,7 @@ class InputMagnamentStreams extends StatelessWidget {
     configureAgentsIa.stream.listen((snapshot) {
       if (listenAgentsIAChanges.select.value == ElementId.title_input) {
         String content = returnContentAgentIA(snapshot);
-
-        if (task != null) {
-          updateDataTask(task!, content, ElementId.title_input);
-        }
+        handleChangeTitleTask(content);
       }
     });
     return Obx(() {
@@ -57,7 +50,9 @@ class InputMagnamentStreams extends StatelessWidget {
               if (snapshot.hasData && select) {
                 return InputTitle(
                     value: value, onChange: handleChangeTitleTask);
-              } else if (snapshot.hasError && select && !configureAgentsIa.errorShown) {
+              } else if (snapshot.hasError &&
+                  select &&
+                  !configureAgentsIa.errorShown) {
                 configureAgentsIa.errorShown = true;
                 showErrorAgentIA(
                     context: contextmain,

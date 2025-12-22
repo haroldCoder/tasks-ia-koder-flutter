@@ -1,11 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
-import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
-import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
@@ -14,208 +13,194 @@ import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnamentStreams.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnamentStream.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnament.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnament.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
-import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/utils/convertBrainToTask.dart';
 
-class Createtasks extends StatelessWidget {
+class Createtasks extends ConsumerWidget {
+  final Rx<Color> color_app;
+
   Createtasks({super.key, required this.color_app});
-  Rx<Color> color_app;
-  Rx<TaskDataManage> task = TaskDataManage().obs;
-  final convertBrainToTask = Get.put(ConvertBrainToTask());
-  final configApp = Get.put(ConfigAppState());
-  final connectionGlobal = Get.put(ConnectionGlobal());
 
-  backPage(BuildContext context) {
+  void backPage(BuildContext context) {
     if (!context.mounted) return;
     Future.microtask(() => context.pop());
   }
 
-  handleChangeTitleTask(value) {
-    task.update((t) {
-      if (t != null) t.setTitle(value);
-    });
-    task.refresh();
-  }
-
-  handleChangeDescriptionTask(value) {
-    task.update((t) {
-      if (t != null) t.setDescription(value);
-    });
-    task.refresh();
-  }
-
-  handeChangePriority(value) {
-    task.update((t) {
-      if (t != null) t.setPriority(value);
-    });
-    task.refresh();
-  }
-
-  createTask(BuildContext context) async {
-    TaskController().createTask(task.value.title, task.value.description,
-        task.value.priority);
+  void createTask(WidgetRef ref, BuildContext context) async {
+    final taskData = ref.read(taskDataManageProvider);
+    await ref.read(taskUseCasesProvider.notifier).createTask(
+          taskData.title,
+          taskData.description,
+          taskData.priority,
+        );
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text("Tarea creada con éxito"),
         duration: Duration(seconds: 2),
         backgroundColor: Colors.green,
       ),
     );
+    ref.read(taskDataManageProvider.notifier).resetData();
+  }
 
-    task.update((t) {
-      if (t != null) t.resetData();
-    });
-    task.refresh();
+  void handleChangeTitleTask(WidgetRef ref, dynamic value) {
+    ref.read(taskDataManageProvider.notifier).setTitle(value);
+  }
+
+  void handleChangeDescription(WidgetRef ref, dynamic value) {
+    ref.read(taskDataManageProvider.notifier).setDescription(value);
   }
 
   @override
-  Widget build(BuildContext context) {
-    ever(convertBrainToTask.title, (String tt) {
-      handleChangeTitleTask(tt);
-    });
-
-    ever(convertBrainToTask.description, (String dp) {
-      handleChangeDescriptionTask(dp);
-    });
+  Widget build(BuildContext context, WidgetRef ref) {
+    final task = ref.watch(taskDataManageProvider);
 
     return Scaffold(
-        backgroundColor: color_app.value,
-        resizeToAvoidBottomInset: true,
-        body: SafeArea(child: Obx(() {
-          return Container(
-            height: double.infinity,
-            padding: EdgeInsets.only(left: 15, right: 15),
-            child: SingleChildScrollView(
-                child: ListView(
-              physics: NeverScrollableScrollPhysics(),
+      backgroundColor: color_app.value,
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: Container(
+          height: double.infinity,
+          padding: const EdgeInsets.only(left: 15, right: 15),
+          child: SingleChildScrollView(
+            child: ListView(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               children: [
                 Container(
-                    height: 50,
-                    width: double.infinity,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Button(
-                            style: ButtonStyle(
-                                alignment: Alignment.centerLeft,
-                                padding: MaterialStatePropertyAll<EdgeInsets>(
-                                    EdgeInsets.all(0)),
-                                backgroundColor:
-                                    MaterialStatePropertyAll<Color>(
-                                        Colors.transparent)),
-                            click: () => backPage(context),
-                            contentbtn: Icon(
-                              Icons.arrow_back,
-                              size: 25,
-                              color: Colors.white,
+                  height: 50,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Button(
+                        style: ButtonStyle(
+                          alignment: Alignment.centerLeft,
+                          padding: MaterialStateProperty.all<EdgeInsets>(
+                              EdgeInsets.zero),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.transparent),
+                        ),
+                        click: () => backPage(context),
+                        contentbtn: const Icon(
+                          Icons.arrow_back,
+                          size: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const LanguagueChange(
+                        background: Color(0xFF202020),
+                        selectedBackground: Colors.blueAccent,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 30),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          tr('create_task.create'),
+                          style: const TextStyle(
+                            fontFamily: "normal",
+                            fontSize: 30,
+                            decoration: TextDecoration.none,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(height: 30),
+                        const Align(
+                          alignment: Alignment.topRight,
+                          child: ConnectionInternet(),
+                        ),
+                        const SizedBox(height: 25),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: SelectModelAI(enabled: true),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 30, bottom: 20),
+                          height: 50,
+                          child: Scaffold(
+                            resizeToAvoidBottomInset: false,
+                            backgroundColor: Colors.transparent,
+                            body: InputMagnament(
+                              handleChangeTitleTask: (dynamic value) =>
+                                  handleChangeTitleTask(ref, value),
+                              value: task.title,
+                              contextmain: context,
                             ),
                           ),
-                          LanguagueChange(
-                              background: Color(0xFF202020),
-                              selectedBackground: Colors.blueAccent)
-                        ])),
-                Container(
-                    margin: EdgeInsets.only(top: 30),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            tr('create_task.create'),
+                        ),
+                        Buttonai(
+                          ref: task.title,
+                          typeref: Typeref.title,
+                          disabled: false,
+                          widgetRef: ref,
+                        ),
+                        const SizedBox(height: 10),
+                        Textboxmagnament(
+                          value: task.description,
+                          handleChangeDescriptionTask: (dynamic value) =>
+                              handleChangeDescription(ref, value),
+                          contextmain: context,
+                        ),
+                        const SizedBox(height: 4),
+                        Buttonai(
+                          ref: task.description,
+                          typeref: Typeref.descripcion,
+                          disabled: false,
+                          widgetRef: ref,
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(top: 10, bottom: 20),
+                          width: double.infinity,
+                          height: 140,
+                          child: Radiocheck(
+                            value: task.priority,
+                            onChange: (value) => ref
+                                .read(taskDataManageProvider.notifier)
+                                .setPriority(value),
+                            list: priorityOptions,
+                          ),
+                        ),
+                        Button(
+                          width: double.infinity,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          click: () => createTask(ref, context),
+                          contentbtn: Text(
+                            btnCreate,
                             style: TextStyle(
-                                fontFamily: "normal",
-                                fontSize: 30,
-                                decoration: TextDecoration.none,
-                                color: Colors.white),
+                              color: Colors.white,
+                              fontSize: 17,
+                              fontFamily: 'inter',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                          SizedBox(height: 30),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: ConnectionInternet(),
-                          ),
-                          SizedBox(height: 25),
-                          Align(
-                            alignment: Alignment.topRight,
-                            child: SelectModelAI(
-                                enabled: connectionGlobal.connection.value),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 30, bottom: 20),
-                            height: 50,
-                            child: Scaffold(
-                              resizeToAvoidBottomInset: false,
-                              backgroundColor: Colors.transparent,
-                              body: InputMagnamentStreams(
-                                handleChangeTitleTask: (dynamic value) =>
-                                    handleChangeTitleTask(value),
-                                value: task.value.title,
-                                task: task,
-                                contextmain: context,
+                          style: ButtonStyle(
+                            shape: WidgetStateProperty.all<OutlinedBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
                               ),
                             ),
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                Colors.blueAccent),
                           ),
-                          Buttonai(
-                            task: task,
-                            ref: task.value.title,
-                            typeref: Typeref.title,
-                            disabled: !connectionGlobal.connection.value,
-                          ),
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 10),
-                          ),
-                          Textboxmagnamentstream(
-                            value: task.value.description,
-                            handleChangeDescriptionTask: (dynamic value) =>
-                                handleChangeDescriptionTask(value),
-                            task: task,
-                            contextmain: context,
-                          ),
-                          SizedBox(height: 4),
-                          Buttonai(
-                            task: task,
-                            ref: task.value.description,
-                            typeref: Typeref.descripcion,
-                            disabled: !connectionGlobal.connection.value,
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 10, bottom: 20),
-                            width: double.infinity,
-                            height: 140,
-                            child: Radiocheck(
-                              value: task.value.priority,
-                              onChange: handeChangePriority,
-                              list: priorityOptions,
-                            ),
-                          ),
-                          Button(
-                            width: double.infinity,
-                            padding: EdgeInsets.symmetric(horizontal: 8),
-                            click: () => createTask(context),
-                            contentbtn: Text(btnCreate,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontFamily: 'inter',
-                                    fontWeight: FontWeight.bold)),
-                            style: ButtonStyle(
-                                shape: WidgetStatePropertyAll<OutlinedBorder>(
-                                    RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(16))),
-                                backgroundColor: WidgetStatePropertyAll<Color>(
-                                    Colors.blueAccent)),
-                          ),
-                        ],
-                      ),
-                    )),
-                ButtonvoiceAi(enabled: connectionGlobal.connection),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                ButtonvoiceAi(),
               ],
-            )),
-          );
-        })));
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

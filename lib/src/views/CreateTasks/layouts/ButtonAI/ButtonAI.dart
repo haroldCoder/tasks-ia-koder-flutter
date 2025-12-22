@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/modifyState/updateDataTask.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnMessageIA.dart';
 import '../../../../shared/utils/AI/ConfigureAI.dart';
 import '../../../../widgets/Button/Button.dart';
@@ -14,16 +15,16 @@ import '../../utils/generateBrain.dart';
 
 class Buttonai extends StatelessWidget {
   ConfigureAI configureAI = ConfigureAI();
-  Rx<TasksInterface> task;
   String ref;
   final configureAgentsIa = Get.find<ConfigureAgentsIa>();
   final configApp = Get.put(ConfigAppState());
   final controllerStreamBrain = Get.find<ControllerStreamBrain>();
-  final Typeref? typeref;
+  final Typeref typeref;
   ElementId? elementId = ElementId.worthless;
   bool disabled;
+  final WidgetRef widgetRef;
 
-  Buttonai({super.key, required this.task, required this.ref, this.typeref, this.disabled = false});
+  Buttonai({super.key, required this.ref, required this.typeref, this.disabled = false, required this.widgetRef});
 
   void useIAModelToBrain() {
     elementId = typeref == Typeref.title
@@ -33,20 +34,12 @@ class Buttonai extends StatelessWidget {
       case ModelIA.gemma3nE4Bit:
         controllerStreamBrain.SelectElement(elementId!);
         generateBrain(configureAI.model, ref, (value) {
-          task.update((tk) {
-            if (tk != null) {
-              if (ref == task.value.title) {
-                tk.title = value.trim();
-              } else if (ref == task.value.description) {
-                tk.description = value.trim();
-              }
-            }
-          });
+          updateDataTask(widgetRef, value, elementId!);
         });
         break;
       default:
         configureAgentsIa.makeBrain(configApp.model_ai.value,
-            returnMessageIA(this.typeref!, ref), elementId);
+            returnMessageIA(this.typeref, ref), elementId);
         break;
     }
   }

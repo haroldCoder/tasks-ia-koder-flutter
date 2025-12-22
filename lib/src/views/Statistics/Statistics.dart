@@ -14,7 +14,7 @@ class Statistics extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final taskState = ref.watch(taskProvider);
+    final taskState = ref.watch(taskUseCasesProvider);
     final task_completed =
         taskState.tasks.where((tk) => tk.completed == 1).length;
     final task_pending = taskState.tasks.where((tk) => tk.completed == 0).length;

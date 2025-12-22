@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/task_state.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/taskContainer/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
@@ -66,12 +66,12 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
     }
     uploadTask.Upload(
         context,
-        TasksInterface(
+        ITaskModel(
             id: widget.id,
             title: widget.title,
             description: widget.description,
             priority: widget.priority,
-            completed: widget.completed! ? 1 : 0));
+            completed: widget.completed! ? 1 : 0) as TasksInterface);
   }
 
   deleteTask(int id) {
@@ -92,7 +92,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
             backgroundColor: Colors.red,
             child: Text(continueTaskContainer),
             onPressed: () {
-              TaskController().deleteTask(id);
+              ref.read(taskUseCasesProvider.notifier).deleteTask(id);
               ShadToaster.of(context).show(
                 ShadToast(
                   description: Text(taskRemoveTaskContainer),
@@ -115,7 +115,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
 
   @override
   Widget build(BuildContext context) {
-    TasksState taskState = ref.watch(taskProvider);
+    TasksState taskState = ref.watch(taskUseCasesProvider);
     final stateTaskServer = ref.watch(taskServerStateProvider);
 
     return ShadCard(
