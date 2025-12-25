@@ -1,38 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/shared/States/modifyState/updateDataTask.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/modifyState/updateDataTask.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/returnMessageIA.dart';
 import '../../../../shared/utils/AI/ConfigureAI.dart';
 import '../../../../widgets/Button/Button.dart';
 import '../../utils/generateBrain.dart';
 
-class Buttonai extends StatelessWidget {
+class Buttonai extends ConsumerWidget {
   ConfigureAI configureAI = ConfigureAI();
   String ref;
-  final configureAgentsIa = Get.find<ConfigureAgentsIa>();
   final configApp = Get.put(ConfigAppState());
-  final controllerStreamBrain = Get.find<ControllerStreamBrain>();
+
   final Typeref typeref;
   ElementId? elementId = ElementId.worthless;
   bool disabled;
   final WidgetRef widgetRef;
 
-  Buttonai({super.key, required this.ref, required this.typeref, this.disabled = false, required this.widgetRef});
+  Buttonai(
+      {super.key,
+      required this.ref,
+      required this.typeref,
+      this.disabled = false,
+      required this.widgetRef});
 
-  void useIAModelToBrain() {
+  void useIAModelToBrain(AgentNotifier configureAgentsIa,
+      BrainNotifier controllerStreamBrain) {
     elementId = typeref == Typeref.title
-            ? ElementId.title_input
-            : ElementId.desc_textBox;
+        ? ElementId.title_input
+        : ElementId.desc_textBox;
     switch (configApp.model_ai.value) {
       case ModelIA.gemma3nE4Bit:
-        controllerStreamBrain.SelectElement(elementId!);
+        controllerStreamBrain.selectElement(elementId!);
         generateBrain(configureAI.model, ref, (value) {
           updateDataTask(widgetRef, value, elementId!);
         });
@@ -45,7 +51,10 @@ class Buttonai extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final configureAgentsIa = ref.read(agentNotifierProvider.notifier);
+    final controllerBrain = ref.read(brainProvider.notifier);
+
     return Button(
       disable: ref == "" || disabled ?? true,
       style: ButtonStyle(
@@ -69,7 +78,7 @@ class Buttonai extends StatelessWidget {
         ],
       ),
       click: () {
-        useIAModelToBrain();
+        useIAModelToBrain(configureAgentsIa, controllerBrain);
       },
     );
   }

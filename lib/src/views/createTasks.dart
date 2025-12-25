@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
-import 'package:tasks_ia_koderx/src/shared/class/tasks/TaskDataManage.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/LanguagueChange.dart';
@@ -13,8 +12,9 @@ import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/ButtonAI.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/ButtonVoiceAI/ButtonVoiceAI.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/InputMagnament.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/LayoutsStream/TextBoxMagnament.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/Input/InputMagnament.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/layouts/TextBox/TextBoxMagnament.dart';
+import 'package:tasks_ia_koderx/src/views/CreateTasks/state/create_task_controllers_provider.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
 
@@ -29,10 +29,10 @@ class Createtasks extends ConsumerWidget {
   }
 
   void createTask(WidgetRef ref, BuildContext context) async {
-    final taskData = ref.read(taskDataManageProvider);
+    final taskData = ref.read(createTaskControllersProvider);
     await ref.read(taskUseCasesProvider.notifier).createTask(
-          taskData.title,
-          taskData.description,
+          taskData.titleController.text,
+          taskData.descriptionController.text,
           taskData.priority,
         );
     ScaffoldMessenger.of(context).showSnackBar(
@@ -42,20 +42,15 @@ class Createtasks extends ConsumerWidget {
         backgroundColor: Colors.green,
       ),
     );
-    ref.read(taskDataManageProvider.notifier).resetData();
-  }
 
-  void handleChangeTitleTask(WidgetRef ref, dynamic value) {
-    ref.read(taskDataManageProvider.notifier).setTitle(value);
-  }
-
-  void handleChangeDescription(WidgetRef ref, dynamic value) {
-    ref.read(taskDataManageProvider.notifier).setDescription(value);
+    ref.read(createTaskControllersProvider.notifier).resetData();
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final task = ref.watch(taskDataManageProvider);
+    final createTaskState = ref.watch(createTaskControllersProvider);
+    final createTaskController =
+        ref.read(createTaskControllersProvider.notifier);
 
     return Scaffold(
       backgroundColor: color_app.value,
@@ -130,28 +125,28 @@ class Createtasks extends ConsumerWidget {
                             backgroundColor: Colors.transparent,
                             body: InputMagnament(
                               handleChangeTitleTask: (dynamic value) =>
-                                  handleChangeTitleTask(ref, value),
-                              value: task.title,
+                                  createTaskController.changeTitleTask(value),
+                              value: createTaskState.titleController.text,
                               contextmain: context,
                             ),
                           ),
                         ),
                         Buttonai(
-                          ref: task.title,
+                          ref: createTaskState.titleController.text,
                           typeref: Typeref.title,
                           disabled: false,
                           widgetRef: ref,
                         ),
                         const SizedBox(height: 10),
                         Textboxmagnament(
-                          value: task.description,
+                          value: createTaskState.descriptionController.text,
                           handleChangeDescriptionTask: (dynamic value) =>
-                              handleChangeDescription(ref, value),
+                              createTaskController.changeDescriptionTask(value),
                           contextmain: context,
                         ),
                         const SizedBox(height: 4),
                         Buttonai(
-                          ref: task.description,
+                          ref: createTaskState.descriptionController.text,
                           typeref: Typeref.descripcion,
                           disabled: false,
                           widgetRef: ref,
@@ -161,10 +156,9 @@ class Createtasks extends ConsumerWidget {
                           width: double.infinity,
                           height: 140,
                           child: Radiocheck(
-                            value: task.priority,
-                            onChange: (value) => ref
-                                .read(taskDataManageProvider.notifier)
-                                .setPriority(value),
+                            value: createTaskState.priority,
+                            onChange: (value) =>
+                                createTaskController.changePriorityTask(value),
                             list: priorityOptions,
                           ),
                         ),

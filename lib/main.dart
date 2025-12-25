@@ -15,7 +15,7 @@ import 'package:tasks_ia_koderx/src/views/Statistics/Statistics.dart';
 import 'package:tasks_ia_koderx/src/views/UploadTask/UploadTask.dart';
 import 'package:tasks_ia_koderx/src/views/completedTasks.dart';
 import 'package:tasks_ia_koderx/src/views/createTasks.dart';
-import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/utils/convertBrainToTask.dart';
+
 import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
@@ -27,9 +27,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   Get.put(ConfigAppState());
-  Get.put(ConfigureAgentsIa(), permanent: true);
-  Get.put(ControllerStreamBrain(), permanent: true);
-  Get.put(ConvertBrainToTask(), permanent: true);
+
   await Firebase.initializeApp(
     options: FirebaseOptions(
       apiKey: dotenv.env["FIREBASE_API_KEY"].toString(),
