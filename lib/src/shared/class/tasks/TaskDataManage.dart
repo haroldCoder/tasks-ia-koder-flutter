@@ -1,37 +1,49 @@
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
+import 'package:flutter_riverpod/legacy.dart';
 
-class TaskDataManage extends TasksInterface {
-  TaskDataManage({
-    int id = 0,
-    int completed = 0,
-    String title = "",
-    String description = "",
-    int priority = 3,
-  }) : super(id: id, title: title, description: description, priority: priority, completed: completed);
+class CreateTaskData {
+  final String title;
+  final String description;
+  final int priority;
 
-  void setId(int id) {
-    this.id = id;
+  CreateTaskData({
+    this.title = "",
+    this.description = "",
+    this.priority = 3,
+  });
+
+  CreateTaskData copyWith({
+    String? title,
+    String? description,
+    int? priority,
+  }) {
+    return CreateTaskData(
+      title: title ?? this.title,
+      description: description ?? this.description,
+      priority: priority ?? this.priority,
+    );
   }
+}
+
+class TaskDataManageNotifier extends StateNotifier<CreateTaskData> {
+  TaskDataManageNotifier() : super(CreateTaskData());
 
   void setTitle(String title) {
-    this.title = title;
+    state = state.copyWith(title: title);
   }
 
   void setDescription(String description) {
-    this.description = description;
+    state = state.copyWith(description: description);
   }
 
   void setPriority(int priority) {
-    this.priority = priority;
-  }
-
-  void setCompleted(int completed) {
-    this.completed = completed;
+    state = state.copyWith(priority: priority);
   }
 
   void resetData(){
-    title = "";
-    description = "";
-    priority = 3;
+    state = CreateTaskData();
   }
 }
+
+final taskDataManageProvider = StateNotifierProvider<TaskDataManageNotifier, CreateTaskData>((ref) {
+  return TaskDataManageNotifier();
+});

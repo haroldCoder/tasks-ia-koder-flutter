@@ -86,5 +86,11 @@
     },
     "generate_brain": {
         "generate_text": "Write and improve the text for this task. Return only the final text with proper punctuation, without explanations or justification: "
+    },
+    "tab_footer": {
+        "home": "Home",
+        "check": "Completed",
+        "statistics": "Statistics",
+        "settings": "Settings"
     }
 }

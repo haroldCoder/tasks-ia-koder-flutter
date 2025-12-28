@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
+import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
+import 'package:tasks_ia_koderx/src/providers/task_state.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/taskContainer/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
@@ -11,7 +14,7 @@ import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/showUserNotLogged.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/uploadTask.dart';
 
-class TaskContainer extends StatefulWidget {
+class TaskContainer extends ConsumerStatefulWidget {
   TaskContainer(
       {super.key,
       this.title = "Test",
@@ -31,36 +34,45 @@ class TaskContainer extends StatefulWidget {
   final bool? online;
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<ConsumerStatefulWidget> createState() {
     return _TaskContainerState();
   }
 }
 
-class _TaskContainerState extends State<TaskContainer> {
-  TaskController taskController = Get.put(TaskController());
-  late StateTaskServer stateTaskServer;
+class _TaskContainerState extends ConsumerState<TaskContainer> {
   UploadTask uploadTask = Get.put(UploadTask());
-  AuthService authService = Get.put(AuthService());
+  final taskServerStateProvider =
+      AsyncNotifierProvider<StateTaskServerNotifier, bool>(
+          StateTaskServerNotifier.new);
 
   @override
   void initState() {
-    stateTaskServer = StateTaskServer();
     super.initState();
+
+    final stateTaskController = ref.read(taskServerStateProvider.notifier);
+
+    if (widget.completed!) {
+      Future.microtask(() {
+        stateTaskController.searchTask(widget.id);
+      });
+    }
   }
 
   void UploadTaskMethod(BuildContext context) {
-    if (!authService.logged.value) {
-      showUserNotLogged(context, authService);
+    final authState = ref.read(authServiceProvider);
+    if (!authState.logged) {
+      showUserNotLogged(context);
       return;
     }
     uploadTask.Upload(
         context,
-        TasksInterface(
+        ITaskModel(
             id: widget.id,
             title: widget.title,
             description: widget.description,
             priority: widget.priority,
-            completed: widget.completed! ? 1 : 0));
+            completed: widget.completed! ? 1 : 0) as TasksInterface,
+        ref);
   }
 
   deleteTask(int id) {
@@ -81,7 +93,7 @@ class _TaskContainerState extends State<TaskContainer> {
             backgroundColor: Colors.red,
             child: Text(continueTaskContainer),
             onPressed: () {
-              TaskController().deleteTask(id);
+              ref.read(taskUseCasesProvider.notifier).deleteTask(id);
               ShadToaster.of(context).show(
                 ShadToast(
                   description: Text(taskRemoveTaskContainer),
@@ -104,12 +116,12 @@ class _TaskContainerState extends State<TaskContainer> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.completed!) {
-      stateTaskServer.searchTask(widget.id);
-    }
+    TasksState taskState = ref.watch(taskUseCasesProvider);
+    final stateTaskServer = ref.watch(taskServerStateProvider);
+    final authState = ref.watch(authServiceProvider);
 
     return ShadCard(
-      backgroundColor: taskController.selectedTasks.contains(widget.id)
+      backgroundColor: taskState.selectedTasks.contains(widget.id)
           ? Colors.lightBlueAccent
           : Colors.white70,
       shadows: [
@@ -148,7 +160,7 @@ class _TaskContainerState extends State<TaskContainer> {
                     },
                     contentbtn: Icon(
                       Icons.close,
-                      color: taskController.selectedTasks.contains(widget.id)
+                      color: taskState.selectedTasks.contains(widget.id)
                           ? Colors.white
                           : Color(0x9095A0FF),
                     ),
@@ -209,38 +221,35 @@ class _TaskContainerState extends State<TaskContainer> {
                                 ? Colors.orange
                                 : Colors.green,
                         borderRadius: BorderRadius.all(Radius.circular(5))))
-                : StreamBuilder<bool>(
-                    stream: stateTaskServer.stream,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            color: Colors.blueAccent,
-                          ),
-                        );
-                      } else if (snapshot.hasData &&
-                          snapshot.data == true &&
-                          authService.logged.value) {
-                        return Container(
-                          width: 20,
-                          height: 20,
-                          decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        );
-                      } else if (snapshot.hasError) {
-                        return Icon(
-                          Icons.cloud_off,
-                          color: Colors.red,
-                        );
-                      }
-                      return Buttonupload(click: () {
-                        UploadTaskMethod(context);
-                      });
-                    })
+                : stateTaskServer.when(loading: () {
+                    return SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        color: Colors.blueAccent,
+                      ),
+                    );
+                  }, data: (value) {
+                    if (authState.logged) {
+                      return Container(
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      );
+                    }
+
+                    return Buttonupload(click: () {
+                      UploadTaskMethod(context);
+                    });
+                  }, error: (e, _) {
+                    return Icon(
+                      Icons.cloud_off,
+                      color: Colors.red,
+                    );
+                  })
           ],
         ),
       ),

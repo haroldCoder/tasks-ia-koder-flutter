@@ -1,81 +1,103 @@
-import 'dart:async';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
+import 'package:flutter_riverpod/legacy.dart';
 import 'package:http/http.dart' as http;
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/lang/agentIA/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
 import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 
-class ListenAgentsIAChanges extends GetxController{
-  Rx<ElementId> select = ElementId.worthless.obs;
-  Rx<bool> loading = false.obs;
+class AgentState {
+  final ElementId select;
+  final bool loading;
+  final http.Response? response;
+  final String? error;
+  final bool hasError;
 
-  void assignElementSelect(ElementId element){
-    select.value = element;
+
+  const AgentState({
+    this.select = ElementId.worthless,
+    this.loading = false,
+    this.response,
+    this.error,
+    this.hasError = false,
+  });
+
+  AgentState copyWith({
+    ElementId? select,
+    bool? loading,
+    http.Response? response,
+    String? error,
+    bool? hasError,
+    bool setResponseToNull = false,
+    bool setErrorToNull = false,
+  }) {
+    return AgentState(
+      select: select ?? this.select,
+      loading: loading ?? this.loading,
+      response: setResponseToNull ? null : (response ?? this.response),
+      error: setErrorToNull ? null : (error ?? this.error),
+      hasError: hasError ?? this.error != null,
+    );
   }
-
-  void changeLoading(bool value){
-    loading.value = value;
-  }
-
 }
 
-class ConfigureAgentsIa extends GetxController{
-  final StreamController<http.Response> _streamController = StreamController<http.Response>.broadcast();
-  final _listenAgentsIAChanges = Get.put(ListenAgentsIAChanges());
-  bool _errorShown = false;
+class AgentNotifier extends StateNotifier<AgentState> {
+  AgentNotifier() : super(const AgentState());
 
-  Stream<http.Response> get stream => _streamController.stream;
-  bool get errorShown => _errorShown;
-  set errorShown(bool value) => _errorShown = value;
-
-  Future<void> makeBrain(ModelIA model, List<MessagesIAInterface> messages, [ElementId? element]) async {
-    _errorShown = false;
+  Future<void> makeBrain(ModelIA model, List<MessagesIAInterface> messages,
+      [ElementId? element]) async {
+    http.Response? localResponse;
     try {
-      if(element != null){
-        _listenAgentsIAChanges.assignElementSelect(element);
-      }
+      state = state.copyWith(
+        loading: true,
+        select: element,
+        setResponseToNull: true,
+        setErrorToNull: true,
+        hasError: false,
+      );
 
-      _listenAgentsIAChanges.changeLoading(true);
-      http.Response response = await Requests(baseUrl: 'https://openrouter.ai/')
-          .makeRequest(
+      localResponse =
+          await Requests(baseUrl: 'https://openrouter.ai/').makeRequest(
               method: HttpMethod.post,
               endpoint: 'api/v1/chat/completions',
               headers: {
-            'Authorization': 'Bearer ${dotenv.env["OPEN_API_KEY"].toString()}',
-            'Content-Type': 'application/json'
-          },
+                'Authorization':
+                    'Bearer \${dotenv.env["OPEN_API_KEY"].toString()}',
+                'Content-Type': 'application/json'
+              },
               body: {
-            'model': model.path,
-            'messages': messages.map((m) => m.toJson()).toList(),
-          });
+                'model': model.path,
+                'messages': messages.map((m) => m.toJson()).toList(),
+              });
 
-      if(response.statusCode == 200){
-        _streamController.add(response);
-      }
-      else{
-        _streamController.addError(error);
-      }
-      
-      _listenAgentsIAChanges.changeLoading(false);
-      if(kDebugMode){
-        print(response.body);
+      if (localResponse.statusCode == 200) {
+        state = state.copyWith(
+          loading: false,
+          response: localResponse,
+          setErrorToNull: true,
+          hasError: false,
+        );
+      } else {
+        state = state.copyWith(
+          loading: false,
+          error: 'Error: \${localResponse.statusCode} \${localResponse.body}',
+          setResponseToNull: true,
+          hasError: true,
+        );
       }
     } catch (err) {
       print(err);
-      _streamController.addError('Err: $err');
+      state = state.copyWith(
+        loading: false,
+        error: 'Err: \$err',
+        setResponseToNull: true,
+        hasError: true,
+      );
+    } finally {
+      if (kDebugMode && localResponse != null) {
+        print(localResponse.body);
+      }
     }
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    _streamController.close();
   }
 }

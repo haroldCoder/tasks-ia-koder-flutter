@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/TabFooter/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 
 class TabBarFooter extends StatelessWidget {
@@ -59,7 +60,7 @@ class TabBarFooter extends StatelessWidget {
                                   ? Colors.blueAccent
                                   : Color(0xF0393939),
                             ),
-                            Text("Home",
+                            Text(homeTab,
                                 style: TextStyle(
                                     fontFamily: this.font_family,
                                     fontSize: 15,
@@ -89,7 +90,7 @@ class TabBarFooter extends StatelessWidget {
                                 color: currentPath == "/check"
                                     ? Colors.blueAccent
                                     : Color(0xF0393939)),
-                            Text("Completado",
+                            Text(checkTab,
                                 style: TextStyle(
                                     fontFamily: this.font_family,
                                     fontSize: 15,
@@ -119,7 +120,7 @@ class TabBarFooter extends StatelessWidget {
                                 color: currentPath == "/statistics"
                                     ? Colors.blueAccent
                                     : Color(0xF0393939)),
-                            Text("Estadisticas",
+                            Text(statisticsTab,
                                 style: TextStyle(
                                     fontFamily: this.font_family,
                                     fontSize: 15,
@@ -153,7 +154,7 @@ class TabBarFooter extends StatelessWidget {
                             color: currentPath == "/settings"
                                 ? Colors.blueAccent
                                 : Color(0xF0393939)),
-                        Text("Configuraciones",
+                        Text(settingsTab,
                             style: TextStyle(
                                 fontFamily: this.font_family,
                                 fontSize: 15,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
@@ -12,14 +13,16 @@ import '../../widgets/MarkDown/Markdown.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonPremium.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonGoogle.dart';
 
-class Settings extends StatelessWidget {
+class Settings extends ConsumerWidget {
   Settings({super.key});
   final ConfigAppState configAppState = Get.find<ConfigAppState>();
-  AuthService authService = Get.put(AuthService());
-  PremiumUser isUserPremium = Get.put(PremiumUser());
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authServiceProvider);
+    final user = authState.currentUser;
+    final isUserPremium = ref.watch(premiumUserProvider);
+
     return SafeArea(
         child: Scaffold(
             backgroundColor: const Color(0xFF000000),
@@ -29,7 +32,7 @@ class Settings extends StatelessWidget {
                   children: [
                     Container(
                       height: 65,
-                      padding:
+                      padding: 
                           EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                       decoration:
                           BoxDecoration(color: Colors.black, boxShadow: [
@@ -83,23 +86,48 @@ class Settings extends StatelessWidget {
                                       fontWeight: FontWeight.bold),
                                 ),
                               ),
-                              Obx(() {
-                                return CircleAvatar(
-                                  radius: 24,
-                                  backgroundImage:
-                                      authService.current_user.value == null
-                                          ? AssetImage('lib/assets/lion.jpeg')
-                                          : NetworkImage(authService
-                                              .current_user.value!.photoURL!),
-                                );
-                              })
+                              CircleAvatar(
+                                radius: 24,
+                                backgroundImage: user?.photoURL == null
+                                    ? AssetImage('lib/assets/lion.jpeg')
+                                    : NetworkImage(user!.photoURL!) as ImageProvider,
+                              ),
                             ],
                           )),
-                          Obx(() {
-                            return Align(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                spacing: 10,
+                                children: [
+                                  Container(
+                                    width: 200,
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                width: 1,
+                                                color: Colors.white60))),
+                                    child: Text(
+                                      username,
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 18),
+                                    ),
+                                    padding: EdgeInsets.only(
+                                        left: 10, right: 10, bottom: 5),
+                                  ),
+                                  Text(
+                                    user?.displayName ?? "",
+                                    style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontSize: 17),
+                                  ),
+                                ],
+                              )),
+                          Align(
+                              alignment: Alignment.topLeft,
+                              child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.start,
                                   spacing: 10,
                                   children: [
                                     Container(
@@ -110,62 +138,21 @@ class Settings extends StatelessWidget {
                                                   width: 1,
                                                   color: Colors.white60))),
                                       child: Text(
-                                        username,
+                                        email,
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 18),
+                                            color: Colors.white,
+                                            fontSize: 18),
                                       ),
                                       padding: EdgeInsets.only(
                                           left: 10, right: 10, bottom: 5),
                                     ),
                                     Text(
-                                      authService.current_user.value != null
-                                          ? authService
-                                              .current_user.value!.displayName!
-                                              .toString()
-                                          : "",
+                                      user?.email ?? "",
                                       style: TextStyle(
-                                          color: Colors.blueAccent,
+                                          color: Colors.white38,
                                           fontSize: 17),
                                     ),
-                                  ],
-                                ));
-                          }),
-                          Obx(() {
-                            return Align(
-                                alignment: Alignment.topLeft,
-                                child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    spacing: 10,
-                                    children: [
-                                      Container(
-                                        width: 200,
-                                        decoration: BoxDecoration(
-                                            border: Border(
-                                                bottom: BorderSide(
-                                                    width: 1,
-                                                    color: Colors.white60))),
-                                        child: Text(
-                                          email,
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 18),
-                                        ),
-                                        padding: EdgeInsets.only(
-                                            left: 10, right: 10, bottom: 5),
-                                      ),
-                                      Text(
-                                        authService.current_user.value != null
-                                            ? authService
-                                                .current_user.value!.email!
-                                                .toString()
-                                            : "",
-                                        style: TextStyle(
-                                            color: Colors.white38,
-                                            fontSize: 17),
-                                      ),
-                                    ]));
-                          }),
+                                  ])),
                           Row(
                             children: [
                               Text(
@@ -197,11 +184,8 @@ class Settings extends StatelessWidget {
                     child: Column(
                       spacing: 5,
                       children: [
-                        Obx(() {
-                          return !isUserPremium.isPremium.value
-                              ? Buttonpremium()
-                              : SizedBox.shrink();
-                        }),
+                        if (!isUserPremium)
+                          Buttonpremium(),
                         Buttongoogle()
                       ],
                     )),

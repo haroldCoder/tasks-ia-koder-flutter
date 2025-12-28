@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
-import 'home.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key, required this.color_app});
   final Rx<Color> color_app;
 
@@ -15,8 +15,10 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-  PremiumUser verifyPremiumUser = Get.put(PremiumUser());
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  bool get verifyPremiumUser => ref.watch(premiumUserProvider);
+  PremiumUserNotifier get verifyPremiumUserController => ref.read(premiumUserProvider.notifier);
+
 
   @override
   void initState() {
@@ -30,14 +32,14 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final data_user = prefs.getString("data_user");
 
-    if(data_user!.isEmpty){
-      verifyPremiumUser.ResetPremiumUser();
+    if(data_user == null){
+      verifyPremiumUserController.resetPremiumUser();
       return;
     }
 
-    final Map<String, dynamic> userJson = jsonDecode(data_user!);
+    final Map<String, dynamic> userJson = jsonDecode(data_user);
 
-    verifyPremiumUser.verifyUser(userJson['email'].toString());
+    verifyPremiumUserController.verifyUser(userJson['email'].toString());
   }
 
   Future<void> checkFirstTime() async {

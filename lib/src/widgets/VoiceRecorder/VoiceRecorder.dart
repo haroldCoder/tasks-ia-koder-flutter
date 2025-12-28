@@ -1,27 +1,26 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:tasks_ia_koderx/src/widgets/VoiceRecorder/utils/convertBrainToTask.dart';
 
-class Voicerecorder extends StatefulWidget {
+class Voicerecorder extends ConsumerStatefulWidget {
   const Voicerecorder({super.key, required this.widget, this.onPressed});
 
   final Widget widget;
   final Function(Function fn)? onPressed;
 
   @override
-  State<Voicerecorder> createState() => _VoicerecorderState();
+  ConsumerState<Voicerecorder> createState() => _VoicerecorderState();
 }
 
-class _VoicerecorderState extends State<Voicerecorder> {
+class _VoicerecorderState extends ConsumerState<Voicerecorder> {
   late stt.SpeechToText _speech;
   bool _isListening = false;
   String _text = '';
-  final convertBrainToTask = Get.find<ConvertBrainToTask>();
   Timer? _closeTimer;
   double _scale = 1;
 
@@ -75,7 +74,7 @@ class _VoicerecorderState extends State<Voicerecorder> {
       _speech.stop();
       GoRouter.of(context).pop();
       print(_text);
-      convertBrainToTask.brain.value = _text;
+      ref.read(convertBrainToTaskProvider.notifier).convert(_text);
     });
   }
 

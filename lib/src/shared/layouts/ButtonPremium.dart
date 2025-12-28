@@ -1,23 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 
 import '../../widgets/Button/Button.dart';
 import '../utils/subscription_request.dart';
 
-class Buttonpremium extends StatefulWidget {
+class Buttonpremium extends ConsumerWidget {
   const Buttonpremium({super.key});
 
   @override
-  State<Buttonpremium> createState() => _ButtonpremiumState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final authState = ref.watch(authServiceProvider);
 
-class _ButtonpremiumState extends State<Buttonpremium> {
-  AuthService authService = Get.put(AuthService());
-
-  @override
-  Widget build(BuildContext context) {
     return Button(
       contentbtn: Container(
         height: 40,
@@ -45,7 +40,7 @@ class _ButtonpremiumState extends State<Buttonpremium> {
       ),
       click: () {
         SubscriptionRequests()
-            .createSubscription(authService.current_user.value?.email);
+            .createSubscription(authState.currentUser?.email);
       },
     );
   }

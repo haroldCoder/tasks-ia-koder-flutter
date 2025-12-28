@@ -1,4 +1,6 @@
-class TasksServer {
+import 'package:tasks_ia_koderx/src/shared/interfaces/taskBase.interface.dart';
+
+class TasksServer extends TaskBase {
   String title;
   String description;
   int priority;
@@ -26,4 +28,7 @@ class TasksServer {
         userId: json['userId'] as int,
         id_task_app: json['id_task_app'] as int);
   }
+
+  @override
+  int get taskId => id_task_app;
 }
