@@ -35,7 +35,7 @@ class ButtonvoiceAi extends ConsumerWidget {
         bottom: 40,
         right: 25,
         widget: Consumer(builder: (contex, ref, _) {
-          final isConnected = ref.watch(connectionGlobalProvider);
+          final isConnected = ref.watch(isConnectedProvider);
           bool isEnabled = (enabled == true) || isConnected;
 
           return Container(

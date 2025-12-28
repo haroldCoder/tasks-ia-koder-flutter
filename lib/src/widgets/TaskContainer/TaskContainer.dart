@@ -41,7 +41,6 @@ class TaskContainer extends ConsumerStatefulWidget {
 
 class _TaskContainerState extends ConsumerState<TaskContainer> {
   UploadTask uploadTask = Get.put(UploadTask());
-  AuthService authService = Get.put(AuthService());
   final taskServerStateProvider =
       AsyncNotifierProvider<StateTaskServerNotifier, bool>(
           StateTaskServerNotifier.new);
@@ -60,8 +59,9 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
   }
 
   void UploadTaskMethod(BuildContext context) {
-    if (!authService.logged.value) {
-      showUserNotLogged(context, authService);
+    final authState = ref.read(authServiceProvider);
+    if (!authState.logged) {
+      showUserNotLogged(context);
       return;
     }
     uploadTask.Upload(
@@ -71,7 +71,8 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
             title: widget.title,
             description: widget.description,
             priority: widget.priority,
-            completed: widget.completed! ? 1 : 0) as TasksInterface);
+            completed: widget.completed! ? 1 : 0) as TasksInterface,
+        ref);
   }
 
   deleteTask(int id) {
@@ -117,6 +118,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
   Widget build(BuildContext context) {
     TasksState taskState = ref.watch(taskUseCasesProvider);
     final stateTaskServer = ref.watch(taskServerStateProvider);
+    final authState = ref.watch(authServiceProvider);
 
     return ShadCard(
       backgroundColor: taskState.selectedTasks.contains(widget.id)
@@ -228,7 +230,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
                       ),
                     );
                   }, data: (value) {
-                    if (authService.logged.value) {
+                    if (authState.logged) {
                       return Container(
                         width: 20,
                         height: 20,

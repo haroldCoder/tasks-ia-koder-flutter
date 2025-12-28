@@ -230,7 +230,7 @@ class _MyHomePageState extends ConsumerState<HomePage> {
                     color: Colors.blueAccent,
                     size: 60,
                   ),
-                  position: ButtonPosition(0, 250, 0, 540),
+                  position: ButtonPosition(100, 0, -12, 0),
                 )
               ],
             )));

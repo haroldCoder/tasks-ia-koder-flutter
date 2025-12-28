@@ -21,6 +21,7 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
+import 'package:tasks_ia_koderx/src/widgets/connection_initializer.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
@@ -190,19 +191,25 @@ class MyApp extends StatelessWidget {
           )
         ]);
 
-    return ShadApp.custom(
-      appBuilder: (BuildContext context) {
-        return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            routerConfig: router,
-            theme: preferencesApp(context),
-            builder: (context, child) {
-              return ProviderScope(child: ShadAppBuilder(child: child!)) ;
-            });
-      },
+    return ProviderScope(
+      child: ShadApp.custom(
+        appBuilder: (BuildContext context) {
+          return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              routerConfig: router,
+              theme: preferencesApp(context),
+              builder: (context, child) {
+                return ShadAppBuilder(
+                  child: ConnectionInitializer(
+                    child: child!,
+                  ),
+                );
+              });
+        },
+      ),
     );
   }
 }

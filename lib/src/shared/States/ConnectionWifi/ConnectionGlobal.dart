@@ -3,6 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/providers/connection_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/enums/connectionType.dart';
 
+/// @deprecated This class is deprecated and will be removed in a future version.
+/// Use the new hexagonal architecture providers instead:
+/// - `connectionStatusProvider` for full connection status
+/// - `isConnectedProvider` for boolean connection state
+/// - `connectionTypeProvider` for connection type only
+/// 
+/// Migration example:
+/// ```dart
+/// // Old way:
+/// final isConnected = ref.watch(connectionGlobalProvider);
+/// 
+/// // New way:
+/// final isConnected = ref.watch(isConnectedProvider);
+/// ```
+@Deprecated('Use isConnectedProvider or connectionStatusProvider instead')
 class ConnectionGlobal extends Notifier<bool> {
   @override
   bool build() {

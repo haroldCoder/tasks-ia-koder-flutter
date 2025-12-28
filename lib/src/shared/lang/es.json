@@ -86,5 +86,11 @@
     },
     "generate_brain": {
         "generate_text": "Redacta y mejora el texto para esta tarea, solo dame el resultado, para ponerlo en un input. solo el texto con signos de puntuacio, etc: "
+    },
+    "tab_footer": {
+        "home": "Home",
+        "check": "Completado",
+        "statistics": "Estadisticas",
+        "settings": "Configuraciones"
     }
 }
