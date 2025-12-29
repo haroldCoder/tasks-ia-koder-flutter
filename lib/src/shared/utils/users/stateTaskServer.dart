@@ -18,7 +18,7 @@ class StateTaskServerNotifier extends AsyncNotifier<bool> {
     return response;
   }
 
-  Future<void> searchTask(int idTaks) async {
+  Future<void> searchTask(String idTaks) async {
     state = const AsyncLoading();
 
     try {

@@ -1,6 +1,6 @@
 
 abstract class Task {
-  final int id;
+  final String id;
   final String title;
   final String description;
   final int priority;

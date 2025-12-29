@@ -24,7 +24,7 @@ class ITaskModel extends Task {
     String? description,
     int? priority,
     int? completed,
-    int? id,
+    String? id,
   }) {
     return ITaskModel(
       title: title ?? this.title,

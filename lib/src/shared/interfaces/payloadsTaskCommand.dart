@@ -1,28 +1,29 @@
 import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 
 class CreateTaskPayload {
+  final String id;
   final String title;
   final String description;
   final int priority;
 
-  CreateTaskPayload(this.title, this.description, this.priority);
+  CreateTaskPayload(this.id, this.title, this.description, this.priority);
 }
 
 class UpdateTaskPayload {
-  final int id;
+  final String id;
   final UpdateTasksInterface updateTasksInterface;
 
   UpdateTaskPayload(this.id, this.updateTasksInterface);
 }
 
 class DeleteTaskPayload {
-  final int id;
+  final String id;
 
   DeleteTaskPayload(this.id);
 }
 
 class DeleteTaskSeveralPayload {
-  final List<int> ids;
+  final List<String> ids;
 
   DeleteTaskSeveralPayload(this.ids);
 }

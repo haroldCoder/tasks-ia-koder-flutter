@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/uploadTask/lang.dart';
@@ -18,7 +19,7 @@ import 'package:tasks_ia_koderx/src/views/UploadTask/shared/widgets/DialogUpdate
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 
 class Uploadtask extends StatefulWidget {
-  final TasksInterface? data;
+  final ITaskModel? data;
   const Uploadtask({required this.data});
 
   @override

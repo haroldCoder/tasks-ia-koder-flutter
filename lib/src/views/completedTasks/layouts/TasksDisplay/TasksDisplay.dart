@@ -12,7 +12,7 @@ class TaskDisplay extends StatelessWidget {
       required this.changeToPendingTask});
   final List<TasksInterface> localTasks;
   final List<TasksServer> onlineTasks;
-  final void Function(int id) changeToPendingTask;
+  final void Function(String id) changeToPendingTask;
 
 
   @override

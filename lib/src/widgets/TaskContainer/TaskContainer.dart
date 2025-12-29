@@ -30,7 +30,7 @@ class TaskContainer extends ConsumerStatefulWidget {
   final int priority;
   final VoidCallback? onClick;
   final bool? completed;
-  final int id;
+  final String id;
   final bool? online;
 
   @override
@@ -71,11 +71,11 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
             title: widget.title,
             description: widget.description,
             priority: widget.priority,
-            completed: widget.completed! ? 1 : 0) as TasksInterface,
+            completed: widget.completed! ? 1 : 0),
         ref);
   }
 
-  deleteTask(int id) {
+  deleteTask(String id) {
     showShadDialog(
       context: context,
       builder: (context) => ShadDialog.alert(
@@ -230,7 +230,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
                       ),
                     );
                   }, data: (value) {
-                    if (authState.logged) {
+                    if (authState.logged && value) {
                       return Container(
                         width: 20,
                         height: 20,

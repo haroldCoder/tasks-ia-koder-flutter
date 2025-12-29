@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/constants/updateTaskOptions.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
+import 'package:tasks_ia_koderx/src/infrastructure/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
@@ -24,7 +24,7 @@ class UpdateTasks extends StatefulWidget {
   String title;
   String description;
   int priority;
-  int id;
+  String id;
   int complete;
 
   void changeTitle(value) {

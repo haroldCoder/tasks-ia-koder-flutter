@@ -34,7 +34,7 @@ class _CompletedtasksState extends ConsumerState<Completedtasks> {
     ref.read(uploadedTasksProvider.notifier).getUploadedTasks(email);
   }
 
-  changeToPendingTask(int id) async {
+   changeToPendingTask(String id) async {
     final taskController = ref.read(taskUseCasesProvider.notifier);
     await taskController.updateTask(UpdateTasksInterface(completed: 0), id);
   }
