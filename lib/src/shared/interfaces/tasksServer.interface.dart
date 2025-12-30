@@ -7,7 +7,7 @@ class TasksServer extends TaskBase {
   int completed;
   int id;
   int userId;
-  int id_task_app;
+  String id_task_app;
 
   TasksServer(
       {required this.title,
@@ -26,9 +26,9 @@ class TasksServer extends TaskBase {
         priority: json['priority'] as int,
         completed: json['completed'] as int,
         userId: json['userId'] as int,
-        id_task_app: json['id_task_app'] as int);
+        id_task_app: json['id_task_app'] as String);
   }
 
   @override
-  int get taskId => id_task_app;
+  String get taskId => id_task_app;
 }

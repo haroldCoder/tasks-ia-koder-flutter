@@ -73,6 +73,7 @@ class _UploadtaskState extends State<Uploadtask> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Container(
+          color: Colors.black,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
             child: Scaffold(
               backgroundColor: Colors.black,

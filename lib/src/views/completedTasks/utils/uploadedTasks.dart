@@ -20,6 +20,7 @@ class UploadedTasks extends AsyncNotifier<List<TasksServer>> {
       final taskList = response['response'] as List<dynamic>;
       final tasks = taskList.map((json) => TasksServer.fromJson(json)).toList();
 
+      print(tasks);
       state = AsyncData(tasks);
     } catch (err, stack) {
       state = AsyncError(err, stack);

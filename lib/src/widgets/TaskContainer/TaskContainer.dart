@@ -147,7 +147,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
                 maxLines: null,
               ),
             ),
-            !widget.online!
+            (widget.online == false)
                 ? Button(
                     style: ElevatedButton.styleFrom(
                         padding: EdgeInsets.zero,
@@ -182,7 +182,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            !widget.online!
+            (widget.online == false)
                 ? ShadButton.outline(
                     onPressed: widget.onClick,
                     height: 30,
@@ -197,7 +197,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
                           ? btnEditTaskContainer
                           : btnReturnTaskContainer,
                       style: TextStyle(
-                          color: !widget.completed!
+                          color: (widget.completed == false)
                               ? Color(0xFF5B36FF)
                               : Colors.white,
                           fontSize: 15),
@@ -210,8 +210,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
                         fontSize: 20,
                         fontWeight: FontWeight.w700),
                   ),
-            !widget.completed!
-                ? Container(
+            if (!widget.completed!) Container(
                     width: 20,
                     height: 20,
                     decoration: BoxDecoration(
@@ -220,8 +219,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
                             : widget.priority == 2
                                 ? Colors.orange
                                 : Colors.green,
-                        borderRadius: BorderRadius.all(Radius.circular(5))))
-                : stateTaskServer.when(loading: () {
+                        borderRadius: BorderRadius.all(Radius.circular(5)))) else stateTaskServer.when(loading: () {
                     return SizedBox(
                       width: 20,
                       height: 20,
@@ -230,7 +228,7 @@ class _TaskContainerState extends ConsumerState<TaskContainer> {
                       ),
                     );
                   }, data: (value) {
-                    if (authState.logged && value) {
+                    if (authState.logged && value && (widget.online ?? false)) {
                       return Container(
                         width: 20,
                         height: 20,

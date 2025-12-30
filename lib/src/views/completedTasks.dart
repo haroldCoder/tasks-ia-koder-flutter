@@ -83,6 +83,7 @@ class _CompletedtasksState extends ConsumerState<Completedtasks> {
                 if(completedLocalTasks.isEmpty && value.isEmpty){
                   return AreNoTasks();
                 }
+
                 return TaskDisplay(
                     localTasks: completedLocalTasks,
                     onlineTasks: value,
