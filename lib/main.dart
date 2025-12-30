@@ -5,11 +5,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasks_ia_koderx/preferencesApp.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Tasks/TaskController.dart';
+import 'package:tasks_ia_koderx/src/infrastructure/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/utils/generateBrain.dart';
 import 'package:tasks_ia_koderx/src/views/Settings/Settings.dart';
 import 'package:tasks_ia_koderx/src/views/Statistics/Statistics.dart';
 import 'package:tasks_ia_koderx/src/views/UploadTask/UploadTask.dart';
@@ -172,11 +171,11 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: '/upload-task',
             builder: (context, state) {
-              final data = state.extra as TasksInterface;
+              final data = state.extra as ITaskModel;
               return Uploadtask(data: data);
             },
             pageBuilder: (context, state) {
-              final data = state.extra as TasksInterface;
+              final data = state.extra as ITaskModel;
               return CustomTransitionPage(
                   transitionsBuilder:
                       (context, animation, secondaryAnimation, child) {

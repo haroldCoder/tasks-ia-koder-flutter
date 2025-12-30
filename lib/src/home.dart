@@ -84,7 +84,7 @@ class _MyHomePageState extends ConsumerState<HomePage> {
                   ),
                 ));
       } else {
-        List<int> task_remove = taskState.tasks
+        List<String> task_remove = taskState.tasks
             .where((task) => task.completed == 0)
             .map((task) => task.id)
             .toList();

@@ -68,13 +68,13 @@
         "thursday": "Thursday",
         "friday": "Friday",
         "saturday": "Saturday",
-        "sunday": "Sunday",
-        "upload_task": {
-            "btn_upload_view": "Upload to the cloud",
-            "upload_succesfully": "Task uploaded successfully",
-            "upload_error": "An error occurred",
-            "back": "Back"
-        }
+        "sunday": "Sunday"
+    },
+    "upload_task": {
+        "btn_upload_view": "Upload to the cloud",
+        "upload_succesfully": "Task uploaded successfully",
+        "upload_error": "An error occurred",
+        "back": "Back"
     },
     "settings": {
         "title": "Settings",

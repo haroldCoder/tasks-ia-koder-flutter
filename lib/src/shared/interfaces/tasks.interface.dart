@@ -9,7 +9,7 @@ class TasksInterface implements TaskBase {
   int priority;
   @override
   int completed;
-  int id;
+  String id;
 
   TasksInterface(
       {required this.title,
@@ -19,7 +19,7 @@ class TasksInterface implements TaskBase {
       required this.id});
 
   @override
-  int get taskId => id;
+  String get taskId => id;
 
   factory TasksInterface.fromMap(Map<String, dynamic> map) {
     return TasksInterface(
@@ -36,7 +36,7 @@ class TasksInterface implements TaskBase {
     String? description,
     int? priority,
     int? completed,
-    int? id,
+    String? id,
   }) {
     return TasksInterface(
       title: title ?? this.title,

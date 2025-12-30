@@ -2,7 +2,7 @@ import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 
 class TasksState {
   final List<TasksInterface> tasks;
-  final List<int> selectedTasks;
+  final List<String> selectedTasks;
 
   TasksState({
     this.tasks = const [],
@@ -11,7 +11,7 @@ class TasksState {
 
   TasksState copyWith({
     List<TasksInterface>? tasks,
-    List<int>? selectedTasks,
+    List<String>? selectedTasks,
   }) {
     return TasksState(
       tasks: tasks ?? this.tasks,

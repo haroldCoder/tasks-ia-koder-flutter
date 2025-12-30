@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:tasks_ia_koderx/src/infrastructure/adapters/storageManage.dart';
 import 'package:tasks_ia_koderx/src/shared/States/Visited_App/interface/visited_table.dart';
-import 'package:tasks_ia_koderx/src/shared/States/storage/storageManage.dart';
 
 class DatabaseVisitedHelper{
   static const table = 'loggeds';

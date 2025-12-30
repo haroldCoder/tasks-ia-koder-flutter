@@ -12,13 +12,16 @@ class TaskDisplay extends StatelessWidget {
       required this.changeToPendingTask});
   final List<TasksInterface> localTasks;
   final List<TasksServer> onlineTasks;
-  final void Function(int id) changeToPendingTask;
-
+  final void Function(String id) changeToPendingTask;
 
   @override
   Widget build(BuildContext context) {
     final List<TaskBase> tasksUser = onlineTasks.isNotEmpty
-        ? [...localTasks, ...onlineTasks]
+        ? [
+            ...localTasks.where((local) =>
+                !onlineTasks.any((online) => online.taskId == local.taskId)),
+            ...onlineTasks
+          ]
         : localTasks;
 
     return Scrollbar(
@@ -31,7 +34,11 @@ class TaskDisplay extends StatelessWidget {
           spacing: 25,
           children: tasksUser.map((task) {
             final isLocal = task is TasksInterface;
+            final ids = tasksUser.map((t) => t.taskId?.trim()).toList();
 
+            final duplicates = ids.where((id) =>
+            ids.where((e) => e == id).length > 1
+            ).toSet();
             return TaskContainer(
               online: !isLocal,
               id: task.taskId,
@@ -39,8 +46,7 @@ class TaskDisplay extends StatelessWidget {
               title: task.title,
               description: task.description,
               priority: task.priority,
-              onClick: () =>
-                  changeToPendingTask(task.taskId),
+              onClick: () => changeToPendingTask(task.taskId),
             );
           }).toList(),
         ),
