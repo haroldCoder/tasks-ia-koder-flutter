@@ -8,12 +8,12 @@ import 'package:tasks_ia_koderx/preferencesApp.dart';
 import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
 import 'package:tasks_ia_koderx/src/home.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/Tasks/TaskController.dart';
+import 'package:tasks_ia_koderx/src/presentation/CreateTasks/screen/createTasks.dart';
+import 'package:tasks_ia_koderx/src/presentation/Settings/screen/Settings.dart';
+import 'package:tasks_ia_koderx/src/presentation/Statistics/screen/Statistics.dart';
+import 'package:tasks_ia_koderx/src/presentation/UploadTask/screen/UploadTask.dart';
+import 'package:tasks_ia_koderx/src/presentation/completedTasks/screen/completedTasks.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
-import 'package:tasks_ia_koderx/src/views/Settings/Settings.dart';
-import 'package:tasks_ia_koderx/src/views/Statistics/Statistics.dart';
-import 'package:tasks_ia_koderx/src/views/UploadTask/UploadTask.dart';
-import 'package:tasks_ia_koderx/src/views/completedTasks.dart';
-import 'package:tasks_ia_koderx/src/views/createTasks.dart';
 
 import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -29,13 +29,13 @@ void main() async {
   Get.put(ConfigAppState());
 
   await Firebase.initializeApp(
-    options: FirebaseOptions(
+    /*options: FirebaseOptions(
       apiKey: dotenv.env["FIREBASE_API_KEY"].toString(),
       appId: dotenv.env["FIREBASE_APP_ID"].toString(),
       messagingSenderId: dotenv.env["FIREBASE_MESSAGINGSENDERING"].toString(),
       projectId: dotenv.env["FIREBASE_PROJECT_ID"].toString(),
       storageBucket: dotenv.env["FIREBASE_BUCKET"].toString(),
-    ),
+    ),*/
   );
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('locale');

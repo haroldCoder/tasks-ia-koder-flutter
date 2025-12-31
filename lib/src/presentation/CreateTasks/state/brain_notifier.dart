@@ -1,0 +1,22 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tasks_ia_koderx/src/presentation/CreateTasks/domain/entities/brain_state.dart';
+import 'package:tasks_ia_koderx/src/presentation/CreateTasks/domain/enum/elementId.dart';
+
+class BrainNotifier extends Notifier<BrainState> {
+  @override
+  BrainState build() {
+    return const BrainState();
+  }
+
+  void selectElement(ElementId element) {
+    state = state.copyWith(elementId: element);
+  }
+
+  void setLoading(bool value) {
+    state = state.copyWith(loading: value, clearError: value, hasError: false);
+  }
+
+  void setError(Object error) {
+    state = state.copyWith(error: error, loading: false, hasError: true);
+  }
+}

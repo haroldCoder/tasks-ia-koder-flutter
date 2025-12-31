@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:tasks_ia_koderx/src/application/ports/connection_monitor_port.dart';
-import 'package:tasks_ia_koderx/src/application/usecases/monitor_connection_usecase.dart';
+import 'package:tasks_ia_koderx/src/application/use_cases/monitor_connection_usecase.dart';
 import 'package:tasks_ia_koderx/src/domain/entities/connection_status.dart';
+import 'package:tasks_ia_koderx/src/domain/ports/connection_monitor_port.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/adapters/connectivity_adapter.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionGlobal.dart';
 import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/ConnectionWifi.dart';

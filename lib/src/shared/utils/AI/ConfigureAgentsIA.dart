@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:http/http.dart' as http;
+import 'package:tasks_ia_koderx/src/presentation/CreateTasks/domain/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
-import 'package:tasks_ia_koderx/src/views/CreateTasks/enum/elementId.dart';
 
 class AgentState {
   final ElementId select;
