@@ -5,12 +5,15 @@ class BrainState {
   final bool loading;
   final Object? error;
   final bool hasError;
+  final String textGenerated;
+
 
   const BrainState({
     this.elementId = ElementId.worthless,
     this.loading = false,
     this.error,
     this.hasError = false,
+    this.textGenerated = "",
   });
 
   BrainState copyWith({
@@ -19,12 +22,14 @@ class BrainState {
     Object? error,
     bool clearError = false,
     bool? hasError,
+    String? textGenerated,
   }) {
     return BrainState(
       elementId: elementId ?? this.elementId,
       loading: loading ?? this.loading,
       error: clearError ? null : error ?? this.error,
       hasError: error != null,
+      textGenerated: textGenerated ?? this.textGenerated,
     );
   }
 }

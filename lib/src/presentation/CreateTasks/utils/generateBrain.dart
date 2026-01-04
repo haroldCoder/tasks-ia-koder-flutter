@@ -5,8 +5,8 @@ import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/AI/lang.dart';
 
-Future<void> generateBrain(
-    GenerativeModel model, String value, void Function(String) function, WidgetRef ref) async {
+Future<String> generateBrain(
+    GenerativeModel model, String value, WidgetRef ref) async {
   final notifier = ref.read(brainProvider.notifier);
 
   try {
@@ -14,10 +14,13 @@ Future<void> generateBrain(
 
     final response =
         await model.startChat().sendMessage(Content.text('${generateText} ${value}'));
-    function(response.text.toString());
     notifier.setLoading(false);
+
+    return response.text ?? "";
   } catch (err) {
     print(err);
     notifier.setError(err);
   }
+
+  return "";
 }

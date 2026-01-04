@@ -32,17 +32,15 @@ class Buttonai extends ConsumerWidget {
       this.disabled = false,
       required this.widgetRef});
 
-  void useIAModelToBrain(AgentNotifier configureAgentsIa,
-      BrainNotifier controllerStreamBrain) {
+  Future<void> useIAModelToBrain(AgentNotifier configureAgentsIa,
+      BrainNotifier controllerBrain) async {
     elementId = typeref == Typeref.title
         ? ElementId.title_input
         : ElementId.desc_textBox;
     switch (configApp.model_ai.value) {
       case ModelIA.gemma3nE4Bit:
-        controllerStreamBrain.selectElement(elementId!);
-        generateBrain(configureAI.model, ref, (value) {
-          updateDataTask(widgetRef, value, elementId!);
-        }, widgetRef);
+        controllerBrain.selectElement(elementId!);
+        controllerBrain.setTextGenerated(await generateBrain(configureAI.model, ref, widgetRef));
         break;
       default:
         configureAgentsIa.makeBrain(configApp.model_ai.value,

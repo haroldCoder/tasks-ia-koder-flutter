@@ -9,14 +9,18 @@ class BrainNotifier extends Notifier<BrainState> {
   }
 
   void selectElement(ElementId element) {
-    state = state.copyWith(elementId: element);
+    state = state.copyWith(elementId: element, textGenerated: "");
   }
 
   void setLoading(bool value) {
-    state = state.copyWith(loading: value, clearError: value, hasError: false);
+    state = state.copyWith(loading: value, clearError: value, hasError: false, textGenerated: "");
   }
 
   void setError(Object error) {
-    state = state.copyWith(error: error, loading: false, hasError: true);
+    state = state.copyWith(error: error, loading: false, hasError: true, textGenerated: "");
+  }
+
+  void setTextGenerated(String text) {
+    state = state.copyWith(textGenerated: text);
   }
 }

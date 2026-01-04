@@ -124,9 +124,9 @@ class Createtasks extends ConsumerWidget {
                             resizeToAvoidBottomInset: false,
                             backgroundColor: Colors.transparent,
                             body: InputMagnament(
+                              value: createTaskState.titleController.text,
                               handleChangeTitleTask: (dynamic value) =>
                                   createTaskController.changeTitleTask(value),
-                              value: createTaskState.titleController.text,
                               contextmain: context,
                             ),
                           ),
@@ -134,7 +134,7 @@ class Createtasks extends ConsumerWidget {
                         Buttonai(
                           ref: createTaskState.titleController.text,
                           typeref: Typeref.title,
-                          disabled: false,
+                          disabled: createTaskState.titleController.text == "",
                           widgetRef: ref,
                         ),
                         const SizedBox(height: 10),
@@ -148,7 +148,8 @@ class Createtasks extends ConsumerWidget {
                         Buttonai(
                           ref: createTaskState.descriptionController.text,
                           typeref: Typeref.descripcion,
-                          disabled: false,
+                          disabled:
+                              createTaskState.descriptionController.text == "",
                           widgetRef: ref,
                         ),
                         Container(

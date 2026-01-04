@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:http/http.dart' as http;
 import 'package:tasks_ia_koderx/src/presentation/CreateTasks/domain/enum/elementId.dart';
@@ -55,6 +56,7 @@ class AgentNotifier extends StateNotifier<AgentState> {
         setResponseToNull: true,
         setErrorToNull: true,
         hasError: false,
+        response: null
       );
 
       localResponse =
@@ -63,7 +65,7 @@ class AgentNotifier extends StateNotifier<AgentState> {
               endpoint: 'api/v1/chat/completions',
               headers: {
                 'Authorization':
-                    'Bearer \${dotenv.env["OPEN_API_KEY"].toString()}',
+                    'Bearer ${dotenv.env["OPENROUTER_API_KEY"].toString()}',
                 'Content-Type': 'application/json'
               },
               body: {
@@ -87,10 +89,9 @@ class AgentNotifier extends StateNotifier<AgentState> {
         );
       }
     } catch (err) {
-      print(err);
       state = state.copyWith(
         loading: false,
-        error: 'Err: \$err',
+        error: 'Err: $err',
         setResponseToNull: true,
         hasError: true,
       );

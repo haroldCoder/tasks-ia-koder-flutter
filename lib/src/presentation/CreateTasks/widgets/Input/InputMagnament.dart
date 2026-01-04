@@ -8,8 +8,6 @@ import 'package:tasks_ia_koderx/src/presentation/CreateTasks/widgets/InputTitle/
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAgentsIA.dart';
-import 'package:tasks_ia_koderx/src/presentation/CreateTasks/state/brain_notifier.dart';
 
 class InputMagnament extends ConsumerWidget {
   InputMagnament(
@@ -27,42 +25,50 @@ class InputMagnament extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final configureAgentsIa = ref.watch(agentNotifierProvider);
-    final controllerBrain = ref.watch(brainProvider);
-    bool select = configureAgentsIa.select == ElementId.title_input;
+    final brainState = ref.watch(brainProvider);
+    bool selectAgentsIa = configureAgentsIa.select == ElementId.title_input;
+    bool selectBrain = brainState.elementId == ElementId.title_input;
 
     ref.listen(agentNotifierProvider, (previous, next) {
-      if (next.response != null && previous?.response != next.response) {
-        String content = returnContentAgentIA(configureAgentsIa.response!);
+      if (next.response != null && previous?.response != next.response && selectAgentsIa) {
+        String content = returnContentAgentIA(next.response!);
         handleChangeTitleTask(content);
       }
     });
 
-    if (configApp.model_ai.value != ModelIA.gemma3nE4Bit) {
+    ref.listen(brainProvider, (previous, next) {
+      if (next.textGenerated != "" && previous?.textGenerated != next.textGenerated && selectBrain) {
+        handleChangeTitleTask(next.textGenerated);
+      }
+    });
 
-      if (configureAgentsIa.loading && select) {
+    if (configApp.model_ai.value != ModelIA.gemma3nE4Bit) {
+      if (configureAgentsIa.loading && selectAgentsIa) {
         return CircularProgressIndicator(color: Colors.blueAccent);
       }
 
-      if (configureAgentsIa.response != null && select) {
+      if (configureAgentsIa.response != null && selectAgentsIa) {
         return InputTitle(value: value, onChange: handleChangeTitleTask);
       } else if (configureAgentsIa.hasError &&
-          select &&
+          selectAgentsIa &&
           configureAgentsIa.error != null) {
         showErrorAgentIA(
             context: contextmain, description: configureAgentsIa.error!);
       }
 
       return InputTitle(value: value, onChange: handleChangeTitleTask);
-    }
-    if(controllerBrain.loading && select){
-      return CircularProgressIndicator(color: Colors.blueAccent);
-    }
+    } else {
+      if (brainState.loading && selectBrain) {
+        return CircularProgressIndicator(color: Colors.blueAccent);
+      }
 
-    if(controllerBrain.hasError && select){
-      showErrorAgentIA(
-          context: contextmain, description: controllerBrain.error.toString());
-    }
+      if (brainState.hasError && selectBrain) {
+        showErrorAgentIA(
+            context: contextmain,
+            description: brainState.error.toString());
+      }
 
-    return InputTitle(value: value, onChange: handleChangeTitleTask);
+      return InputTitle(value: value, onChange: handleChangeTitleTask);
+    }
   }
 }

@@ -24,27 +24,31 @@ class Textboxmagnament extends ConsumerWidget {
     final configApp = ref.watch(configAppProvider);
     final agentState = ref.watch(agentNotifierProvider);
     final brainState = ref.watch(brainProvider);
+    bool selectAgentsIa = agentState.select == ElementId.desc_textBox;
+    bool selectBrain = brainState.elementId == ElementId.desc_textBox;
 
     ref.listen(agentNotifierProvider, (previous, next) {
-      bool select = next.select == ElementId.desc_textBox;
-      if (next.response != null && previous?.response != next.response && select) {
+      if (next.response != null && previous?.response != next.response && selectAgentsIa) {
         String content = returnContentAgentIA(next.response!);
         handleChangeDescriptionTask(content);
       }
     });
 
+    ref.listen(brainProvider, (previous, next) {
+      if (next.textGenerated != "" && previous?.textGenerated != next.textGenerated && selectBrain) {
+        handleChangeDescriptionTask(next.textGenerated);
+      }
+    });
 
 
     if (configApp.modelAi != ModelIA.gemma3nE4Bit) {
-      bool select = agentState.select == ElementId.desc_textBox;
-
-      if (agentState.loading && select) {
+      if (agentState.loading && selectAgentsIa) {
         return const Center(
           child: CircularProgressIndicator(
             color: Colors.blueAccent,
           ),
         );
-      } else if (agentState.hasError && select) {
+      } else if (agentState.hasError && selectAgentsIa) {
         return TextboxsDescription(
           value: value,
           onChange: handleChangeDescriptionTask,
@@ -56,9 +60,7 @@ class Textboxmagnament extends ConsumerWidget {
         onChange: handleChangeDescriptionTask,
       );
     } else {
-      bool select = brainState.elementId == ElementId.desc_textBox;
-
-      if (select && brainState.loading) {
+      if (brainState.loading && selectBrain) {
         return const Center(
           child: CircularProgressIndicator(
             color: Colors.blueAccent,
@@ -66,7 +68,7 @@ class Textboxmagnament extends ConsumerWidget {
         );
       }
 
-      if (select && brainState.hasError) {
+      if (selectBrain && brainState.hasError) {
       }
 
       return TextboxsDescription(
