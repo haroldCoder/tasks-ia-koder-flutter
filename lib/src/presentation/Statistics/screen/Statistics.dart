@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
-import 'package:tasks_ia_koderx/src/templates/BarGraphicVisited/BarGraphicVisited.dart';
-import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
-import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
+import 'package:tasks_ia_koderx/src/widgets/AppBar/tabMain.dart';
+import 'package:tasks_ia_koderx/src/widgets/Charts/BarGraphicTasks/BarGraphicTasks.dart';
+import 'package:tasks_ia_koderx/src/widgets/Charts/BarGraphicVisited/BarGraphicVisited.dart';
 import 'package:tasks_ia_koderx/src/widgets/MarkDown/Markdown.dart';
-import 'package:tasks_ia_koderx/src/templates/BarGraphicTasks/BarGraphicTasks.dart';
+import 'package:tasks_ia_koderx/src/widgets/Navigation/tabBarFooter.dart';
 
 class Statistics extends ConsumerWidget {
   const Statistics({super.key, required this.color_app});

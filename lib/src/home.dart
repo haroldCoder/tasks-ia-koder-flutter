@@ -7,14 +7,14 @@ import 'package:tasks_ia_koderx/src/shared/States/Visited_App/VisitedService.dar
 import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
-import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
-import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
-import 'package:tasks_ia_koderx/src/templates/update-tasks/update-tasks.dart';
+import 'package:tasks_ia_koderx/src/widgets/AppBar/tabMain.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/shared/class/button.dart';
+import 'package:tasks_ia_koderx/src/widgets/Navigation/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/widgets/Search.dart';
 import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:tasks_ia_koderx/src/widgets/update-tasks/update-tasks.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   HomePage({super.key, required this.title, required this.colorApp});

@@ -6,12 +6,12 @@ import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
-import 'package:tasks_ia_koderx/src/templates/tabBarFooter/tabBarFooter.dart';
-import 'package:tasks_ia_koderx/src/templates/tabMain.dart';
 import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonPremium.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonGoogle.dart';
+import 'package:tasks_ia_koderx/src/widgets/AppBar/tabMain.dart';
 import 'package:tasks_ia_koderx/src/widgets/MarkDown/Markdown.dart';
+import 'package:tasks_ia_koderx/src/widgets/Navigation/tabBarFooter.dart';
 
 class Settings extends ConsumerWidget {
   Settings({super.key});
