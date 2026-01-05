@@ -6,20 +6,18 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasks_ia_koderx/preferencesApp.dart';
 import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
-import 'package:tasks_ia_koderx/src/home.dart';
+import 'package:tasks_ia_koderx/src/presentation/Home/home.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/Tasks/TaskController.dart';
-import 'package:tasks_ia_koderx/src/presentation/CreateTasks/screen/createTasks.dart';
 import 'package:tasks_ia_koderx/src/presentation/Settings/screen/Settings.dart';
 import 'package:tasks_ia_koderx/src/presentation/Statistics/screen/Statistics.dart';
-import 'package:tasks_ia_koderx/src/presentation/UploadTask/screen/UploadTask.dart';
-import 'package:tasks_ia_koderx/src/presentation/completedTasks/screen/completedTasks.dart';
+import 'package:tasks_ia_koderx/src/presentation/completed_tasks/screen/completedTasks.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/screen/create_tasks.dart';
+import 'package:tasks_ia_koderx/src/presentation/splash_screen/screen_splash.dart';
+import 'package:tasks_ia_koderx/src/presentation/upload_task/screen/upload_task.dart';
 import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
-
-import 'src/screen_splash.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/widgets/connection_initializer.dart';
 
 void main() async {
@@ -96,7 +94,7 @@ class MyApp extends StatelessWidget {
           ),
           GoRoute(
             path: '/create-tasks',
-            builder: (context, state) => Createtasks(
+            builder: (context, state) => CreateTasks(
               color_app: configAppState.color_theme,
             ),
             pageBuilder: (context, state) {
@@ -109,12 +107,12 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: Createtasks(color_app: configAppState.color_theme));
+                  child: CreateTasks(color_app: configAppState.color_theme));
             },
           ),
           GoRoute(
             path: '/check',
-            builder: (context, state) => Completedtasks(
+            builder: (context, state) => CompletedTasks(
               colorApp: configAppState.color_theme,
             ),
             pageBuilder: (context, state) {
@@ -127,7 +125,7 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: Completedtasks(
+                  child: CompletedTasks(
                     colorApp: configAppState.color_theme,
                   ));
             },
@@ -172,7 +170,7 @@ class MyApp extends StatelessWidget {
             path: '/upload-task',
             builder: (context, state) {
               final data = state.extra as ITaskModel;
-              return Uploadtask(data: data);
+              return UploadTask(data: data);
             },
             pageBuilder: (context, state) {
               final data = state.extra as ITaskModel;
@@ -185,7 +183,7 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: Uploadtask(data: data));
+                  child: UploadTask(data: data));
             },
           )
         ]);

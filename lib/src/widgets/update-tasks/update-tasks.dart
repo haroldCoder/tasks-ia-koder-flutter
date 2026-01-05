@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:tasks_ia_koderx/src/constants/updateTaskOptions.dart';
+import 'package:tasks_ia_koderx/src/domain/constants/updateTaskOptions.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
