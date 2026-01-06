@@ -6,10 +6,6 @@ import 'package:tasks_ia_koderx/src/presentation/create_tasks/state/brain_notifi
 import 'package:tasks_ia_koderx/src/shared/utils/AI/configure_agents_IA.dart';
 
 final agentNotifierProvider =
-StateNotifierProvider<AgentNotifier, IAgentStateModel>((ref) {
-  final notifier = AgentNotifier();
-  ref.onDispose(() => notifier.dispose());
-  return notifier;
-});
+StateNotifierProvider<AgentNotifier, IAgentStateModel>((ref) => AgentNotifier());
 
 final brainProvider = NotifierProvider<BrainNotifier, BrainState>(BrainNotifier.new);

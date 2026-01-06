@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/utils/returnMessageIA.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ButtonAI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
-import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/configure_agents_IA.dart';
@@ -17,7 +16,6 @@ import '../../state/brain_notifier.dart';
 class ButtonAi extends ConsumerWidget {
   ConfigureAI configureAI = ConfigureAI();
   String ref;
-  final configApp = Get.put(ConfigAppState());
 
   final Typeref typeref;
   ElementId? elementId = ElementId.worthless;
@@ -32,17 +30,17 @@ class ButtonAi extends ConsumerWidget {
       required this.widgetRef});
 
   Future<void> useIAModelToBrain(AgentNotifier configureAgentsIa,
-      BrainNotifier controllerBrain) async {
+      BrainNotifier controllerBrain, ConfigAppState configApp) async {
     elementId = typeref == Typeref.title
         ? ElementId.title_input
         : ElementId.desc_textBox;
-    switch (configApp.model_ai.value) {
+    switch (configApp.modelAi) {
       case ModelIA.gemma3nE4Bit:
         controllerBrain.selectElement(elementId!);
         controllerBrain.setTextGenerated(await generateBrain(configureAI.model, ref, widgetRef));
         break;
       default:
-        configureAgentsIa.makeBrain(configApp.model_ai.value,
+        configureAgentsIa.makeBrain(configApp.modelAi,
             returnMessageIA(this.typeref, ref), elementId);
         break;
     }
@@ -52,6 +50,8 @@ class ButtonAi extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final configureAgentsIa = ref.read(agentNotifierProvider.notifier);
     final controllerBrain = ref.read(brainProvider.notifier);
+    final configAppState = ref.watch(configAppProvider);
+
 
     return Button(
       disable: ref == "" || disabled ?? true,
@@ -76,7 +76,7 @@ class ButtonAi extends ConsumerWidget {
         ],
       ),
       click: () {
-        useIAModelToBrain(configureAgentsIa, controllerBrain);
+        useIAModelToBrain(configureAgentsIa, controllerBrain, configAppState);
       },
     );
   }

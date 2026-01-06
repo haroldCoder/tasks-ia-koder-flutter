@@ -41,7 +41,6 @@ class TextBoxMagnament extends ConsumerWidget {
     });
 
     if (configApp.modelAi != ModelIA.gemma3nE4Bit) {
-      print('${agentState.loading} ${agentState.select}');
       if (agentState.loading && selectAgentsIa) {
         return const Center(
           child: CircularProgressIndicator(

@@ -18,9 +18,7 @@ class AgentNotifier extends StateNotifier<IAgentStateModel> {
     try {
       state = state.copyWith(
         loading: true,
-        select: element,
-        setResponseToNull: true,
-        setErrorToNull: true,
+        select: element ?? ElementId.worthless,
         hasError: false,
         response: null
       );
@@ -43,14 +41,12 @@ class AgentNotifier extends StateNotifier<IAgentStateModel> {
         state = state.copyWith(
           loading: false,
           response: localResponse,
-          setErrorToNull: true,
           hasError: false,
         );
       } else {
         state = state.copyWith(
           loading: false,
           error: 'Error: \${localResponse.statusCode} \${localResponse.body}',
-          setResponseToNull: true,
           hasError: true,
         );
       }
@@ -58,7 +54,6 @@ class AgentNotifier extends StateNotifier<IAgentStateModel> {
       state = state.copyWith(
         loading: false,
         error: 'Err: $err',
-        setResponseToNull: true,
         hasError: true,
       );
     } finally {

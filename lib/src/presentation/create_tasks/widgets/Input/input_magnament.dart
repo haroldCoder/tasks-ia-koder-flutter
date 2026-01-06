@@ -25,12 +25,11 @@ class InputMagnament extends ConsumerWidget {
     final brainState = ref.watch(brainProvider);
     final configAppState = ref.watch(configAppProvider);
 
-    bool selectAgentsIa = configureAgentsIa.select == ElementId.title_input;
+    final bool selectAgentsIa = configureAgentsIa.select == ElementId.title_input;
     bool selectBrain = brainState.elementId == ElementId.title_input;
 
     ref.listen(agentNotifierProvider, (previous, next) {
-      print(next.select);
-      if (next.response != null && previous?.response != next.response && selectAgentsIa) {
+      if (next.response != null && previous?.response != next.response && next.select == ElementId.title_input) {
         String content = returnContentAgentIA(next.response!);
         handleChangeTitleTask(content);
       }
@@ -47,9 +46,7 @@ class InputMagnament extends ConsumerWidget {
         return CircularProgressIndicator(color: Colors.blueAccent);
       }
 
-      if (configureAgentsIa.response != null && selectAgentsIa) {
-        return InputTitle(value: value, onChange: handleChangeTitleTask);
-      } else if (configureAgentsIa.hasError &&
+      if (configureAgentsIa.hasError &&
           selectAgentsIa &&
           configureAgentsIa.error != null) {
         showErrorAgentIA(
