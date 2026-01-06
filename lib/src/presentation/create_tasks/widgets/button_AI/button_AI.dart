@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/utils/returnMessageIA.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ButtonAI/enum/typeRef.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/utils/return_message_IA.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/button_AI/enum/typeRef.dart';
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
@@ -13,7 +13,7 @@ import '../../../../shared/utils/AI/ConfigureAI.dart';
 import '../../../../widgets/Button/Button.dart';
 import '../../state/brain_notifier.dart';
 
-class ButtonAi extends ConsumerWidget {
+class ButtonAI extends ConsumerWidget {
   ConfigureAI configureAI = ConfigureAI();
   String ref;
 
@@ -22,7 +22,7 @@ class ButtonAi extends ConsumerWidget {
   bool disabled;
   final WidgetRef widgetRef;
 
-  ButtonAi(
+  ButtonAI(
       {super.key,
       required this.ref,
       required this.typeref,

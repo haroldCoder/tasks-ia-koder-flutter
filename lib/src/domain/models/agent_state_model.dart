@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
 import 'package:http/http.dart' as http;
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
 
 part 'agent_state_model.freezed.dart';
 

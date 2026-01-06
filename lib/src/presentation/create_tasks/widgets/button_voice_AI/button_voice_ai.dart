@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ButtonVoiceAI/widgets/voice_Ai_view.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/button_voice_AI/widgets/voice_Ai_view.dart';
 import 'package:tasks_ia_koderx/src/providers/connection_providers.dart';
 import 'package:tasks_ia_koderx/src/widgets/Overlay/OverlayFixed.dart';
 import 'package:tasks_ia_koderx/src/widgets/PopUp/PopUp.dart';
 
-class ButtonVoiceAi extends ConsumerWidget {
-  ButtonVoiceAi({super.key, this.enabled});
+class ButtonVoiceAI extends ConsumerWidget {
+  ButtonVoiceAI({super.key, this.enabled});
   final bool? enabled;
 
   void openDialogVoice(BuildContext context) {

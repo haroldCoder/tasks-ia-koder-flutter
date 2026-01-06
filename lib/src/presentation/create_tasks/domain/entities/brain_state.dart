@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
 
 part 'brain_state.freezed.dart';
 

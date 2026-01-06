@@ -5,11 +5,11 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/domain/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/state/create_task_controllers_provider.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ButtonAI/button_AI.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ButtonAI/enum/typeRef.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ButtonVoiceAI/button_voice_ai.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/Input/input_magnament.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/TextBox/text_box_magnament.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/button_AI/button_AI.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/button_AI/enum/typeRef.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/button_voice_AI/button_voice_ai.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/text_box/text_box_magnament.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
@@ -131,7 +131,7 @@ class CreateTasks extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        ButtonAi(
+                        ButtonAI(
                           ref: createTaskState.titleController.text,
                           typeref: Typeref.title,
                           disabled: createTaskState.titleController.text == "",
@@ -145,7 +145,7 @@ class CreateTasks extends ConsumerWidget {
                           contextmain: context,
                         ),
                         const SizedBox(height: 4),
-                        ButtonAi(
+                        ButtonAI(
                           ref: createTaskState.descriptionController.text,
                           typeref: Typeref.descripcion,
                           disabled:
@@ -190,7 +190,7 @@ class CreateTasks extends ConsumerWidget {
                     ),
                   ),
                 ),
-                ButtonVoiceAi(),
+                ButtonVoiceAI(),
               ],
             ),
           ),

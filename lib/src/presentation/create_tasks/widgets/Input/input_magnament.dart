@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/utils/returnContentAgentIA.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ErrorAgent/show_error_agent_IA.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/InputTitle/input_title.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/utils/return_content_agent_IA.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/error_agent/show_error_agent_IA.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/input_title/input_title.dart';
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/domain/models/convert_brain_to_task_model.dart';
-import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
+import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
