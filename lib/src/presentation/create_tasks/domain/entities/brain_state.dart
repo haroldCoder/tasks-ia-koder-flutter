@@ -1,34 +1,34 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
 
-class BrainState {
-  final ElementId elementId;
-  final bool loading;
-  final Object? error;
-  final bool hasError;
-  final String textGenerated;
+part 'brain_state.freezed.dart';
 
+@freezed
+class BrainState with _$BrainState {
+  const factory BrainState({
+    @Default(ElementId.worthless) ElementId elementId,
+    @Default(false) bool loading,
+    Object? error,
+    @Default(false) bool hasError,
+    @Default("") String textGenerated,
+    @Default(false) bool clearError,
+  }) = _BrainState;
 
-  const BrainState({
-    this.elementId = ElementId.worthless,
-    this.loading = false,
-    this.error,
-    this.hasError = false,
-    this.textGenerated = "",
-  });
+  const BrainState._();
 
-  BrainState copyWith({
+  BrainState customCopyWith({
     ElementId? elementId,
     bool? loading,
     Object? error,
-    bool clearError = false,
+    bool? clearError,
     bool? hasError,
     String? textGenerated,
   }) {
-    return BrainState(
+    return copyWith(
       elementId: elementId ?? this.elementId,
       loading: loading ?? this.loading,
-      error: clearError ? null : error ?? this.error,
-      hasError: error != null,
+      error: clearError ?? false ? null : error ?? this.error,
+      hasError: (error != null) ? true : (hasError ?? this.hasError),
       textGenerated: textGenerated ?? this.textGenerated,
     );
   }

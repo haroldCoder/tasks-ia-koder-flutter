@@ -1,58 +1,47 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:tasks_ia_koderx/src/domain/models/convert_brain_to_task_model.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/elementId.dart';
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAI.dart';
 import 'package:tasks_ia_koderx/src/widgets/voice_recorder/constants/return_messages.dart';
 import 'package:tasks_ia_koderx/src/widgets/voice_recorder/enum/messageTypes.dart';
 
-class ConvertBrainToTaskState {
-  final String title;
-  final String description;
-
-  ConvertBrainToTaskState({this.title = '', this.description = ''});
-}
-
-class ConvertBrainToTaskNotifier extends Notifier<ConvertBrainToTaskState> {
+class ConvertBrainToTaskNotifier extends Notifier<IConvertBrainToTaskModel> {
   @override
-  ConvertBrainToTaskState build() {
-    return ConvertBrainToTaskState();
+  IConvertBrainToTaskModel build() {
+    return const IConvertBrainToTaskModel(title: '', description: '');
   }
 
   Future<void> convert(String brain) async {
     final configApp = ref.read(configAppProvider);
     final controllerAgentIa = ref.read(agentNotifierProvider.notifier);
     final controllerBrain = ref.read(brainProvider.notifier);
-    final configureAgentIa = ref.watch(agentNotifierProvider);
-
-    ConfigureAI configureAI = ConfigureAI();
+    final brainState = ref.watch(brainProvider);
 
     String _description = returnMessage(brain, MessageTypes.descripcion);
     String _title = returnMessage(brain, MessageTypes.title);
 
     if (configApp.modelAi == ModelIA.gemma3nE4Bit) {
       try {
-        controllerBrain.setLoading(true);
-        configureAgentIa.select == ElementId.title_input;
-        final responseTitle = await configureAI.model
-            .startChat()
-            .sendMessage(Content.text(_title));
+        controllerBrain.selectElement(ElementId.title_input);
 
-        final newTitle = responseTitle.text.toString();
+        await controllerBrain.generateBrain(_title);
 
-        configureAgentIa.select == ElementId.desc_textBox;
-        final responseDescription = await configureAI.model
-            .startChat()
-            .sendMessage(Content.text(_description));
+        final newTitle = brainState.textGenerated;
 
-        final newDescription = responseDescription.text.toString();
-        
-        state = ConvertBrainToTaskState(title: newTitle, description: newDescription);
+        await Future.delayed(Duration(seconds: 2));
 
+        controllerBrain.selectElement(ElementId.desc_textBox);
+
+        await controllerBrain.generateBrain(_description);
+
+        final newDescription = brainState.textGenerated;
+
+        state = IConvertBrainToTaskModel(
+            title: newTitle, description: newDescription);
       } catch (err) {
         controllerBrain.setError(err);
       } finally {
@@ -80,5 +69,5 @@ class ConvertBrainToTaskNotifier extends Notifier<ConvertBrainToTaskState> {
 }
 
 final convertBrainToTaskProvider =
-    NotifierProvider<ConvertBrainToTaskNotifier, ConvertBrainToTaskState>(
+    NotifierProvider<ConvertBrainToTaskNotifier, IConvertBrainToTaskModel>(
         ConvertBrainToTaskNotifier.new);
