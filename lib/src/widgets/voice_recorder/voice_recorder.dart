@@ -40,8 +40,9 @@ class _VoiceRecorderState extends ConsumerState<VoiceRecorder> {
 
   Future<void> _requestPermission() async {
     final status = await Permission.microphone.request();
+    final speech = await Permission.speech.request();
 
-    if (status == PermissionStatus.granted) {
+    if (status.isGranted && speech.isGranted) {
       print('🎤 Permiso concedido');
     } else {
       print('❌ Permiso denegado');
@@ -81,23 +82,25 @@ class _VoiceRecorderState extends ConsumerState<VoiceRecorder> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.transparent,
+        color: Colors.transparent,
         child: GestureDetector(
-      child: AnimatedScale(
-          scale: _scale,
-          duration: Duration(milliseconds: 200),
-          child: Container(
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: _isListening ? Color(0x420043D4) : Colors.transparent),
-            child: widget.widget,
-          )),
-      onLongPressStart:
-          widget.onPressed != null ? (_) => widget.onPressed!(_listen) : null,
-      onLongPressEnd: (_) {
-        pressedEnd();
-      },
-    ));
+          child: AnimatedScale(
+              scale: _scale,
+              duration: Duration(milliseconds: 200),
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color:
+                        _isListening ? Color(0x420043D4) : Colors.transparent),
+                child: widget.widget,
+              )),
+          onLongPressStart: widget.onPressed != null
+              ? (_) => widget.onPressed!(_listen)
+              : null,
+          onLongPressEnd: (_) {
+            pressedEnd();
+          },
+        ));
   }
 }

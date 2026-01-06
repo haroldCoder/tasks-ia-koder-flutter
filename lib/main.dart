@@ -27,13 +27,13 @@ void main() async {
   Get.put(ConfigAppState());
 
   await Firebase.initializeApp(
-    options: FirebaseOptions(
+    /*options: FirebaseOptions(
       apiKey: dotenv.env["FIREBASE_API_KEY"].toString(),
       appId: dotenv.env["FIREBASE_APP_ID"].toString(),
       messagingSenderId: dotenv.env["FIREBASE_MESSAGINGSENDERING"].toString(),
       projectId: dotenv.env["FIREBASE_PROJECT_ID"].toString(),
       storageBucket: dotenv.env["FIREBASE_BUCKET"].toString(),
-    ),
+    ),*/
   );
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('locale');
