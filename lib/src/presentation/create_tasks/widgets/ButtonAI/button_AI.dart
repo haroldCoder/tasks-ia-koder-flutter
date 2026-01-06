@@ -6,11 +6,11 @@ import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/ButtonAI/e
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/AI/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/configure_agents_IA.dart';
 import '../../../../shared/utils/AI/ConfigureAI.dart';
 import '../../../../widgets/Button/Button.dart';
-import '../../utils/generateBrain.dart';
 import '../../state/brain_notifier.dart';
 
 class ButtonAi extends ConsumerWidget {
@@ -37,11 +37,11 @@ class ButtonAi extends ConsumerWidget {
     switch (configApp.modelAi) {
       case ModelIA.gemma3nE4Bit:
         controllerBrain.selectElement(elementId!);
-        controllerBrain.setTextGenerated(await generateBrain(configureAI.model, ref, widgetRef));
+        controllerBrain.generateBrain("$generateText $ref");
         break;
       default:
-        configureAgentsIa.makeBrain(configApp.modelAi,
-            returnMessageIA(this.typeref, ref), elementId);
+        configureAgentsIa.makeBrain(
+            configApp.modelAi, returnMessageIA(this.typeref, ref), elementId);
         break;
     }
   }
@@ -51,7 +51,6 @@ class ButtonAi extends ConsumerWidget {
     final configureAgentsIa = ref.read(agentNotifierProvider.notifier);
     final controllerBrain = ref.read(brainProvider.notifier);
     final configAppState = ref.watch(configAppProvider);
-
 
     return Button(
       disable: ref == "" || disabled ?? true,
