@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tasks_ia_koderx/src/constants/class/radiointerface.dart';
+import 'package:tasks_ia_koderx/src/domain/models/radio_model.dart';
 
 class Radiocheck extends StatefulWidget{
   Radiocheck(
@@ -10,7 +10,7 @@ class Radiocheck extends StatefulWidget{
         required this.value,
         this.textStyle});
 
-  final List<RadioInterface> list;
+  final List<IRadioModel> list;
   final ValueChanged<dynamic>? onChange;
   final dynamic value;
   final TextStyle? textStyle;

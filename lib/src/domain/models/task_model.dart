@@ -1,13 +1,25 @@
-import 'package:tasks_ia_koderx/src/domain/entities/task.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_base_model.dart';
 
-class ITaskModel extends Task {
-  ITaskModel({
-    required super.id,
-    required super.title,
-    required super.description,
-    required super.priority,
-    required super.completed,
-  });
+class ITaskModel implements ITaskBase {
+  @override
+  String title;
+  @override
+  String description;
+  @override
+  int priority;
+  @override
+  int completed;
+  String id;
+
+  ITaskModel(
+      {required this.title,
+      required this.description,
+      required this.priority,
+      required this.completed,
+      required this.id});
+
+  @override
+  String get taskId => id;
 
   factory ITaskModel.fromMap(Map<String, dynamic> map) {
     return ITaskModel(

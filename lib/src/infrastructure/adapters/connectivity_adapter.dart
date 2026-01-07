@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:tasks_ia_koderx/src/application/ports/connection_monitor_port.dart';
 import 'package:tasks_ia_koderx/src/domain/entities/connection_status.dart';
-import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/enums/connectionType.dart';
+import 'package:tasks_ia_koderx/src/domain/ports/connection_monitor_port.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Connection_wifi/enums/connection_Type.dart';
 
 class ConnectivityAdapter implements ConnectionMonitorPort {
   final Connectivity _connectivity;

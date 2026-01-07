@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:tasks_ia_koderx/src/infrastructure/commands/taskCommand.dart';
+import 'package:tasks_ia_koderx/src/domain/models/payloads_task_command_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/update_task_model.dart';
+import 'package:tasks_ia_koderx/src/infrastructure/commands/task_command.dart';
 import 'package:tasks_ia_koderx/src/providers/task_state.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/payloadsTaskCommand.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:uuid/uuid.dart';
 
 class TaskUseCases extends StateNotifier<TasksState> {
@@ -19,7 +19,7 @@ class TaskUseCases extends StateNotifier<TasksState> {
     }
   }
 
-  Future<int> updateTask(UpdateTasksInterface task, String id) async {
+  Future<int> updateTask(IUpdateModel task, String id) async {
     final result =
         await UpdateTaskCommand().execute(UpdateTaskPayload(id, task));
     final tasks = await GetTaskCommand().execute();
