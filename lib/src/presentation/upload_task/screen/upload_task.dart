@@ -13,8 +13,8 @@ import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/uploadTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/NavBarPremium.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/users/getIdUser.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/users/get_email_user_app.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/users/get_id_user.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 
 class UploadTask extends StatefulWidget {

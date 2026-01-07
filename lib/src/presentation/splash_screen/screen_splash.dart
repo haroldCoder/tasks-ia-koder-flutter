@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/premium_user.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key, required this.color_app});
-  final Rx<Color> color_app;
+  final Color color_app;
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -59,7 +58,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      backgroundColor: widget.color_app.value,
+      backgroundColor: widget.color_app,
       body: Container(
         height: double.infinity,
         width: double.infinity,

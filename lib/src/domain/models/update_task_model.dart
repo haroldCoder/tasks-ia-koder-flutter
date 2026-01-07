@@ -1,11 +1,11 @@
-class UpdateTasksInterface {
+class IUpdateModel {
   String? title;
   String? description;
   int? priority;
   int? completed;
   int? id;
 
-  UpdateTasksInterface(
+  IUpdateModel(
       {this.title,
       this.description,
       this.priority,

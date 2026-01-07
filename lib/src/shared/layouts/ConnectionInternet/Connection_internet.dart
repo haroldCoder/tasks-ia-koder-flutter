@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/providers/connection_providers.dart';
-import 'package:tasks_ia_koderx/src/shared/lang/connectionInternet/lang.dart';
-import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionStream.dart';
+import 'package:tasks_ia_koderx/src/shared/lang/connection_internet/lang.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/connection_watch.dart';
 
 class ConnectionInternet extends ConsumerWidget {
   const ConnectionInternet({super.key, this.decoration, this.font});

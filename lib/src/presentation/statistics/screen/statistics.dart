@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
-import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/Connection_internet.dart';
 import 'package:tasks_ia_koderx/src/widgets/AppBar/tabMain.dart';
 import 'package:tasks_ia_koderx/src/widgets/Charts/BarGraphicTasks/BarGraphicTasks.dart';
 import 'package:tasks_ia_koderx/src/widgets/Charts/BarGraphicVisited/BarGraphicVisited.dart';

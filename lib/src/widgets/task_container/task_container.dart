@@ -4,15 +4,14 @@ import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/task_state.dart';
 import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/taskContainer/lang.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/users/stateTaskServer.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/auth_service.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/users/state_task_server.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/ButtonUpload/ButtonUpload.dart';
 import 'package:get/get.dart';
-import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/showUserNotLogged.dart';
-import 'package:tasks_ia_koderx/src/widgets/TaskContainer/utils/uploadTask.dart';
+import 'package:tasks_ia_koderx/src/widgets/task_container/utils/showUserNotLogged.dart';
+import 'package:tasks_ia_koderx/src/widgets/task_container/utils/uploadTask.dart';
 
 class TaskContainer extends ConsumerStatefulWidget {
   TaskContainer(

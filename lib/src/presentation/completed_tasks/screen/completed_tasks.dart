@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/presentation/completed_tasks/widgets/TasksDisplay/TasksDisplay.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/uploaded_providers.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/completedTask/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/AreNoTasks.dart';
-import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/Connection_internet.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/users/get_email_user_app.dart';
 import 'package:tasks_ia_koderx/src/widgets/AppBar/tabMain.dart';
 import 'package:tasks_ia_koderx/src/widgets/Navigation/tabBarFooter.dart';
 import 'package:tasks_ia_koderx/src/widgets/Search.dart';
 
+import '../../../domain/models/update_task_model.dart';
+
 class CompletedTasks extends ConsumerStatefulWidget {
   const CompletedTasks({super.key, required this.colorApp});
 
-  final Rx<Color> colorApp;
+  final Color colorApp;
 
   @override
   ConsumerState<CompletedTasks> createState() => _CompletedtasksState();
@@ -36,7 +36,7 @@ class _CompletedtasksState extends ConsumerState<CompletedTasks> {
 
    changeToPendingTask(String id) async {
     final taskController = ref.read(taskUseCasesProvider.notifier);
-    await taskController.updateTask(UpdateTasksInterface(completed: 0), id);
+    await taskController.updateTask(IUpdateModel(completed: 0), id);
   }
 
   @override
@@ -48,7 +48,7 @@ class _CompletedtasksState extends ConsumerState<CompletedTasks> {
         .toList();
 
     return Scaffold(
-      backgroundColor: widget.colorApp.value,
+      backgroundColor: widget.colorApp,
       body: SafeArea(
           child: Column(
         children: [

@@ -1,7 +1,7 @@
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
 
 class TasksState {
-  final List<TasksInterface> tasks;
+  final List<ITaskModel> tasks;
   final List<String> selectedTasks;
 
   TasksState({
@@ -10,7 +10,7 @@ class TasksState {
   });
 
   TasksState copyWith({
-    List<TasksInterface>? tasks,
+    List<ITaskModel>? tasks,
     List<String>? selectedTasks,
   }) {
     return TasksState(

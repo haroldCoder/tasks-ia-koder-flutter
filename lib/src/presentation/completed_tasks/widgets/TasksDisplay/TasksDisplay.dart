@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/taskBase.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasksServer.interface.dart';
-import 'package:tasks_ia_koderx/src/widgets/TaskContainer/TaskContainer.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_base_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_server_model.dart';
+import 'package:tasks_ia_koderx/src/widgets/task_container/task_container.dart';
 
 class TaskDisplay extends StatelessWidget {
   const TaskDisplay(
@@ -10,13 +10,13 @@ class TaskDisplay extends StatelessWidget {
       required this.localTasks,
       required this.onlineTasks,
       required this.changeToPendingTask});
-  final List<TasksInterface> localTasks;
-  final List<TasksServer> onlineTasks;
+  final List<ITaskModel> localTasks;
+  final List<ITaskServerModel> onlineTasks;
   final void Function(String id) changeToPendingTask;
 
   @override
   Widget build(BuildContext context) {
-    final List<TaskBase> tasksUser = onlineTasks.isNotEmpty
+    final List<ITaskBase> tasksUser = onlineTasks.isNotEmpty
         ? [
             ...localTasks.where((local) =>
                 !onlineTasks.any((online) => online.taskId == local.taskId)),
@@ -33,7 +33,7 @@ class TaskDisplay extends StatelessWidget {
         child: Column(
           spacing: 25,
           children: tasksUser.map((task) {
-            final isLocal = task is TasksInterface;
+            final isLocal = task is ITaskModel;
             final ids = tasksUser.map((t) => t.taskId?.trim()).toList();
 
             final duplicates = ids.where((id) =>

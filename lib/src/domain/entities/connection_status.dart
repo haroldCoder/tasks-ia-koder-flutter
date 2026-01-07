@@ -1,4 +1,4 @@
-import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/enums/connectionType.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Connection_wifi/enums/connection_Type.dart';
 
 class ConnectionStatus {
   final ConnectionType type;

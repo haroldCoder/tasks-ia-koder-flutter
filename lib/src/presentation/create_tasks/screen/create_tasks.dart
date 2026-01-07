@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tasks_ia_koderx/src/domain/constants/radioList.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/state/create_task_controllers_provider.dart';
@@ -12,14 +11,14 @@ import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/button_voi
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/widgets/text_box/text_box_magnament.dart';
 import 'package:tasks_ia_koderx/src/providers/task_providers.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
-import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/Connection_internet.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/LanguagueChange.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/SelectModelIA.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/RadioCheck/RadioCheck.dart';
 
 class CreateTasks extends ConsumerWidget {
-  final Rx<Color> color_app;
+  final Color color_app;
 
   CreateTasks({super.key, required this.color_app});
 
@@ -53,7 +52,7 @@ class CreateTasks extends ConsumerWidget {
         ref.read(createTaskControllersProvider.notifier);
 
     return Scaffold(
-      backgroundColor: color_app.value,
+      backgroundColor: color_app,
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: Container(

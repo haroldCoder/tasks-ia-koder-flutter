@@ -10,51 +10,51 @@ import 'package:tasks_ia_koderx/src/presentation/Home/home.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/Tasks/TaskController.dart';
 import 'package:tasks_ia_koderx/src/presentation/Settings/screen/Settings.dart';
 import 'package:tasks_ia_koderx/src/presentation/Statistics/screen/Statistics.dart';
-import 'package:tasks_ia_koderx/src/presentation/completed_tasks/screen/completedTasks.dart';
+import 'package:tasks_ia_koderx/src/presentation/completed_tasks/screen/completed_tasks.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/screen/create_tasks.dart';
 import 'package:tasks_ia_koderx/src/presentation/splash_screen/screen_splash.dart';
 import 'package:tasks_ia_koderx/src/presentation/upload_task/screen/upload_task.dart';
-import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/widgets/connection_initializer.dart';
 
 void main() async {
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  Get.put(ConfigAppState());
 
   await Firebase.initializeApp(
-    /*options: FirebaseOptions(
+      /*options: FirebaseOptions(
       apiKey: dotenv.env["FIREBASE_API_KEY"].toString(),
       appId: dotenv.env["FIREBASE_APP_ID"].toString(),
       messagingSenderId: dotenv.env["FIREBASE_MESSAGINGSENDERING"].toString(),
       projectId: dotenv.env["FIREBASE_PROJECT_ID"].toString(),
       storageBucket: dotenv.env["FIREBASE_BUCKET"].toString(),
     ),*/
-  );
+      );
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('locale');
 
   runApp(
-    EasyLocalization(
+    ProviderScope(
+        child: EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('es')],
       path: 'lib/src/shared/lang',
       startLocale: const Locale('en'),
       saveLocale: false,
-      child: const MyApp(),
-    ),
+      child: MyApp(),
+    )),
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    ConfigAppState configAppState = Get.find<ConfigAppState>();
+  Widget build(BuildContext context, WidgetRef ref) {
+    ConfigAppState configAppState = ref.watch(configAppProvider);
     final GoRouter router = GoRouter(
         redirect: (context, state) {
           Get.put(TaskController());
@@ -65,12 +65,12 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: '/',
             builder: (context, state) => SplashScreen(
-              color_app: configAppState.color_theme,
+              color_app: configAppState.colorTheme,
             ),
             pageBuilder: (context, state) {
               return NoTransitionPage(
                   child: SplashScreen(
-                color_app: configAppState.color_theme,
+                color_app: configAppState.colorTheme,
               ));
             },
           ),
@@ -88,14 +88,14 @@ class MyApp extends StatelessWidget {
                   },
                   child: HomePage(
                     title: "Tasks App Koderx",
-                    colorApp: configAppState.color_theme.value,
+                    colorApp: configAppState.colorTheme,
                   ));
             },
           ),
           GoRoute(
             path: '/create-tasks',
             builder: (context, state) => CreateTasks(
-              color_app: configAppState.color_theme,
+              color_app: configAppState.colorTheme,
             ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
@@ -107,13 +107,13 @@ class MyApp extends StatelessWidget {
                     return SlideTransition(
                         position: offsetAnimation, child: child);
                   },
-                  child: CreateTasks(color_app: configAppState.color_theme));
+                  child: CreateTasks(color_app: configAppState.colorTheme));
             },
           ),
           GoRoute(
             path: '/check',
             builder: (context, state) => CompletedTasks(
-              colorApp: configAppState.color_theme,
+              colorApp: configAppState.colorTheme,
             ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
@@ -126,14 +126,14 @@ class MyApp extends StatelessWidget {
                         position: offsetAnimation, child: child);
                   },
                   child: CompletedTasks(
-                    colorApp: configAppState.color_theme,
+                    colorApp: configAppState.colorTheme,
                   ));
             },
           ),
           GoRoute(
             path: '/statistics',
             builder: (context, state) => Statistics(
-              color_app: configAppState.color_theme.value,
+              color_app: configAppState.colorTheme,
             ),
             pageBuilder: (context, state) {
               return CustomTransitionPage(
@@ -146,7 +146,7 @@ class MyApp extends StatelessWidget {
                         position: offsetAnimation, child: child);
                   },
                   child: Statistics(
-                    color_app: configAppState.color_theme.value,
+                    color_app: configAppState.colorTheme,
                   ));
             },
           ),
@@ -188,25 +188,23 @@ class MyApp extends StatelessWidget {
           )
         ]);
 
-    return ProviderScope(
-      child: ShadApp.custom(
-        appBuilder: (BuildContext context) {
-          return MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              routerConfig: router,
-              theme: preferencesApp(context),
-              builder: (context, child) {
-                return ShadAppBuilder(
-                  child: ConnectionInitializer(
-                    child: child!,
-                  ),
-                );
-              });
-        },
-      ),
+    return ShadApp.custom(
+      appBuilder: (BuildContext context) {
+        return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            routerConfig: router,
+            theme: preferencesApp(context),
+            builder: (context, child) {
+              return ShadAppBuilder(
+                child: ConnectionInitializer(
+                  child: child!,
+                ),
+              );
+            });
+      },
     );
   }
 }

@@ -4,8 +4,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/users/getEmailUserApp.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/users/getIdUser.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/users/get_email_user_app.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/users/get_id_user.dart';
 
 class StateTaskServerNotifier extends AsyncNotifier<bool> {
   @override

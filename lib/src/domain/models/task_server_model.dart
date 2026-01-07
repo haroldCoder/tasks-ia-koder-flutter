@@ -1,6 +1,6 @@
-import 'package:tasks_ia_koderx/src/shared/interfaces/taskBase.interface.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_base_model.dart';
 
-class TasksServer extends TaskBase {
+class ITaskServerModel implements ITaskBase {
   String title;
   String description;
   int priority;
@@ -9,7 +9,7 @@ class TasksServer extends TaskBase {
   int userId;
   String id_task_app;
 
-  TasksServer(
+  ITaskServerModel(
       {required this.title,
       required this.description,
       required this.priority,
@@ -18,8 +18,8 @@ class TasksServer extends TaskBase {
       required this.userId,
       required this.id_task_app});
 
-  factory TasksServer.fromJson(Map<String, dynamic> json) {
-    return TasksServer(
+  factory ITaskServerModel.fromJson(Map<String, dynamic> json) {
+    return ITaskServerModel(
         id: json['id'] as int,
         title: json['title'] as String,
         description: json['description'] as String,

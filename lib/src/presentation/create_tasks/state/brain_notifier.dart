@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/entities/brain_state.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AI/ConfigureAI.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/AI/configure_AI.dart';
 
 class BrainNotifier extends Notifier<BrainState> {
   @override

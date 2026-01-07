@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/loginUser.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/auth_service.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/login_user.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/premium_user.dart';
 
 import '../../widgets/Button/Button.dart';
-import '../utils/premiumUser.dart';
 
 class Buttongoogle extends ConsumerWidget {
   const Buttongoogle({super.key});

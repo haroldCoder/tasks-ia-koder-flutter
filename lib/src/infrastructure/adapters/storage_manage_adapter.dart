@@ -4,8 +4,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class StorageManage{
-  const StorageManage({required this.filedb});
+class StorageManageAdapter{
+  const StorageManageAdapter({required this.filedb});
   final String filedb;
 
   static Database? _database;

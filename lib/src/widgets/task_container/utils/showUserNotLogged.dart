@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonGoogle.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/auth_service.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/premium_user.dart';
 
 void showUserNotLogged(BuildContext context) {
   showShadDialog(

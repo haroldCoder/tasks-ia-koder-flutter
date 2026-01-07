@@ -1,8 +1,8 @@
-class MessagesIAInterface {
+class IMessagesIAModel {
   final String role;
   final String content;
 
-  MessagesIAInterface({required this.role, required this.content});
+  IMessagesIAModel({required this.role, required this.content});
 
   Map<String, dynamic> toJson() {
     return {

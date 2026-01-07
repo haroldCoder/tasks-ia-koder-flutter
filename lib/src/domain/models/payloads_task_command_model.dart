@@ -1,4 +1,4 @@
-import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
+import 'package:tasks_ia_koderx/src/domain/models/update_task_model.dart';
 
 class CreateTaskPayload {
   final String id;
@@ -11,7 +11,7 @@ class CreateTaskPayload {
 
 class UpdateTaskPayload {
   final String id;
-  final UpdateTasksInterface updateTasksInterface;
+  final IUpdateModel updateTasksInterface;
 
   UpdateTaskPayload(this.id, this.updateTasksInterface);
 }

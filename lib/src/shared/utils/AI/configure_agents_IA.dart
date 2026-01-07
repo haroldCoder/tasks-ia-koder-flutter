@@ -3,16 +3,16 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:http/http.dart' as http;
 import 'package:tasks_ia_koderx/src/domain/models/agent_state_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/messages_IA_model.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
 
 class AgentNotifier extends StateNotifier<IAgentStateModel> {
   AgentNotifier() : super(const IAgentStateModel());
 
-  Future<void> makeBrain(ModelIA model, List<MessagesIAInterface> messages,
+  Future<void> makeBrain(ModelIA model, List<IMessagesIAModel> messages,
       [ElementId? element]) async {
     http.Response? localResponse;
     try {

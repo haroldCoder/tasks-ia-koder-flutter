@@ -2,13 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/premium_user.dart';
 import '../../../shared/layouts/ButtonPremium.dart';
 
 class UploadTask {

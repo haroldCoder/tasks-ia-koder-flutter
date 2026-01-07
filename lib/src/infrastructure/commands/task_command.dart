@@ -1,6 +1,7 @@
+import 'package:tasks_ia_koderx/src/domain/models/payloads_task_command_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/update_task_model.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/Tasks/task_service.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/payloadsTaskCommand.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
 
 abstract class TaskCommandInterface<T, U> {
   U execute([T payload]);
@@ -18,7 +19,7 @@ class CreateTaskCommand implements TaskCommandInterface<CreateTaskPayload, Futur
 class GetTaskCommand implements TaskCommandInterface<void, Future<List<dynamic>>> {
   final TaskService _taskService = TaskService.instance;
   @override
-  Future<List<TasksInterface>> execute([void payload]) async {
+  Future<List<ITaskModel>> execute([void payload]) async {
     return await _taskService.getTasks();
   }
 }

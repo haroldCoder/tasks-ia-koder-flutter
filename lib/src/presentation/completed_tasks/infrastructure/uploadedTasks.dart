@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_server_model.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/http_method.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasksServer.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/Requests.dart';
 
-class UploadedTasks extends AsyncNotifier<List<TasksServer>> {
+class UploadedTasks extends AsyncNotifier<List<ITaskServerModel>> {
   @override
-  Future<List<TasksServer>> build() async {
+  Future<List<ITaskServerModel>> build() async {
     return [];
   }
 
@@ -18,7 +18,7 @@ class UploadedTasks extends AsyncNotifier<List<TasksServer>> {
           .request(method: HttpMethod.get, endpoint: "v1/tasks/tasks/$email");
 
       final taskList = response['response'] as List<dynamic>;
-      final tasks = taskList.map((json) => TasksServer.fromJson(json)).toList();
+      final tasks = taskList.map((json) => ITaskServerModel.fromJson(json)).toList();
       
       state = AsyncData(tasks);
     } catch (err, stack) {

@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
-import 'package:tasks_ia_koderx/src/shared/States/configApp.dart';
+import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
-import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/ConnectionInternet.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/premiumUser.dart';
-import 'package:get/get.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonPremium.dart';
 import 'package:tasks_ia_koderx/src/shared/layouts/ButtonGoogle.dart';
+import 'package:tasks_ia_koderx/src/shared/layouts/ConnectionInternet/Connection_internet.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/auth_service.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/premium_user.dart';
 import 'package:tasks_ia_koderx/src/widgets/AppBar/tabMain.dart';
 import 'package:tasks_ia_koderx/src/widgets/MarkDown/Markdown.dart';
 import 'package:tasks_ia_koderx/src/widgets/Navigation/tabBarFooter.dart';
 
 class Settings extends ConsumerWidget {
   Settings({super.key});
-  final ConfigAppState configAppState = Get.find<ConfigAppState>();
+
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authState = ref.watch(authServiceProvider);
     final user = authState.currentUser;
     final isUserPremium = ref.watch(premiumUserProvider);
+    final ConfigAppState configAppState = ref.watch(configAppProvider);
+    final configAppController = ref.watch(configAppProvider.notifier);
 
     return SafeArea(
         child: Scaffold(
@@ -159,18 +160,18 @@ class Settings extends ConsumerWidget {
                                 mode,
                                 style: TextStyle(color: Colors.white30),
                               ),
-                              Obx(() => ShadSwitch(
+                              ShadSwitch(
                                   onChanged: (value) {
-                                    configAppState.color_theme.value ==
+                                    configAppState.colorTheme ==
                                             Colors.black
-                                        ? configAppState
+                                        ? configAppController
                                             .changeColorThemeApp(Colors.white)
-                                        : configAppState
+                                        : configAppController
                                             .changeColorThemeApp(Colors.black);
                                   },
                                   duration: Duration(milliseconds: 500),
-                                  value: configAppState.color_theme.value ==
-                                      Colors.black))
+                                  value: configAppState.colorTheme.value ==
+                                      Colors.black)
                             ],
                           ),
                         ],

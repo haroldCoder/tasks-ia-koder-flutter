@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/settings/lang.dart';
-import 'package:tasks_ia_koderx/src/shared/utils/AuthService.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/auth_service.dart';
 
 import '../../widgets/Button/Button.dart';
 import '../utils/subscription_request.dart';

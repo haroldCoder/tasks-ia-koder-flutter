@@ -8,8 +8,8 @@ import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/AI/lang.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
+import 'package:tasks_ia_koderx/src/shared/utils/AI/configure_AI.dart';
 import 'package:tasks_ia_koderx/src/shared/utils/AI/configure_agents_IA.dart';
-import '../../../../shared/utils/AI/ConfigureAI.dart';
 import '../../../../widgets/Button/Button.dart';
 import '../../state/brain_notifier.dart';
 

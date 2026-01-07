@@ -1,9 +1,9 @@
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/update_task_model.dart';
 
 abstract class StorageRepository {
   Future<int> insert(String id, String title, String description, int priority);
-  Future<List<TasksInterface>> getTasks();
-  Future<int> update(UpdateTasksInterface task, String id);
+  Future<List<ITaskModel>> getTasks();
+  Future<int> update(IUpdateModel task, String id);
   Future<int> delete(String id);
 }

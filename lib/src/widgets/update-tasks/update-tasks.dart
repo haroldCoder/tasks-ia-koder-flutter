@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 import 'package:tasks_ia_koderx/src/domain/constants/updateTaskOptions.dart';
+import 'package:tasks_ia_koderx/src/domain/models/update_task_model.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/Tasks/TaskController.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/home/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/Button/Button.dart';
 import 'package:tasks_ia_koderx/src/widgets/PopUp/PopUp.dart';
@@ -41,7 +41,7 @@ class UpdateTasks extends StatefulWidget {
 
   void updateDate(BuildContext context) async {
     if (await TaskController().updateTask(
-            UpdateTasksInterface(
+            IUpdateModel(
                 completed: complete,
                 title: title,
                 description: description,

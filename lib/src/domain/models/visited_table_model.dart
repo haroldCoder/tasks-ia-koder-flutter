@@ -1,8 +1,8 @@
-class VisitedTable{
+class IVisitedTableModel{
   late int id;
   late String datelog;
 
-  VisitedTable({required this.id, required this.datelog});
+  IVisitedTableModel({required this.id, required this.datelog});
 
   Map<String, dynamic> toMap() {
     return {
@@ -11,8 +11,8 @@ class VisitedTable{
     };
   }
 
-  factory VisitedTable.fromMap(Map<String, dynamic> map) {
-    return VisitedTable(
+  factory IVisitedTableModel.fromMap(Map<String, dynamic> map) {
+    return IVisitedTableModel(
       id: map['id'],
       datelog: map['datelog']
     );

@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/domain/models/convert_brain_to_task_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/messages_IA_model.dart';
 import 'package:tasks_ia_koderx/src/presentation/create_tasks/domain/enum/element_id.dart';
 import 'package:tasks_ia_koderx/src/providers/agentsIa_providers.dart';
 import 'package:tasks_ia_koderx/src/providers/configApp_provider.dart';
 import 'package:tasks_ia_koderx/src/shared/enums/modelIa.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/messagesIA.interface.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/createTask/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/voice_recorder/constants/return_messages.dart';
 import 'package:tasks_ia_koderx/src/widgets/voice_recorder/enum/messageTypes.dart';
@@ -48,13 +48,13 @@ class ConvertBrainToTaskNotifier extends Notifier<IConvertBrainToTaskModel> {
         controllerBrain.setLoading(false);
       }
     } else {
-      List<MessagesIAInterface> messagesTitle = [
-        MessagesIAInterface(role: 'system', content: systemInteractue),
-        MessagesIAInterface(role: 'user', content: _title)
+      List<IMessagesIAModel> messagesTitle = [
+        IMessagesIAModel(role: 'system', content: systemInteractue),
+        IMessagesIAModel(role: 'user', content: _title)
       ];
-      List<MessagesIAInterface> messagesDescription = [
-        MessagesIAInterface(role: 'system', content: systemInteractue),
-        MessagesIAInterface(role: 'user', content: _description)
+      List<IMessagesIAModel> messagesDescription = [
+        IMessagesIAModel(role: 'system', content: systemInteractue),
+        IMessagesIAModel(role: 'user', content: _description)
       ];
 
       await controllerAgentIa.makeBrain(

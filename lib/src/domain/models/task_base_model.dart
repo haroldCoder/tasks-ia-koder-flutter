@@ -1,4 +1,4 @@
-abstract class TaskBase {
+abstract class ITaskBase {
   dynamic get taskId;
   int get completed;
   String get title;

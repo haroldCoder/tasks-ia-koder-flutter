@@ -1,20 +1,21 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/update_task_model.dart';
 import 'package:tasks_ia_koderx/src/domain/ports/storageRepository.dart';
-import 'package:tasks_ia_koderx/src/infrastructure/adapters/storageManage.dart';
 import 'dart:async';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
+
+import 'package:tasks_ia_koderx/src/infrastructure/adapters/storage_manage_adapter.dart';
 
 class DatabaseTasksHelper implements StorageRepository {
   static String table = 'tasks';
   static const columnId = 'id';
   static const columnTaskName = 'taskName';
   static const columnDueDate = 'dueDate';
-  late StorageManage storageManage;
+  late StorageManageAdapter storageManage;
   static final DatabaseTasksHelper _instance = DatabaseTasksHelper._internal();
 
   DatabaseTasksHelper._internal(){
-    this.storageManage = StorageManage(filedb: 'my_database.db');
+    this.storageManage = StorageManageAdapter(filedb: 'my_database.db');
     initDatabase();
   }
 
@@ -45,14 +46,14 @@ class DatabaseTasksHelper implements StorageRepository {
   }
 
   @override
-  Future<List<TasksInterface>> getTasks() async {
+  Future<List<ITaskModel>> getTasks() async {
     Database db = await this.storageManage.database;
     List<Map<String, dynamic>> result = await db.query(table);
-    return result.map((map) => TasksInterface.fromMap(map)).toList();
+    return result.map((map) => ITaskModel.fromMap(map)).toList();
   }
 
   @override
-  Future<int> update(UpdateTasksInterface task, String id) async {
+  Future<int> update(IUpdateModel task, String id) async {
     Database db = await this.storageManage.database;
 
     return await db.update(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tasks_ia_koderx/src/providers/connection_providers.dart';
-import 'package:tasks_ia_koderx/src/shared/States/ConnectionWifi/enums/connectionType.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Connection_wifi/enums/connection_Type.dart';
 
 class ConnectionWatch extends ConsumerWidget {
   const ConnectionWatch({super.key});

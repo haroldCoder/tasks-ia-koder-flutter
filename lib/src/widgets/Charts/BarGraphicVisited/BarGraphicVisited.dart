@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Visited_App/VisitedService.dart';
+import 'package:tasks_ia_koderx/src/shared/States/Visited_App/visited_service.dart';
 import 'package:tasks_ia_koderx/src/shared/lang/graphs/lang.dart';
 import 'package:tasks_ia_koderx/src/widgets/Charts/BarGraphicVisited/constants/days.dart';
 

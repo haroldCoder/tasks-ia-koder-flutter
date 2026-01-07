@@ -1,6 +1,6 @@
+import 'package:tasks_ia_koderx/src/domain/models/task_model.dart';
+import 'package:tasks_ia_koderx/src/domain/models/update_task_model.dart';
 import 'package:tasks_ia_koderx/src/infrastructure/Tasks/database_helper.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/tasks.interface.dart';
-import 'package:tasks_ia_koderx/src/shared/interfaces/updateTask.interface.dart';
 
 class TaskService {
   static final TaskService _instance = TaskService._internal();
@@ -13,11 +13,11 @@ class TaskService {
     await DatabaseTasksHelper.instance.insert(id, title, description, priority);
   }
 
-  Future<List<TasksInterface>> getTasks() async {
+  Future<List<ITaskModel>> getTasks() async {
     return await DatabaseTasksHelper.instance.getTasks();
   }
 
-  Future<int> updateTask(UpdateTasksInterface task, String id) async{
+  Future<int> updateTask(IUpdateModel task, String id) async{
     return await DatabaseTasksHelper.instance.update(task, id);
   }
 

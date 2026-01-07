@@ -1,18 +1,15 @@
-import 'dart:io';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:tasks_ia_koderx/src/infrastructure/adapters/storageManage.dart';
-import 'package:tasks_ia_koderx/src/shared/States/Visited_App/interface/visited_table.dart';
+import 'package:tasks_ia_koderx/src/domain/models/visited_table_model.dart';
+import 'package:tasks_ia_koderx/src/infrastructure/adapters/storage_manage_adapter.dart';
 
 class DatabaseVisitedHelper{
   static const table = 'loggeds';
   static const dateColumn = 'datelog';
-  late StorageManage storageManage;
+  late StorageManageAdapter storageManage;
   static final DatabaseVisitedHelper _instance = DatabaseVisitedHelper._internal();
 
   DatabaseVisitedHelper._internal(){
-    this.storageManage = StorageManage(filedb: 'my_database.db');
+    this.storageManage = StorageManageAdapter(filedb: 'my_database.db');
     initDatabase();
   }
 
@@ -36,12 +33,12 @@ class DatabaseVisitedHelper{
     });
   }
 
-  Future<List<VisitedTable>> getData() async {
+  Future<List<IVisitedTableModel>> getData() async {
     Database db = await this.storageManage.database;
     List<Map<String, dynamic>> result = await db.query(table);
     result.map((rs) => print(rs));
 
-    return result.map((rs) => VisitedTable.fromMap(rs)).toList();
+    return result.map((rs) => IVisitedTableModel.fromMap(rs)).toList();
   }
 
 }
